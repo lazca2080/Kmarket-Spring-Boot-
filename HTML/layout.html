@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kmarket::main layout</title>
+    <!--
+        날짜 : 2022/12/06
+        이름 : 박종협
+        내용 : Kmarket main layout
+    -->
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            font: 12px 고딕;
+        }
+
+        ul, ol { list-style: none; }
+
+        a {
+            text-decoration: none;
+            color: #111;
+        }
+
+       /* a:-webkit-any-link {
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: underline;
+        }*/
+
+
+        input, textarea { outline: none; }
+
+        #warpper { width: 100%; }
+
+        header {
+            width: 100%;
+            height: 197px;
+            border: 1px solid red;
+            box-sizing: border-box;
+        }
+
+        header > .top {
+            height: 35px;
+            border: 1px solid blue;
+            box-sizing: border-box;
+        }
+
+        header > .top > div {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            border: 1px solid green;
+            box-sizing: border-box;
+        }
+
+        header > .logo {
+            height: 115px;
+            border: 1px solid blue;
+            box-sizing: border-box;
+        }
+
+        header > .logo > div {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            border: 1px solid green;
+        }
+
+        header > .menu {
+            height: 46px;
+            border: 1px solid blue;
+            box-sizing: border-box;
+        }
+
+        header > .menu > div {
+            width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            border: 1px solid green;
+            box-sizing: border-box;
+        }
+
+        main {
+            overflow: hidden;
+            width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            border: 1px solid red;
+        }
+
+        main > aside {
+            float: left;
+            width: 215px;
+            height: 100%;
+            border: 1px solid blue;
+            box-sizing: border-box;
+        }
+
+        main > section {
+            float: right;
+            width: 958px;
+            height: auto;
+            border: 1px solid blue;
+            box-sizing: border-box;
+        }
+
+        main > section > section {
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+            border: 1px solid green;
+            box-sizing: border-box;
+        }
+
+        main > section > section > article {
+            float: left;
+            width: 25%;
+            height: 345px;
+            border: 1px solid orange;
+            box-sizing: border-box;
+        }
+
+        h3 {
+            display: block;
+            font-size: 1.17em;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        main > section > .slider {
+            overflow: hidden;
+            width: 100%;
+            height: 425px;
+            border: 1px solid orange;
+            box-sizing: border-box;
+        }
+
+        main > section > .slider > .bx-wrapper {
+            margin-bottom: 60px;
+            padding: 0;
+        }
+
+        main > section > .hit {}
+
+        main > section > .recommend {}
+
+        main > section > .new {}
+
+        main > section > .discount {}
+
+        footer {
+            width: 100%;
+            height: 192px;
+            border: 1px solid red;
+            box-sizing: border-box;
+        }
+
+        footer > ul {
+            width: 1200px;
+            height: 39px;
+            margin: 0 auto;
+            border: 1px solid blue;
+        }
+
+        footer > div {
+            width: 1200px;
+            height: auto;
+            border: 1px solid blue;
+            margin: 0 auto;
+        }
+
+        footer {}
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="top">
+                <div></div>
+            </div>
+            <div class="logo">
+                <div></div>
+            </div>
+            <div class="menu">
+                <div></div>
+            </div>
+        </header>
+        <main>
+            <aside>
+            </aside>
+            <section>
+                <section class="slider">
+                    <div class="bx-wrapper" style="max-width: 100%">.</div>
+                </section>
+                <section class="hit">
+                    <h3></h3>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                </section>
+                <section class="recommend">
+                    <h3></h3>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                </section>
+                <section class="new">
+                    <h3></h3>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                </section>
+                <section class="discount">
+                    <h3></h3>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                    <article></article>
+                </section>
+            </section>
+        </main>
+        <footer>
+            <ul></ul>
+            <div></div>
+        </footer>
+    </div>
+</body>
+</html>
