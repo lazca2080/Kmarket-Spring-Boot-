@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kmarket.dao.MemberDAO">
+    <!-- 이 쿼리 수행되고 keyProperty: pk값 return -->
+<!--    <insert id="insertMember" useGeneratedKeys="true" keyProperty="uid">-->
+
+<!--    </insert>-->
+<!--    <insert id="insertMemberSeller">-->
+
+<!--    </insert>-->
+
+    <select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVO">
+        select * from `km_member_terms`;
+    </select>
+
+
+</mapper>
