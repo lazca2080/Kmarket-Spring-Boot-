@@ -1,4 +1,4 @@
-package kr.co.kmarket.controller.product;
+package kr.co.kmarket.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
