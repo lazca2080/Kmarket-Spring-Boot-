@@ -6,27 +6,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductController {
 	
-	@GetMapping("/product/list")
+
+	@GetMapping("/list")
 	public String list() {
 		return "/product/list";
 	}
 	
-	@GetMapping("/product/view")
+
+	@GetMapping("/view")
 	public String view() {
 		return "/product/view";
 	}
 	
-	@GetMapping("/product/cart")
+
+	@GetMapping("/cart")
 	public String cart() {
 		return "/product/cart";
 	}
 	
-	@GetMapping("/product/order")
+
+	@GetMapping("/order")
 	public String order() {
 		return "/product/order";
 	}
 	
-	@GetMapping("/product/complete")
+	@GetMapping("/complete")
 	public String complete() {
 		return "/product/complete";
 	}	
