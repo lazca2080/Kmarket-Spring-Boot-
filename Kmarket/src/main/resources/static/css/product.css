@@ -558,7 +558,7 @@ main > section > section > article .dis_price > .free {
 
 /* 상품목록 */
 
-#product > section {
+#product > .list {
     padding: 16px;
     box-sizing: border-box;
 }
@@ -753,6 +753,11 @@ main > section > section > article .dis_price > .free {
 }
 
 /* 상품상세 */
+#product > .view {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
 #product > .view > article {
     width: 100%;
     height: auto;
@@ -1087,6 +1092,11 @@ main > section > section > article .dis_price > .free {
 
 /* 장바구니 */
 
+#product > .cart {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
 #product > .cart > form {}
 
 #product > .cart > form > table {
@@ -1218,6 +1228,11 @@ main > section > section > article .dis_price > .free {
 }
 
 /* 구매 */
+#product > .order {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
 #product > .order > form {}
 
 #product > .order > form > table {
@@ -1415,6 +1430,11 @@ main > section > section > article .dis_price > .free {
 #product > .order > form > .alert > ul > li > span { position: relative; left: -6px; }
 
 /* 구매완료 */
+#product > .complete {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
 #product > .complete > article {
     margin-top: 16px;
 }
