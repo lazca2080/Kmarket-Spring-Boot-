@@ -1,38 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/member/_header.html :: memberHeaderFragment}"></th:block>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-    window.onload = () => {
-        const agree = document.getElementById("agree");
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/memberLayout}">
+<th:block layout:fragment="content">
+    <script>
+        window.onload = () => {
+            const agree = document.getElementById("agree");
+            agree.addEventListener("click", ()=>{
+                const a1 = document.querySelector("input[name=agree1]").checked
+                const a2 = document.querySelector("input[name=agree2]").checked
+                const a3 = document.querySelector("input[name=agree3]").checked
+                const a4 = document.querySelector("input[name=agree4]").checked
 
-        agree.addEventListener("click", ()=>{
+                if(a1 && a2 && a3){
+                    location.href = '/Kmarket/member/register';
+                }else{
+                    swal({
+                        title: "Sorry...",
+                        text: "동의 체크를 하세요!",
+                        icon: "info"
+                    });
+                }
+            })
+        }
+    </script>
 
-            const a1 = document.querySelector("input[name=agree1]").checked
-            const a2 = document.querySelector("input[name=agree2]").checked
-            const a3 = document.querySelector("input[name=agree3]").checked
-            const a4 = document.querySelector("input[name=agree4]").checked
-
-            if(a1 && a2 && a3){
-                swal(
-			        "Great!",
-			        "다음 페이지로 넘어갑니다.",
-			        "success"
-			      )
-
-            location.href = '/Kmarket/member/register';
-            }else{
-                swal({
-                    title: "Sorry...",
-                    text: "동의 체크를 하세요!",
-                    icon: "info"
-                });
-            }
-
-        })
-    }
-</script>
-<main id="member">
     <div class="signup">
         <nav>
             <h1>약관동의</h1>
@@ -81,7 +73,6 @@
             <input type="button" class="agree" id="agree" value="동의하기">
         </div>
     </div>
-</main>
-<th:block th:replace="~{/member/_footer.html :: memberFooterFragment}"></th:block>
+    </th:block>
 </html>
         

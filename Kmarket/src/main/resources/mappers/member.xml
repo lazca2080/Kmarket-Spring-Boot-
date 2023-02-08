@@ -4,10 +4,22 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kmarket.dao.MemberDAO">
-    <!-- 이 쿼리 수행되고 keyProperty: pk값 return -->
-<!--    <insert id="insertMember" useGeneratedKeys="true" keyProperty="uid">-->
-
-<!--    </insert>-->
+        <!-- 이 쿼리 수행되고 keyProperty: pk값 return -->
+        <insert id="insertMember" useGeneratedKeys="true" keyProperty="uid">
+            INSERT INTO `km_member` SET
+                `uid`= #{uid},
+                `pass`= #{pass},
+                `name` = #{name},
+                `gender` = #{gender},
+                `email` = #{email},
+                `type`=1,
+                `hp` = #{hp},
+                `zip` = #{zip},
+                `addr1` = #{addr1},
+                `addr2` = #{addr2},
+                `regip`= #{regip},
+                `rdate`=NOW();
+        </insert>
 <!--    <insert id="insertMemberSeller">-->
 
 <!--    </insert>-->

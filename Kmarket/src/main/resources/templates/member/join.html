@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/member/_header.html :: memberHeaderFragment}"></th:block>
-        <main id="member">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/memberLayout}">
+    <th:block layout:fragment="content">
             <div class="join">
                 <img th:src="@{/img/member_join_tit_welcome.gif}" class="welcome" alt="케이마켓에 오신 것을 환영합니다.">
                 <div class="type">
@@ -30,7 +31,6 @@
                 <img th:src="@{/img/member_join_banner1.jpg}" class="banner" alt="신규 회원을 위한 혜택">
                 <img th:src="@{/img/member_join_banner2.jpg}" class="banner" alt="사업자 신규 가입 혜택">
             </div>
-        </main>
-<th:block th:replace="~{/member/_footer.html :: memberFooterFragment}"></th:block>
+    </th:block>
 </html>
         
