@@ -6,8 +6,7 @@
     window.onload = () => {
         const agree = document.getElementById("agree");
 
-        agree.addEventListener("click", (e)=>{
-            e.preventDefault();
+        agree.addEventListener("click", ()=>{
 
             const a1 = document.querySelector("input[name=agree1]").checked
             const a2 = document.querySelector("input[name=agree2]").checked
@@ -15,14 +14,13 @@
             const a4 = document.querySelector("input[name=agree4]").checked
 
             if(a1 && a2 && a3){
-                swal({
-                    title: "Great!",
-                    text: "다음 페이지로 넘어갑니다.",
-                    icon: "success"
-                });
+                swal(
+			        "Great!",
+			        "다음 페이지로 넘어갑니다.",
+			        "success"
+			      )
 
-                return true;
-                location.href = '/member/register';
+            location.href = '/Kmarket/member/register';
             }else{
                 swal({
                     title: "Sorry...",
@@ -30,6 +28,7 @@
                     icon: "info"
                 });
             }
+
         })
     }
 </script>
@@ -79,9 +78,7 @@
             </label>
         </section>
         <div>
-            <a href="#">
-                <input type="button" class="agree" id="agree" value="동의하기">
-            </a>
+            <input type="button" class="agree" id="agree" value="동의하기">
         </div>
     </div>
 </main>
