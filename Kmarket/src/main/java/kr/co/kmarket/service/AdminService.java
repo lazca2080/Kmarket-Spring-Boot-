@@ -89,7 +89,7 @@ public class AdminService {
 		
 		// 저장 폴더가 없다면 생성
 		// 저장 폴더는 cate1 한번, cate2 한번 총 두번 이루어짐.
-		// mkdir 같은 경우 두번 폴더 생성이 불가능함
+		// mkdir 같은 경우 없는 폴더 두번 생성이 불가능함
 		// 따라서 Files를 이용해서 한번에 생성
         File checkFolder = new File(path);
         if(!checkFolder.exists()){
