@@ -27,6 +27,7 @@ public class AdminService {
 	// 상품 등록
 	public void register(ProductVO vo) {
 		
+		// vo에 있는 파일들 가져오기
 		MultipartFile thumb1 = vo.getThumb1();
 		MultipartFile thumb2 = vo.getThumb2();
 		MultipartFile thumb3 = vo.getThumb3();
@@ -40,7 +41,6 @@ public class AdminService {
 		vo.setNewDetail(file.getNewDetail());
 		
 		dao.register(vo);
-		
 	}
 	
 	// 카테고리 분류
@@ -88,12 +88,14 @@ public class AdminService {
 		String newDetail = cate1 + "-" + cate2 + "-" + UUID.randomUUID().toString() + extDetail;
 		
 		// 저장 폴더가 없다면 생성
+		// 저장 폴더는 cate1 한번, cate2 한번 총 두번 이루어짐.
+		// mkdir 같은 경우 두번 폴더 생성이 불가능함
+		// 따라서 Files를 이용해서 한번에 생성
         File checkFolder = new File(path);
         if(!checkFolder.exists()){
             try {
 				Files.createDirectories(checkFolder.toPath());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -105,10 +107,8 @@ public class AdminService {
 			thumb3.transferTo(new File(path, newThumb3));
 			detail.transferTo(new File(path, newDetail));
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -119,6 +119,5 @@ public class AdminService {
 		file.setNewDetail(newDetail);
 		
 		return file;
-		
 	}
 }
