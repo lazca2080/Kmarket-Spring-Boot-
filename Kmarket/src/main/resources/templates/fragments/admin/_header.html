@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<th:block th:fragment="headerFragment">
+		<header>
+		    <div>
+		        <a th:href="@{/}" class="logo">
+		            <img th:src="@{/img/admin/admin_logo.png}" alt="admin_logo">
+		        </a>
+		        <p>
+		            <span>홍길동님 반갑습니다.</span>
+		            <a href="#">HOME |</a>
+		            <a href="#">로그아웃 |</a>
+		            <a href="#">고객센터</a>
+		        </p>
+		    </div>
+		</header>
+	</th:block>
+</html>

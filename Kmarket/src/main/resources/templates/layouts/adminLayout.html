@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>케이마켓::관리자</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>    
+    <script th:src="@{/js/admin/gnb.js}"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+	<body>
+	    <div id="admin-wrapper">
+			<th:block th:replace="~{fragments/admin/_header::headerFragment}"></th:block>
+	        <main>
+	        	<th:block th:replace="~{fragments/admin/_aside::asideFragment}"></th:block>
+	        	<th:block layout:fragment="content"></th:block>
+	        </main>
+	    </div>
+	</body>
+	<th:block th:replace="~{fragments/admin/_footer::footerFragment}"></th:block>
+</html>
