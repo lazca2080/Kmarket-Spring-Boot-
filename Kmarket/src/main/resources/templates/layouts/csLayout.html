@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
+    	<link rel="stylesheet" th:href="@{/css/cs.css}">
+    	<link rel="stylesheet" th:href="@{/css/common.css}">
+    	<!--
+        날짜 : 2023/02/09
+        이름 : 이왕근
+        내용 : Kmarket cs
+    -->
+	</head>
+	<body>
+		<div id="wrapper">
+            <!-- 헤더 !-->
+            <th:block th:replace="~{fragments/cs/__header::_headerFragment}"></th:block>
+
+            <!-- 메인 내용 -->
+            <main id="cs">
+                <th:block layout:fragment="content"></th:block>
+            </main>
+        </div>
+    </body>
+    <!-- 푸터 -->
+    <th:block th:replace="~{fragments/cs/__footer::_footerFragment}"></th:block>
+	</body>
+</html>

@@ -1,5 +1,8 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{cs/__header.html :: _headerFragment}"></th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/csLayout}">
+    <th:block layout:fragment="content">
         <section id="cs">
             <div class="main">
                 <h1 class="title">
@@ -10,27 +13,14 @@
                         공지사항
                         <a href="#">전체보기</a>
                     </h1>
+                    
                     <ul>
-                        <li>
-                            <a href="#" class="title">[안내] 홰외결제 사칭 문자 주의</a>
+                    	<th:block th:each="cate:${cate}">
+                        <li th:if="${cate.cate == 'notice'}">
+                            <a th:href="@{/cs/notice/view (?no=sdfsdf)}" class="title">[안내] 홰외결제 사칭 문자 주의</a>
                             <span class="date">23.02.07</span>
                         </li>
-                        <li>
-                            <a href="#" class="title">[안내] 홰외결제 사칭 문자 주의</a>
-                            <span class="date">23.02.07</span>
-                        </li>
-                        <li>
-                            <a href="#" class="title">[안내] 홰외결제 사칭 문자 주의</a>
-                            <span class="date">23.02.07</span>
-                        </li>
-                        <li>
-                            <a href="#" class="title">[안내] 홰외결제 사칭 문자 주의</a>
-                            <span class="date">23.02.07</span>
-                        </li>
-                        <li>
-                            <a href="#" class="title">[안내] 홰외결제 사칭 문자 주의</a>
-                            <span class="date">23.02.07</span>
-                        </li>
+                        </th:block>
                     </ul>
                 </section>
                 <section class="faq">
@@ -86,7 +76,8 @@
                         </a>
                     </h1>
                     <ul>
-                        <li>
+                    	<th:block th:each="cate:${cate}">
+                        <li th:if="${cate.cate == 'qna'}">
                             <a href="#" class="title">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
@@ -94,38 +85,7 @@
                                     <span class="date">23.02.07</span>
                                 </p>
                         </li>
-                        <li>
-                            <a href="#">
-                                [쿠폰/이벤트] 스마일포인트는 어디에 사용하나요?</a>
-                                <p>
-                                    <span class="uid">chh***</span>
-                                    <span class="date">23.02.07</span>
-                                </p>
-                        </li>
-                        <li>
-                            <a href="#">
-                                [주문/결제] 신용카드 결제 중 오류가 난 경우는 어떻게 하나요?</a>
-                                <p>
-                                    <span class="uid">chh***</span>
-                                    <span class="date">23.02.07</span>
-                                </p>
-                        </li>
-                        <li>
-                            <a href="#">
-                                [배송] 주문한 상품은 언제 배송되나요?</a>
-                                <p>
-                                    <span class="uid">chh***</span>
-                                    <span class="date">23.02.07</span>
-                                </p>
-                        </li>
-                        <li>
-                            <a href="#">
-                                [취소/반품/교환] 주문을 취소하고 싶어요</a>
-                                <p>
-                                    <span class="uid">chh***</span>
-                                    <span class="date">23.02.07</span>
-                                </p>
-                        </li>
+                    	</th:block>
                     </ul>
                     <a href="#" class="ask">문의글 작성></a>
                 </section>
@@ -165,5 +125,5 @@
                 </section>
             </div>
         </section>
-        <th:block th:replace="~{cs/__footer.html :: _footerFragment}"></th:block>
+     </th:block>
 </html>

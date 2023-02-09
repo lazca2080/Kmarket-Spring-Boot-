@@ -11,7 +11,8 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/cs/notice/view")
-	public String view() {
+	public String view(int no) {
+		
 		return "/cs/notice/view";
 	}
 }
