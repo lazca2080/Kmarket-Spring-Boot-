@@ -26,16 +26,19 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	
+	// 상품 목록 페이지
 	@GetMapping(value = { "admin", "admin/index"})
 	public String index() {
 		return "admin/index";
 	}
 
+	// 상품 목록 페이지
 	@GetMapping("admin/list")
 	public String list() {
 		return "admin/list";
 	}
 	
+	// 상품 등록 페이지
 	@GetMapping("admin/register")
 	public String register(Model model) {
 		
@@ -46,6 +49,7 @@ public class AdminController {
 		return "admin/register";
 	}
 	
+	// 상품 등록
 	@PostMapping("admin/register")
 	public String register(ProductVO vo, HttpServletRequest req) {
 		vo.setSeller("admin");
