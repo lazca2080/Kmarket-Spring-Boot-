@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/memberLayout}">
     <th:block layout:fragment="content">
+
             <div class="register">
                 <nav>
                     <h1>일반 회원가입</h1>
@@ -16,7 +17,7 @@
                                     <span class="essential">*</span> 아이디
                                 </th>
                                 <td>
-                                    <input type="text" name="uid" placeholder="아이디를 입력" required>
+                                    <input type="text" id="uid" name="uid" placeholder="아이디를 입력" required>
                                     <span class="msgId">&nbsp;&nbsp;영문, 숫자로 4~12자까지 설정해 주세요.</span>
                                     <span class="uidResult"></span>
                                 </td>
@@ -26,7 +27,7 @@
                                     <span class="essential">*</span> 비밀번호
                                 </th>
                                 <td>
-                                    <input type="password" name="pass1" placeholder="비밀번호를 입력" required>
+                                    <input type="password" id="pass1" name="pass1" placeholder="비밀번호를 입력" required>
                                     <span class="msgPass1">&nbsp;&nbsp;영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
                                     <span class="passResult1"></span>
                                 </td>
@@ -36,7 +37,7 @@
                                     <span class="essential">*</span> 비밀번호확인
                                 </th>
                                 <td>
-                                    <input type="password" name="pass2" placeholder="비밀번호를 확인" required>
+                                    <input type="password" id="pass2" name="pass2" placeholder="비밀번호를 확인" required>
                                     <span class="msgPass2">&nbsp;&nbsp;비밀번호 재입력</span>
                                     <span class="passResult2"></span>
                                 </td>
@@ -52,7 +53,7 @@
                                     <span class="essential">*</span> 이름
                                 </th>
                                 <td>
-                                    <input type="text" name="name" placeholder="이름을 입력" required>
+                                    <input type="text" id="name" name="name" placeholder="이름을 입력" required>
                                     <span class="nameResult"></span>          
                                 </td>
                             </tr>
@@ -94,7 +95,7 @@
                                 <th>주소</th>
                                 <td>
                                     <div>
-                                        <input type="text" name="zip" id="zip" placeholder="우편번호 입력 클릭" readonly>
+                                        <input type="text" name="zip" id="zip" placeholder="우편번호 입력 클릭" onclick="zipcode()" readonly>
                                     </div> 
                                     <div>
                                         <input type="text" name="addr1" id="addr1" size="50" placeholder="주소를 검색하세요." readonly>
@@ -107,7 +108,7 @@
                         </table>
                     </section>
                     <div>
-                        <input type="submit" class="join" value="회원가입">
+                        <input type="button" class="join" value="회원가입">
                     </div>
                 </form>
             </div>

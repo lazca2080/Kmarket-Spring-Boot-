@@ -12,4 +12,6 @@ public interface MemberDAO {
     public int insertMember(MemberVO memberVO);
 
     public TermsVO selectTerms();
+
+    public Integer selectCheckUid(String uid);
 }
