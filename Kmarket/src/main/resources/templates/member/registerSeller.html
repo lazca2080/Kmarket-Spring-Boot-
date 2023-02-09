@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/member/_header.html :: memberHeaderFragment}"></th:block>
-        <main id="member">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/memberLayout}">
+<th:block layout:fragment="content">
             <div class="registerSeller">
                 <nav>
                     <h1>판매자 회원가입</h1>
@@ -163,6 +164,5 @@
                     </div>
                 </form>
                 </div>
-        </main>
-<th:block th:replace="~{/member/_footer.html :: memberFooterFragment}"></th:block>
+    </th:block>
 </html>

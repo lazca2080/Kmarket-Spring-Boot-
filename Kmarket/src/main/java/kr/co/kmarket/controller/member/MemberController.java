@@ -1,4 +1,4 @@
-package kr.co.kmarket.controller;
+package kr.co.kmarket.controller.member;
 
 import kr.co.kmarket.service.MemberService;
 import kr.co.kmarket.vo.TermsVO;
@@ -18,6 +18,20 @@ public class MemberController {
         return "/member/join";
     }
 
+    @GetMapping("/member/signup")
+    public String signup(Model model){
+        TermsVO tvo = memberService.selectTerms();
+        model.addAttribute("tvo", tvo);
+        return "/member/signup";
+    }
+
+    @GetMapping("/member/signupSeller")
+    public String signupSeller(Model model){
+        TermsVO tvo = memberService.selectTerms();
+        model.addAttribute("tvo", tvo);
+        return "/member/signupSeller";
+    }
+
     @GetMapping("/member/register")
     public String register(){
         return "/member/register";
@@ -28,19 +42,4 @@ public class MemberController {
         return "/member/registerSeller";
     }
 
-    @GetMapping("/member/signup")
-    public String signup(Model model){
-        TermsVO tvo = memberService.selectTerms();
-
-        model.addAttribute("tvo", tvo);
-        return "/member/signup";
-    }
-
-    @GetMapping("/member/signupSeller")
-    public String signupSeller(Model model){
-        TermsVO tvo = memberService.selectTerms();
-
-        model.addAttribute("tvo", tvo);
-        return "/member/signupSeller";
-    }
 }
