@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{cs/__header.html :: _headerFragment}"></th:block>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/csLayout}">
+    <th:block layout:fragment="content">
         <section id="cs">
             <div class="qna">
                 <nav>
@@ -78,5 +80,5 @@
                 </section>
             </div>
         </section>
-        <th:block th:replace="~{cs/__footer.html :: _footerFragment}"></th:block>
+     </th:block>
 </html>
