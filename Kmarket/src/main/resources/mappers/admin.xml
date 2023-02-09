@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kmarket.dao.AdminDAO">
+
+	<!-- 상품 등록 -->
+	<insert id="register">
+		INSERT INTO `km_product` SET
+			`prodCate1`=#{prodCate1},
+			`prodCate2`=#{prodCate2},
+			`prodName`=#{prodName},
+			`descript`=#{descript},
+			`company`=#{company},
+			`seller`=#{seller},
+			`price`=#{price},
+			`discount`=#{discount},
+			`point`=#{point},
+			`stock`=#{stock},
+			`sold`=#{sold},
+			`delivery`=#{delivery},
+			`hit`=#{hit},
+			`score`=#{score},
+			`review`=#{review},
+			`thumb1`=#{newThumb1},
+			`thumb2`=#{newThumb2},
+			`thumb3`=#{newThumb3},
+			`detail`=#{newDetail},
+			`status`=#{status},
+			`duty`=#{duty},
+			`receipt`=#{receipt},
+			`bizType`=#{bizType},
+			`origin`=#{origin},
+			`ip`=#{ip},
+			`rdate`=NOW(),
+			`sellPrice`=#{sellPrice};
+	</insert>
+
+
+	<!-- 카테고리 분류 -->
+	<select id="selectCate1" resultType="kr.co.kmarket.vo.CateVO">
+		SELECT * FROM `km_product_cate1`;
+	</select>
+	
+	<select id="selectCate2" resultType="kr.co.kmarket.vo.CateVO">
+		SELECT * FROM `km_product_cate2` WHERE `cate1` = #{cate1};
+	</select>
+</mapper>
