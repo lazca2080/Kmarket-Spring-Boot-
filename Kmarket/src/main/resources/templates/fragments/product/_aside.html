@@ -97,111 +97,25 @@
 	            베스트상품
 	        </h1>
 	        <ol>
-	            <li>
+	            <li th:each="best, i:${index.sold}">
 	                <a href="#">
 	                    <div class="thumb">
-	                        <i>1</i>
+	                        <i>[[${i.count}]]</i>
 	                        <img src="https://via.placeholder.com/230" alt="item1">
 	                    </div>
-	                    <h2>상품명</h2>
-	                    <div class="org_price">
-	                        <del>30,000</del>
-	                        <span>
-	                            10%
-	                        </span>
-	                    </div>
-	                    <div class="dis_price">
-	                        <ins>
-	                            27,000
-	                        </ins>
-	                    </div>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <div class="thumb">
-	                        <i>2</i>
-	                        <img src="https://via.placeholder.com/50" alt="item1">
-	                    </div>
 	                    <article>
-	                        <h2>상품명</h2>
-	                        <div class="org_price">
-	                            <del>30,000</del>
-	                            <span>
-	                                10%
-	                            </span>
-	                        </div>
-	                        <div class="dis_price">
-	                            <ins>
-	                                27,000
-	                            </ins>
-	                        </div>
-	                    </article>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <div class="thumb">
-	                        <i>3</i>
-	                        <img src="https://via.placeholder.com/50" alt="item1">
-	                    </div>
-	                    <article>
-	                        <h2>상품명</h2>
-	                        <div class="org_price">
-	                            <del>30,000</del>
-	                            <span>
-	                                10%
-	                            </span>
-	                        </div>
-	                        <div class="dis_price">
-	                            <ins>
-	                                27,000
-	                            </ins>
-	                        </div>
-	                    </article>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <div class="thumb">
-	                        <i>4</i>
-	                        <img src="https://via.placeholder.com/50" alt="item1">
-	                    </div>
-	                    <article>
-	                        <h2>상품명</h2>
-	                        <div class="org_price">
-	                            <del>30,000</del>
-	                            <span>
-	                                10%
-	                            </span>
-	                        </div>
-	                        <div class="dis_price">
-	                            <ins>
-	                                27,000
-	                            </ins>
-	                        </div>
-	                    </article>
-	                </a>
-	            </li>
-	            <li>
-	                <a href="#">
-	                    <div class="thumb">
-	                        <i>5</i>
-	                        <img src="https://via.placeholder.com/50" alt="item1">
-	                    </div>
-	                    <article>
-	                        <h2>상품명</h2>
-	                        <div class="org_price">
-	                            <del>30,000</del>
-	                            <span>
-	                                10%
-	                            </span>
-	                        </div>
-	                        <div class="dis_price">
-	                            <ins>
-	                                27,000
-	                            </ins>
-	                        </div>
+		                    <h2>[[${best.prodName}]]</h2>
+		                    <div class="org_price">
+		                        <del>[[${best.price}]]</del>
+		                        <span>
+		                            [[${best.discount + "%"}]]
+		                        </span>
+		                    </div>
+		                    <div class="dis_price">
+		                        <ins>
+		                            [[${best.sellPrice}]]
+		                        </ins>
+		                    </div>
 	                    </article>
 	                </a>
 	            </li>
