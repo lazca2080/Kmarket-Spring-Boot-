@@ -15,30 +15,30 @@
                 </nav>
                 <article class="info">
                     <div class="image">
-                        <img src="	https://via.placeholder.com/460x460" alt="상품이미지">
+                        <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
                     </div>
                     <div class="summary">
                         <nav>
-                            <h1>(주)판매자명</h1>
+                            <h1>(주)[[${prod.company}]]</h1>
                             <h2>
                                 상품번호 : 
-                                <span>11111111111</span>
+                                <span>[[${prod.prodNo}]]</span>
                             </h2>
                         </nav>
                         <nav>
-                            <h3>상품명</h3>
-                            <p>상품설명 출력</p>
+                            <h3>[[${prod.prodName}]]</h3>
+                            <p>[[${prod.descript}]]</p>
                             <h5 class="rating star4">
                                 <a href="#">상품평보기</a>
                             </h5>
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del>30,000</del>
-                                <span>10%</span>
+                                <del>[[${prod.price}]]</del>
+                                <span>[[${prod.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins>27,000</ins>
+                                <ins>[[${prod.sellPrice}]]</ins>
                             </div>
                         </nav>
                         <nav>
@@ -64,7 +64,7 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span>35,000</span>
+                            <span>[[${prod.sellPrice + prod.delivery}]]</span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
@@ -75,9 +75,9 @@
                 </article>
                 <article class="detail">
                     <nav><h1>상품정보</h1></nav>
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지1">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지2">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지3">
+                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지1">
+                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지2">
+                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지3">
                 </article>
                 <article class="notice">
                     <nav>
@@ -87,31 +87,31 @@
                     <table>
                         <tr>
                             <td>상품번호</td>
-                            <td>11111111111</td>
+                            <td>[[${prod.prodNo}]]</td>
                         </tr>
                         <tr>
                             <td>상품상태</td>
-                            <td>새상품</td>
+                            <td>[[${prod.status}]]</td>
                         </tr>
                         <tr>
                             <td>부가세 면세여부</td>
-                            <td>과세상품</td>
+                            <td>[[${prod.duty}]]</td>
                         </tr>
                         <tr>
                             <td>영수증발행</td>
-                            <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
+                            <td>[[${prod.receipt}]]</td>
                         </tr>
                         <tr>
                             <td>사업자구분</td>
-                            <td>사업자 판매자</td>
+                            <td>[[${prod.bizType}]]</td>
                         </tr>
                         <tr>
                             <td>브랜드</td>
-                            <td>블루포스</td>
+                            <td>[[${prod.company}]]</td>
                         </tr>
                         <tr>
                             <td>원산지</td>
-                            <td>국내생산</td>
+                            <td>[[${prod.origin}]]</td>
                         </tr>
                     </table>
                     <table>

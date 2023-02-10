@@ -15,22 +15,23 @@ import lombok.Setter;
 @ToString
 public class ProductVO {
 	
+	private String prodNo;
 	private String prodCate1;
 	private String prodCate2;
 	private String prodName;
 	private String descript;
 	private String company;
 	private String seller;
-	private String price;
-	private String discount;
-	private String sellPrice;
-	private String point;
-	private String stock;
-	private String sold;
-	private String delivery;
-	private String hit;
-	private String score;
-	private String review;
+	private int price;
+	private int discount;
+	private int sellPrice;
+	private int point;
+	private int stock;
+	private int sold;
+	private int delivery;
+	private int hit;
+	private int score;
+	private int review;
 	private MultipartFile newThumb1;
 	private MultipartFile newThumb2;
 	private MultipartFile newThumb3;

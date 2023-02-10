@@ -4,6 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kmarket.dao.ProductDAO">
+	<!-- index -->
 	<select id="selectIndex" resultType="kr.co.kmarket.vo.ProductVO">
 		(SELECT b.* FROM (SELECT  'sold' AS `type`, a.* FROM `km_product` a ORDER BY `sold` DESC LIMIT 5) AS b)
 		UNION
@@ -14,5 +15,20 @@
 		(SELECT b.* FROM (SELECT  'new' AS `type`, a.* FROM `km_product` a ORDER BY `rdate` DESC LIMIT 8) AS b)
 		UNION
 		(SELECT b.* FROM (SELECT  'discount' AS `type`, a.* FROM `km_product` a ORDER BY `discount` DESC LIMIT 8) AS b)
+	</select>
+	
+	<!-- category -->
+	<select id="selectCate" resultType="kr.co.kmarket.vo.CateVO">
+		SELECT * FROM `km_product_cate2`;
+	</select>
+	
+	<!-- 해당 상품 -->
+	<select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT * FROM `km_product` WHERE `prodNo`=#{prodNo};
+	</select>
+	
+	<!-- 카테고리별 상품 목록 -->
+	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
+		SELECT * FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2};
 	</select>
 </mapper>
