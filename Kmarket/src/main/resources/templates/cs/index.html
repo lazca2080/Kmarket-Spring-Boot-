@@ -6,7 +6,7 @@
         <section id="cs">
             <div class="main">
                 <h1 class="title">
-                    <strong>케이마켓</strong>이 도와드릴께요!
+                    <strong>케이마켓</strong>이 도와드릴게요!
                 </h1>
                 <section class="notice">
                     <h1>
@@ -17,8 +17,8 @@
                     <ul>
                     	<th:block th:each="cate:${cate}">
                         <li th:if="${cate.cate == 'notice'}">
-                            <a href="#" class="title" th:text="${cate.">[안내] 홰외결제 사칭 문자 주의</a>
-                            <span class="date">23.02.07</span>
+                            <a href="#" class="title" th:text="${cate.title}">[안내] 홰외결제 사칭 문자 주의</a>
+                            <span class="date" th:text="${#strings.substring(cate.rdate, 2, 10)}">23.02.07</span>
                         </li>
                         </th:block>
                     </ul>
@@ -78,16 +78,16 @@
                     <ul>
                     	<th:block th:each="cate:${cate}">
                         <li th:if="${cate.cate == 'qna'}">
-                            <a href="#" class="title">
+                            <a href="#" class="title" th:text="${cate.title}">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
-                                    <span class="uid">chh***</span>
-                                    <span class="date">23.02.07</span>
+                                    <span class="uid" th:text="${cate.uid}">chh***</span>
+                                    <span class="date" th:text="${#strings.substring(cate.rdate, 2, 10)}">23.02.07</span>
                                 </p>
                         </li>
                     	</th:block>
                     </ul>
-                    <a href="#" class="ask">문의글 작성></a>
+                    <a th:href="@{/cs/qna/write}" class="ask">문의글 작성 ></a>
                 </section>
                 <section class="tel">
                     <h1>1:1 상담이 필요하신가요?</h1>

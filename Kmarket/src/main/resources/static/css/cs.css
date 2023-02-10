@@ -121,7 +121,7 @@ header > .logo a {
     width: 18px;
     height: 18px;
     content: "";
-    background: url("../img/cs_sprites.png") no-repeat;
+    background: url("../img/cs/cs_sprites.png") no-repeat;
     background-position: -230px -276px;
     background-size: 750px auto;
     vertical-align: top;
@@ -144,6 +144,7 @@ header > .logo a {
 }
 #cs > .main > section > ul .date {
     color: #777;
+    float: right
 }
 #cs > .main > .faq > ol {
     width: 1000px;
@@ -163,7 +164,7 @@ header > .logo a {
     height: 90px;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../img/cs/cs_sprites.png");
     background-repeat: no-repeat;
     background-size: 750px auto;
 }
@@ -490,12 +491,12 @@ footer  p > strong {
 }
 #cs > .notice > .list > article > .page > .prev {
     font-size: 0;
-    background-image: url("../img/cs_sprites.png");
+    background-image: url("../img/cs/cs_sprites.png");
     background-position: -706px -652px;
 }
 #cs > .notice > .list > article > .page > .next {
     font-size: 0;
-    background-image: url('../img/cs_sprites.png');
+    background-image: url('../img/cs/cs_sprites.png');
     background-position: -628px -652px;
 }
 #cs > .notice > .list > article > .page > .on {
@@ -803,12 +804,12 @@ footer  p > strong {
  }
  #cs > .qna > .list > article > .page > .prev {
      font-size: 0;
-     background-image: url('../img/cs_sprites.png');
+     background-image: url('../img/cs/cs_sprites.png');
      background-position: -706px -652px;
  }
  #cs > .qna > .list > article > .page > .next {
      font-size: 0;
-     background-image: url('../img/cs_sprites.png');
+     background-image: url('../img/cs/cs_sprites.png');
      background-position: -628px -652px;
  }
  #cs > .qna > .list > article > .page > .num {}
