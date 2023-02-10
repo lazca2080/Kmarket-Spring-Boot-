@@ -37,6 +37,7 @@
             }
 
             if(!uid.match(reUid)) {
+                $('.msgId').hide();
                 $('.uidResult').css('color', 'red').text('유효한 아이디가 아닙니다.');
                 isUidOk = false;
                 return;
@@ -56,7 +57,9 @@
                     data: jsonData,
                     dataType: 'json',
                     success: function(data){
+                        console.log(data)
                         if(data.result == 0){
+                            $('.msgId').hide();
                             $('.uidResult').css('color', 'green').text('사용 가능한 아이디 입니다.');
                             isUidOk = true;
                         }else{
@@ -71,26 +74,33 @@
         /* ------- 중복 체크 ------ */
 
         // 비밀번호 검사하기
+        $('input[name=pass1]').focusout(function(){
+            let pass1 = $('input[name=pass1]').val();
+
+            if(pass1.match(rePass)){
+                $('.msgPass1').hide();
+                $('.passResult1').text('')
+            }else{
+                isPassOk = false;
+                $('.msgPass1').hide();
+                $('.passResult1').css('color', 'red').text('숫자,영문,특수문자 포함 8자리 이상 이어야 합니다.');
+            }
+        })
+
         $('input[name=pass2]').focusout(function(){
 
             let pass1 = $('input[name=pass1]').val();
             let pass2 = $('input[name=pass2]').val();
-
-            if(pass2.match(rePass)){
-
-                if(pass1 == pass2){
-                    isPassOk = true;
-                    $('.passResult').css('color', 'green').text('사용하실 수 있는 비밀번호 입니다.');
-                }else{
-                    isPassOk = false;
-                    $('.passResult').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
-                }
-
+            if(pass1 == pass2){
+                isPassOk = true;
+                $('.msgPass2').hide();
+                $('.passResult2').css('color', 'green').text('사용하실 수 있는 비밀번호 입니다.');
             }else{
-
                 isPassOk = false;
-                $('.passResult1').css('color', 'red').text('숫자,영문,특수문자 포함 5자리 이상 이어야 합니다.');
+                $('.msgPass2').hide();
+                $('.passResult2').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
             }
+
 
         });
         /* ---- 비밀번호 ---- */
@@ -110,54 +120,6 @@
         });
         /* --- 이름 유효성 검사 --- */
 
-        // 별명 검사하기
-        $('input[name=nick]').keydown(function(){
-            isNickOk = false;
-        });
-
-        $('#btnNickCheck').click(function(){
-
-            let nick = $('input[name=nick]').val();
-
-            if(isNickOk){
-                return;
-            }
-
-            if(!nick.match(reNick)) {
-                $('.nickResult').css('color', 'red').text('유효한 별명이 아닙니다.');
-                isNickOk = false;
-                return;
-            }
-
-
-            let jsonData = {
-                "nick": nick
-            };
-
-            $('.nickResult').css('color', 'black').text('...');
-
-            setTimeout(function(){
-
-                $.ajax({
-                    url: '/Jboard2/user/checkNick.do',
-                    method: 'get',
-                    data: jsonData,
-                    dataType: 'json',
-                    success: function(data){
-                        if(data.result == 0){
-                            $('.nickResult').css('color', 'green').text('사용 가능한 별명 입니다.');
-                            isNickOk = true;
-                        }else{
-                            $('.nickResult').css('color', 'red').text('이미 사용중인 별명 입니다.');
-                            isNickOk = false;
-                        }
-                    }
-                });
-
-            }, 500);
-        });
-
-
         // 이메일 검사하기
         $('input[name=email]').focusout(function(){
 
@@ -172,47 +134,47 @@
             }
         });
 
-        // 이메일 인증 검사
-        let emailCode = 0;
-
-        $('#btnEmailAuth').click(function(){
-
-            let email = $('input[name=email]').val();
-
-            $.ajax({
-                url: '/Jboard2/user/emailAuth.do',
-                method: 'get',
-                data: {"email":email},
-                dataType: 'json',
-                success: function(data){
-                    //console.log(data);
-                    if(data.status == 1){
-                        // 메일 발송 성공
-                        emailCode = data.code;
-
-                        $('.emailResult').text('인증코드를 전송 했습니다. 이메일을 확인 하세요.');
-                        $('.auth').show();
-                    }else{
-                        // 메일 발송 실패
-                        $('.emailResult').text('이메일을 실패했습니다. 이메일을 확인 후 다시 하시기 바랍니다.');
-
-                    }
-
-
-                }
-            });
-        });
-
-        // 이메일 인증코드 확인
-        $('#btnEmailConfirm').click(function(){
-
-            let code = $('input[name=auth]').val();
-
-            if(code == emailCode){
-                isEmailAuthOk = true;
-                $('.emailResult').text('이메일이 인증 되었습니다.');
-            }
-        });
+//        // 이메일 인증 검사
+//        let emailCode = 0;
+//
+//        $('#btnEmailAuth').click(function(){
+//
+//            let email = $('input[name=email]').val();
+//
+//            $.ajax({
+//                url: '/Jboard2/user/emailAuth.do',
+//                method: 'get',
+//                data: {"email":email},
+//                dataType: 'json',
+//                success: function(data){
+//                    //console.log(data);
+//                    if(data.status == 1){
+//                        // 메일 발송 성공
+//                        emailCode = data.code;
+//
+//                        $('.emailResult').text('인증코드를 전송 했습니다. 이메일을 확인 하세요.');
+//                        $('.auth').show();
+//                    }else{
+//                        // 메일 발송 실패
+//                        $('.emailResult').text('이메일을 실패했습니다. 이메일을 확인 후 다시 하시기 바랍니다.');
+//
+//                    }
+//
+//
+//                }
+//            });
+//        });
+//
+//        // 이메일 인증코드 확인
+//        $('#btnEmailConfirm').click(function(){
+//
+//            let code = $('input[name=auth]').val();
+//
+//            if(code == emailCode){
+//                isEmailAuthOk = true;
+//                $('.emailResult').text('이메일이 인증 되었습니다.');
+//            }
+//        });
 
         // 휴대폰 검사하기
         $('input[name=hp]').focusout(function(){
@@ -224,6 +186,7 @@
                 $('.hpResult').text('');
             }else{
                 isHpOk = false;
+                $('.msgHp').hide();
                 $('.hpResult').css('color', 'red').text('유효하지 않는 휴대폰 입니다.');
             }
         });
@@ -237,12 +200,8 @@
             if(!isPassOk){alert('비밀번호가 유효하지 않습니다.'); return false;}
             // 이름 검증
             if(!isNameOk){alert('이름이 유효하지 않습니다.'); return false;}
-            // 별명 검증
-            if(!isNickOk){alert('별명이 유효하지 않습니다.'); return false;}
             // 이메일 검증
             if(!isEmailOk){alert('이메일이 유효하지 않습니다.'); return false;}
-            // 이메일 인증 검증
-            if(!isEmailAuthOk){alert('이메일을 인증 하셔야 합니다.'); return false;}
             // 휴대폰 검증
             if(!isHpOk){alert('휴대폰이 유효하지 않습니다.'); return false;}
 

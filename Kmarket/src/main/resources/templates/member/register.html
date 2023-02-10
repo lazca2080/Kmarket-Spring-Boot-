@@ -8,7 +8,8 @@
                 <nav>
                     <h1>일반 회원가입</h1>
                 </nav>
-                <form th:action="@{/member/register}" method="post">
+                <form th:action="@{/register/general}" method="post">
+                    <input type="hidden" name="sellerType" value="seller">
                     <section>
                         <table>
                             <caption>필수 정보입력</caption>
@@ -27,7 +28,7 @@
                                     <span class="essential">*</span> 비밀번호
                                 </th>
                                 <td>
-                                    <input type="password" id="pass1" name="pass1" placeholder="비밀번호를 입력" required>
+                                    <input type="password" name="pass1" placeholder="비밀번호를 입력" required>
                                     <span class="msgPass1">&nbsp;&nbsp;영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
                                     <span class="passResult1"></span>
                                 </td>
@@ -37,7 +38,7 @@
                                     <span class="essential">*</span> 비밀번호확인
                                 </th>
                                 <td>
-                                    <input type="password" id="pass2" name="pass2" placeholder="비밀번호를 확인" required>
+                                    <input type="password" name="pass2" placeholder="비밀번호를 확인" required>
                                     <span class="msgPass2">&nbsp;&nbsp;비밀번호 재입력</span>
                                     <span class="passResult2"></span>
                                 </td>
@@ -88,7 +89,7 @@
                                 <td>
                                     <input type="text" name="hp" placeholder="휴대폰번호 입력" required>
                                     <span class="msgHp"> &nbsp;&nbsp;-포함 13자리를 입력하세요.</span>
-                                    <span class="hpResult"></span>
+                                    <span class="hpResult"> &nbsp;&nbsp;</span>
                                 </td>
                             </tr>
                             <tr class="addr">
@@ -108,7 +109,7 @@
                         </table>
                     </section>
                     <div>
-                        <input type="button" class="join" value="회원가입">
+                        <input type="submit" class="join"  value="회원가입">
                     </div>
                 </form>
             </div>

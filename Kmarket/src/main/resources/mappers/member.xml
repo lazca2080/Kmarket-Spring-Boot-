@@ -20,9 +20,26 @@
                 `regip`= #{regip},
                 `rdate`=NOW();
         </insert>
-<!--    <insert id="insertMemberSeller">-->
-
-<!--    </insert>-->
+        <insert id="insertMemberSeller" useGeneratedKeys="true" keyProperty="uid">
+            INSERT INTO `km_member` SET
+                `uid`= #{uid},
+                `pass`= #{pass},
+                `company` = #{company},
+                `ceo` = #{ceo},
+                `bizRegNum` = #{bizRegNum},
+                `type`=2,
+                `cornRegNum`=#{cornRegNum},
+                `tel` = #{tel},
+                `fax` = #{fax},
+                `email` = #{email},
+                `zip` = #{zip},
+                `addr1` = #{addr1},
+                `addr2` = #{addr2},
+                `name` = #{name},
+                `hp` = #{hp},
+                `regip`= #{regip},
+                `rdate`=NOW();
+        </insert>
 
     <select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVO">
         select * from `km_member_terms`;

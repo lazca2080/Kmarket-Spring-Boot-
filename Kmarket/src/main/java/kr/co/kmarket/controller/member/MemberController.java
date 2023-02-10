@@ -2,10 +2,12 @@ package kr.co.kmarket.controller.member;
 
 import kr.co.kmarket.service.MemberService;
 import kr.co.kmarket.vo.TermsVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class MemberController {
@@ -18,28 +20,28 @@ public class MemberController {
         return "/member/join";
     }
 
-    @GetMapping("/member/signup")
-    public String signup(Model model){
+    @GetMapping("/signup/{type}")
+    public String signup(@PathVariable String type, Model model){
         TermsVO tvo = memberService.selectTerms();
         model.addAttribute("tvo", tvo);
-        return "/member/signup";
-    }
 
-    @GetMapping("/member/signupSeller")
-    public String signupSeller(Model model){
-        TermsVO tvo = memberService.selectTerms();
-        model.addAttribute("tvo", tvo);
+            if("general".equals(type)){
+                return "/member/signup";
+            }
+
         return "/member/signupSeller";
     }
 
-    @GetMapping("/member/register")
-    public String register(){
-        return "/member/register";
-    }
+    @GetMapping("/register/{type}")
+    public String register(@PathVariable String type){
 
-    @GetMapping("/member/registerSeller")
-    public String registerSeller(){
+            if("general".equals(type)){
+                return "/member/register";
+            }
+
         return "/member/registerSeller";
     }
+
+
 
 }
