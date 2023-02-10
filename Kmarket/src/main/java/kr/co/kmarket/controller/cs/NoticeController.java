@@ -20,10 +20,10 @@ public class NoticeController {
 	
 	@GetMapping("/cs/notice/list")
 	public String list(Model model, String cateType1) {
-		List<CsVO> notice = service.selectNtList(cateType1);
-		model.addAttribute("notice",notice);
+		//List<CsVO> notice = service.selectNtList(cateType1);
+		//model.addAttribute("notice",notice);
 		
-		log.info("sdf"+notice);
+		//log.info("sdf"+notice);
 		return "/cs/notice/list";
 	}
 	

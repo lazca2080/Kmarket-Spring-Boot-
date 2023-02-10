@@ -36,7 +36,7 @@
                 <table>
                     <tr th:each="prod:${prods}">
                         <td><a href="#" class="thumb">
-                            <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
+                            <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
                         </a></td>
                         <td>
                             <h3 class="name">[[${prod.prodName}]]</h3>

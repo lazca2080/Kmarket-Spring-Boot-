@@ -20,4 +20,110 @@ $(function(){
     	best.css({ position: "static" });
     }
 	});
+	
+	/* 원 단위 콤마 */
+	var vPrice = document.getElementById('price');
+	var vSellPrice = document.getElementById('sellPrice');
+	var vTotalPrice = document.getElementById('totalPrice');
+	
+	let price      = Number(vPrice.innerText);
+	let sellPrice  = Number(vSellPrice.innerText);
+	let totalPrice = Number(vTotalPrice.innerText);
+
+	/* 상품 수량 증감 */
+	var increase = document.querySelector('button[class=increase]');
+	var decrease = document.querySelector('button[class=decrease]');
+	var num = document.querySelector('input[name=num]');
+	
+	/* 증가 버튼 */
+	increase.addEventListener('click', function(){
+		num.setAttribute('value', Number(num.value)+1);
+		totalPrice = totalPrice + sellPrice
+		vTotalPrice.innerText = (totalPrice).toLocaleString();
+		
+	});
+	
+	/* 감소 버튼 */
+	decrease.addEventListener('click', function(){
+		if(Number(num.value) > 1){
+			num.setAttribute('value', Number(num.value)-1);
+			totalPrice = totalPrice - sellPrice
+			vTotalPrice.innerText = (totalPrice).toLocaleString();
+		}else{
+			return false;
+		}
+	});
+	
+	vPrice.innerText      = price.toLocaleString();
+	vSellPrice.innerText  = sellPrice.toLocaleString();
+	vTotalPrice.innerText = totalPrice.toLocaleString();
+	
+	// 배송 예정 날짜 수정
+	// 현재날짜
+	let today = new Date();
+	
+	// 현재 년도
+	let year = today.getFullYear();
+	
+	// 현재 달
+	let month = today.getMonth()+1;
+	
+	// 2일 뒤 날짜 
+	let date = today.getDate()+2;
+	
+	// 2일 뒤 요일
+	let day = today.getDay()+2;
+	let message;
+	
+	// 현재 달의 마지막 일
+	let lastDay = new Date(today.getFullYear(), today.getMonth()+1, 0);
+	
+	// 3일 뒤 날짜가 현재 달 마지막 일보다 크면
+	if(date > lastDay.getDate()){
+		
+		// 넘어가는 달 날짜는 = 3일 뒤 날짜 - 현재 달의 마지막 날짜
+		// ex) 12월 -> 1월   =   33 - 31 = 2 => 1월 2일
+		let nextDate = date-lastDay.getDate();
+		
+		// day는 연속성을 가짐으로 따로 건드리지않음. date는 30, 31, 28 불연속성이라 보정해줘야함
+		
+		// 현재 달이 12월이면
+		if(today.getMonth()+1 == 12){
+			let newDay = new Date(2023, 0);
+			month = newDay.getMonth()+1;
+			date = nextDate;
+			
+		// 12월이 아닌 달이면 ex)1월->2월, 2월->3월
+		}else{
+			let newDay = new Date(today.getFullYear(), today.getMonth()+1);
+			month = newDay.getMonth()+1;
+			date = nextDate;
+		}
+	}
+	
+	if(day == 1 || day == 8){
+		message = '월';
+	}else if(day == 2 || day == 9){
+		message = '화';
+	}else if(day == 3 || day == 10){
+		message = '수';
+	}else if(day == 4){
+		message = '목';
+	}else if(day == 5){
+		message = '금';
+	}else if(day == 6){
+		message = '토';
+	}else if(day == 0 || day == 7){
+		message = '일';
+	}
+	
+	
+	$('.arrival').text('모레('+message+') '+month+'/'+date+" 도착예정");
+
+	$('#scrollReview').click(function(){
+		const offset = $(".review").offset();
+    	$('html, body').animate({scrollTop: offset.top}, 500);
+	});
+	
+	
 });
