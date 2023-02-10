@@ -15,7 +15,7 @@
                 </nav>
                 <article class="info">
                     <div class="image">
-                        <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
+                        <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
                     </div>
                     <div class="summary">
                         <nav>
@@ -34,15 +34,20 @@
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del>[[${prod.price}]]</del>
+                                <del id="price">[[${prod.price}]]</del>
                                 <span>[[${prod.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins>[[${prod.sellPrice}]]</ins>
+                                <ins id="sellPrice">[[${prod.sellPrice}]]</ins>
                             </div>
                         </nav>
                         <nav>
+                        	<th:block th:if="${prod.delivery != 0}">
+                            <span class="delivery">[[${prod.delivery + "원"}]]</span>
+                            </th:block>
+                            <th:block th:if="${prod.delivery == 0}">
                             <span class="delivery">무료배송</span>
+                            </th:block>
                             <span class="arrival">모레(금) 7/8 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
@@ -64,7 +69,7 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span>[[${prod.sellPrice + prod.delivery}]]</span>
+                            <span id="totalPrice">[[${prod.sellPrice + prod.delivery}]]</span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
@@ -75,9 +80,9 @@
                 </article>
                 <article class="detail">
                     <nav><h1>상품정보</h1></nav>
-                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지1">
-                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지2">
-                    <img th:src="@{/img/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지3">
+                    <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지1">
+                    <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지2">
+                    <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.detail}__}" alt="상세페이지3">
                 </article>
                 <article class="notice">
                     <nav>
