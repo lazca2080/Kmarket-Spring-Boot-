@@ -9,6 +9,7 @@ import lombok.*;
 @ToString
 @Builder
 public class CsVO {
+	private String no;
 	private String uid;
 	private int parent;
 	private String cate;
@@ -20,4 +21,5 @@ public class CsVO {
 	private String rdate;
 	private int hit;
 	private String reply;
+	
 }

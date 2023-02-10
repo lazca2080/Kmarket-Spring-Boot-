@@ -1,4 +1,4 @@
-package kr.co.kmarket.service;
+package kr.co.kmarket.service.cs;
 
 import java.util.List;
 
@@ -11,11 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class CsService {
+public class IndexService {
 	@Autowired
 	private CsDAO dao;
 	
 	public List<CsVO> selectCs(){
 		return dao.selectCs();
 	}
+	
+	
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import kr.co.kmarket.service.CsService;
+import kr.co.kmarket.service.cs.IndexService;
 import kr.co.kmarket.vo.CsVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class IndexController {
 	@Autowired
-	private CsService service;
+	private IndexService service;
 	
 	@GetMapping(value = {"/cs","/cs/index"})
 	public String index(Model model) {

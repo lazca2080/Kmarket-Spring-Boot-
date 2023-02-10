@@ -9,5 +9,11 @@
 		UNION
 		(select * from km_cs where `cate`='qna' limit 5)
     </select>
-
+	
+	<select id="selectNtList" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT `no`, `cate`, `cateType1`, `title`, `rdate` FROM km_cs 
+		<if test="cateType1 != null">
+		WHERE `cateType1`= #{cateType1};
+		</if> 
+	</select>
 </mapper>
