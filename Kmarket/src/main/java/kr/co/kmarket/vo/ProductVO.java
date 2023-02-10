@@ -31,10 +31,10 @@ public class ProductVO {
 	private String hit;
 	private String score;
 	private String review;
-	private MultipartFile thumb1;
-	private MultipartFile thumb2;
-	private MultipartFile thumb3;
-	private MultipartFile detail;
+	private MultipartFile newThumb1;
+	private MultipartFile newThumb2;
+	private MultipartFile newThumb3;
+	private MultipartFile newDetail;
 	private String status;
 	private String duty;
 	private String receipt;
@@ -45,8 +45,9 @@ public class ProductVO {
 	
 	// 추가
 	
-	private String newThumb1;
-	private String newThumb2;
-	private String newThumb3;
-	private String newDetail;
+	private String thumb1;
+	private String thumb2;
+	private String thumb3;
+	private String detail;
+	private String type;
 }

@@ -28,17 +28,17 @@ public class AdminService {
 	public void register(ProductVO vo) {
 		
 		// vo에 있는 파일들 가져오기
-		MultipartFile thumb1 = vo.getThumb1();
-		MultipartFile thumb2 = vo.getThumb2();
-		MultipartFile thumb3 = vo.getThumb3();
-		MultipartFile detail = vo.getDetail();
+		MultipartFile thumb1 = vo.getNewThumb1();
+		MultipartFile thumb2 = vo.getNewThumb2();
+		MultipartFile thumb3 = vo.getNewThumb3();
+		MultipartFile detail = vo.getNewDetail();
 		
 		// 파일 업로드
 		ProductVO file = fileUpload(thumb1, thumb2, thumb3, detail, vo);
-		vo.setNewThumb1(file.getNewThumb1());
-		vo.setNewThumb2(file.getNewThumb2());
-		vo.setNewThumb3(file.getNewThumb3());
-		vo.setNewDetail(file.getNewDetail());
+		vo.setThumb1(file.getThumb1());
+		vo.setThumb2(file.getThumb2());
+		vo.setThumb3(file.getThumb3());
+		vo.setDetail(file.getDetail());
 		
 		dao.register(vo);
 	}
@@ -113,10 +113,10 @@ public class AdminService {
 		}
 		
 		ProductVO file = new ProductVO();
-		file.setNewThumb1(newThumb1);
-		file.setNewThumb2(newThumb2);
-		file.setNewThumb3(newThumb3);
-		file.setNewDetail(newDetail);
+		file.setThumb1(newThumb1);
+		file.setThumb2(newThumb2);
+		file.setThumb3(newThumb3);
+		file.setDetail(newDetail);
 		
 		return file;
 	}

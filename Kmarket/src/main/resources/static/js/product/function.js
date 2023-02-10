@@ -20,5 +20,4 @@ $(function(){
     	best.css({ position: "static" });
     }
 	});
-	
 });
