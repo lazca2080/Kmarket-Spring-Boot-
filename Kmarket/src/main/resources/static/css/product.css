@@ -310,6 +310,9 @@ footer > div > p > strong {
     font-weight: bold;
 }
 
+main .thumb > img {
+	width: 230px;	
+}
 /* 하단 버튼 */
 
 #top {
@@ -410,7 +413,6 @@ main > aside > .best > ol > li > a > .thumb > i {
     font-size: 14px;
     padding: 0;
     color: #ef3e42;
-    border-bottom: 1px solid #ef3e42;
     font-weight: bold;
     font-style: italic;
     text-align: center;

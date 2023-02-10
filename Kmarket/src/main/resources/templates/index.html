@@ -30,9 +30,9 @@
                         <span>히트상품</span>
                     </h3>
                     <article th:each="hit, i:${index.hit}">
-                        <a href="#">
+                        <a th:href="@{/product/view (prodNo=${hit.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230X230" alt="t1">
+                                <img th:src="@{/img/prodImg/__${hit.prodCate1}__/__${hit.prodCate2}__/__${hit.thumb1}__}" alt="t1">
                             </div>
                             <h2>[[${hit.prodName}]]</h2>
                             <p>[[${hit.descript}]]</p>
@@ -57,9 +57,9 @@
                         <span>추천상품</span>
                     </h3>
                     <article th:each="score:${index.score}">
-                        <a href="#">
+                        <a th:href="@{/product/view (prodNo=${score.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230X230" alt="t1">
+                                <img th:src="@{/img/prodImg/__${score.prodCate1}__/__${score.prodCate2}__/__${score.thumb1}__}" alt="t1">
                             </div>
                             <h2>[[${score.prodName}]]</h2>
                             <p>[[${score.descript}]]</p>
@@ -84,9 +84,9 @@
                         <span>최신상품</span>
                     </h3>
                     <article th:each="newProd:${index.new}">
-                        <a href="#">
+                        <a th:href="@{/product/view (prodNo=${newProd.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230X230" alt="t1">
+                                <img th:src="@{/img/prodImg/__${newProd.prodCate1}__/__${newProd.prodCate2}__/__${newProd.thumb1}__}" alt="t1">
                             </div>
                             <h2>[[${newProd.prodName}]]</h2>
                             <p>[[${newProd.descript}]]</p>
@@ -111,9 +111,9 @@
                         <span>할인상품</span>
                     </h3>
                     <article th:each="discount:${index.discount}">
-                        <a href="#">
+                        <a th:href="@{/product/view (prodNo=${discount.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230X230" alt="t1">
+                                <img th:src="@{/img/prodImg/__${discount.prodCate1}__/__${discount.prodCate2}__/__${discount.thumb1}__}" alt="t1">
                             </div>
                             <h2>[[${discount.prodName}]]</h2>
                             <p>[[${discount.descript}]]</p>
