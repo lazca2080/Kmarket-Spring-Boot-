@@ -28,5 +28,8 @@
         select * from `km_member_terms`;
     </select>
 
+    <select id="selectCheckUid" resultType="kr.co.kmarket.vo.MemberVO">
+        SELECT COUNT(`uid`) FROM `km_member` WHERE `uid`=#{uid};
+    </select>
 
 </mapper>

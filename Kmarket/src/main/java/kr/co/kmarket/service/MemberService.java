@@ -33,4 +33,9 @@ public class MemberService {
     public TermsVO selectTerms(){
         return dao.selectTerms();
     }
+
+    public Integer selectCheckUid(String uid){
+        Integer result = dao.selectCheckUid(uid);
+        return result;
+    }
 }
