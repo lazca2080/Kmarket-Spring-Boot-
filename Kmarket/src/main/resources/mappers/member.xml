@@ -35,8 +35,8 @@
                 `zip` = #{zip},
                 `addr1` = #{addr1},
                 `addr2` = #{addr2},
-                `name` = #{name},
-                `hp` = #{hp},
+                `manager` = #{manager},
+                `managerHp` = #{managerHp},
                 `regip`= #{regip},
                 `rdate`=NOW();
         </insert>

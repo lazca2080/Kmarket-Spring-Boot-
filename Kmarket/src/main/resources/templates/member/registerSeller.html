@@ -115,10 +115,14 @@
                                 </th>
                                 <td>
                                     <input type="email" name="email" placeholder="이메일 입력" required>
+                                    <span class="msgEmail"></span>
                                 </td>
                             </tr>
                             <tr class="addr">
-                                <th>회사주소</th>
+                                <th>
+                                    <span class="essential">*</span>
+                                    회사주소
+                                </th>
                                 <td>
                                     <div>
                                         <input type="text" name="zip" id="zip" placeholder="우편번호 입력 클릭" onclick="zipcode()">
@@ -142,7 +146,7 @@
                                     이름
                                 </th>
                                 <td>
-                                    <input type="text" name="name" placeholder="이름 입력" required>
+                                    <input type="text" name="manager" placeholder="이름 입력" required>
                                     <span class="msgName"></span>                        
                                 </td>
                             </tr>
@@ -152,7 +156,7 @@
                                     휴대폰
                                 </th>
                                 <td>
-                                    <input type="text" name="hp" placeholder="휴대폰번호 입력" required>
+                                    <input type="text" name="managerHp" placeholder="휴대폰번호 입력" required>
                                     <span class="msgHp"> &nbsp;&nbsp;-포함 13자리를 입력하세요.</span>
                                 </td>
                             </tr>
@@ -162,6 +166,7 @@
                         <input type="submit" class="join" value="회원가입">
                     </div>
                 </form>
-                </div>
+                <script th:src="@{/js/member/seller.js}"></script>
+            </div>
     </th:block>
 </html>

@@ -42,6 +42,10 @@ public class MemberController {
         return "/member/registerSeller";
     }
 
+    @GetMapping("/member/login")
+    public String login(){
+        return "/member/login";
+    }
 
 
 }

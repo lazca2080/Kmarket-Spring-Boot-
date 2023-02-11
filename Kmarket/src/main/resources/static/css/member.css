@@ -182,7 +182,7 @@
 #member > .register table .addr input {
     margin-top: 6px;
 }
-#member > .register form input[type="button"] {
+#member > .register form input[type="submit"] {
     display: block;
     background: #ef3f43;
     color: #fff;
@@ -277,7 +277,7 @@
 #member > .registerSeller table .addr input {
     margin-top: 6px;
 }
-#member > .registerSeller form input[type="button"] {
+#member > .registerSeller form input[type="submit"] {
     display: block;
     background: #ef3f43;
     color: #fff;

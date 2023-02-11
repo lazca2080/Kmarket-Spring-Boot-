@@ -9,7 +9,6 @@
                     <h1>일반 회원가입</h1>
                 </nav>
                 <form th:action="@{/register/general}" method="post">
-                    <input type="hidden" name="sellerType" value="seller">
                     <section>
                         <table>
                             <caption>필수 정보입력</caption>
@@ -112,6 +111,7 @@
                         <input type="submit" class="join"  value="회원가입">
                     </div>
                 </form>
+                <script th:src="@{/js/member/general.js}"></script>
             </div>
     </th:block>
 </html>

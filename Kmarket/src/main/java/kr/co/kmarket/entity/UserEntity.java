@@ -42,10 +42,6 @@ public class UserEntity {
     private String manager;
     private String managerHp;
     private String fax;
-    private int etc1;
-    private int etc2;
-    private String etc3;
-    private String etc4;
-    private String etc5;
+
 
 }

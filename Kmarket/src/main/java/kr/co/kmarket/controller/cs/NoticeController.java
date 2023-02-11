@@ -18,6 +18,7 @@ public class NoticeController {
 	@Autowired
 	private IndexService service;
 	
+
 	@GetMapping("/cs/notice/list")
 	public String list(Model model, String cateType1) {
 		//List<CsVO> notice = service.selectNtList(cateType1);
@@ -26,6 +27,7 @@ public class NoticeController {
 		//log.info("sdf"+notice);
 		return "/cs/notice/list";
 	}
+
 	
 	@GetMapping("/cs/notice/view")
 	public String view() {
