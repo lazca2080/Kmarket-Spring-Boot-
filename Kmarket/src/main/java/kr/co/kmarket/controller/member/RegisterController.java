@@ -18,16 +18,14 @@ public class RegisterController {
     private MemberService memberService;
 
 
-    @PostMapping("/register/{type}")
-    public String insertMember(@PathVariable("type") String type, MemberVO memberVO){
+    @PostMapping("/register/{MemberType}")
+    public String insertMember(@PathVariable("MemberType") String MemberType, MemberVO memberVO){
 
-        if("general".equals(type)){
+        if("general".equals(MemberType)){
             memberService.insertMember(memberVO);
-        }else if("seller".equals(type)){
+        }else if("seller".equals(MemberType)){
             memberService.insertMemberSeller(memberVO);
         }
-
-
         return "redirect:/member/login";
     }
 
@@ -43,5 +41,6 @@ public class RegisterController {
         log.info("resultMap"+ resultMap);
         return resultMap;
     }
+
 
 }

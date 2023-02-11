@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="memberHeaderFragment">
     <header>
         <div class="top">
             <div>
-                <a th:href="@{/member/login}">로그인</a>
-                <a th:href="@{/member/join}">회원가입</a>
+                <th:block sec:authorize="isAnonymous()">
+                    <a th:href="@{/member/login}">로그인</a>
+                    <a th:href="@{/member/join}">회원가입</a>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <span>홍길동님 반갑습니다.</span>
+                    <a th:href="@{/member/logout}">로그아웃</a>
+                </th:block>
+
                 <a href="#">마이페이지</a>
                 <a href="#">
-                    <i class="fa fa-shopping-cart" aria-hidden="true">장바구니</i>
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    장바구니
                 </a>
             </div>
         </div>
