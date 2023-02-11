@@ -1,14 +1,20 @@
 package kr.co.kmarket.controller.member;
 
+import kr.co.kmarket.entity.UserEntity;
+import kr.co.kmarket.security.MyUserDetails;
 import kr.co.kmarket.service.MemberService;
 import kr.co.kmarket.vo.TermsVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+@Slf4j
 @Controller
 public class MemberController {
 
@@ -48,4 +54,13 @@ public class MemberController {
     }
 
 
+    /* ========= Security Test... ========== */
+
+    @GetMapping("/member/loginInfo")
+    public String loginInfo(@AuthenticationPrincipal MyUserDetails myUser, Model m){
+        UserEntity user =  myUser.getUser();
+        log.info("user : "+ user);
+        m.addAttribute("user", user);
+        return "/member/loginInfo";
+    }
 }

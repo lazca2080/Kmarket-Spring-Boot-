@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:fragment="headerFragment">
     <header>
         <div class="top">
             <div>
+                <!-- 익명 접근자 표시목록 -->
                 <th:block sec:authorize="isAnonymous()">
                     <a th:href="@{/member/login}">로그인</a>
                     <a th:href="@{/member/join}">회원가입</a>
-				</th:block>
-				<th:block sec:authorize="isAuthenticated()">
-					<span>홍길동님 반갑습니다.</span>
-					<a th:href="@{/member/logout}">로그아웃</a>
-				</th:block>
-				<a href="#">마이페이지</a>
+                </th:block>
+                <!-- 일반 회원 name -->
+                <th:block sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.type} == '1'">
+                    <span>[[${#authentication.principal.user.name}]]님, 환영합니다.</span>
+                    <a th:href="@{/member/logout}">로그아웃</a>
+                </th:block>
+
+                <!-- 판매 회원 name -->
+                <th:block sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.type} == '2'">
+                    <span>[[${#authentication.principal.user.company}]](판매자)님, 환영합니다.</span>
+                    <a th:href="@{/admin}">관리자</a>
+                    <a th:href="@{/member/logout}">로그아웃</a>
+                </th:block>
+
+                <!-- 관리자 -->
+                <th:block sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.type} == '3'">
+                    <span>관리자 님, 환영합니다.</span>
+                    <a th:href="@{/admin}">관리자</a>
+                    <a th:href="@{/member/logout}">로그아웃</a>
+                </th:block>
+
+                <a href="#">마이페이지</a>
                 <a href="#">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     장바구니
                 </a>
+                <a th:href="@{/member/loginInfo}">securityTest</a>
             </div>
         </div>
         <div class="logo">

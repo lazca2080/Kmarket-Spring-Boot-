@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--
+  날짜 : 2023/02/11
+  이름 : 조광호
+  내용 : Security login 정보 확인용
+-->
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 정보</title>
+</head>
+<body>
+  <h2>로그인 유저</h2>
+
+    <p sec:authorize="isAuthenticated()">
+        현재 회원 아이디 : [[${#authentication.principal.user.uid}]]
+
+        현재 회원의 타입 : [[${#authentication.principal.user.type}]]
+    </p>
+    <th:block th:if="${#authentication.principal.user.type} == '1'">
+        <p>안녕 일반회원</p>
+    </th:block>
+
+</body>
+</html>

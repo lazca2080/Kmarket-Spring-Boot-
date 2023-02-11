@@ -1,9 +1,6 @@
 package kr.co.kmarket.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,16 +9,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString
 @Table(name = "km_member")
 public class UserEntity {
-
     @Id
     private String uid;
     private String pass;
     private String pass1;
     private String pass2;
     private String name;
-    private int gender;
+    private Integer gender;
     private String hp;
     private String email;
     private int type;
