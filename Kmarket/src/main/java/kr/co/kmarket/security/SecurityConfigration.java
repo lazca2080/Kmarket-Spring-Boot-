@@ -23,7 +23,8 @@ public class SecurityConfigration {
 		
 		// 사이트 위변조 요청 방지
 		http.csrf().disable();
-		
+
+		http.rememberMe().rememberMeParameter("auto").tokenValiditySeconds(3600);
 
 		// 로그인 설정
 		http.formLogin()
