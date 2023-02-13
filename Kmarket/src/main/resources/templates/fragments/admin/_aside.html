@@ -30,8 +30,8 @@
 		        <li>
 		            <a href="#"><i class="fas fa-box-open" aria-hidden="true"></i>상품관리</a>
 		            <ol>
-		                <li><a href="#">상품현황</a></li>
-		                <li><a href="#">상품등록</a></li>
+		                <li><a th:href="@{/admin/product/list}">상품목록</a></li>
+		                <li><a th:href="@{/admin/product/register}">상품등록</a></li>
 		                <li><a href="#">재고관리</a></li>
 		            </ol>
 		        </li>
@@ -44,13 +44,15 @@
 		                <li><a href="#">배송관리</a></li>
 		            </ol>
 		        </li>
-		        <li>
-		            <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>게시판관리</a>
-		            <ol>
-		                <li><a href="#">게시판현황</a></li>
-		                <li><a href="#">고객문의</a></li>
-		            </ol>
-		        </li>
+				<th:block th:if="${#authentication.principal.user.level} == '7'">
+					<li>
+						<a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>게시판관리</a>
+						<ol>
+							<li><a href="#">게시판현황</a></li>
+							<li><a href="#">고객문의</a></li>
+						</ol>
+					</li>
+				</th:block>
 		    </ul>
 		</aside>
 	</th:block>

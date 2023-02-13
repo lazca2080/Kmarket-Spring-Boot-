@@ -23,7 +23,11 @@ public class AdminService {
 	
 	@Autowired
 	private AdminDAO dao;
-	
+
+	// 상품 전체목록
+	public List<ProductVO> selectProductList(){
+		return dao.selectProductList();
+	}
 	// 상품 등록
 	public void register(ProductVO vo) {
 		
@@ -47,7 +51,9 @@ public class AdminService {
 	public List<CateVO> selectCate1(){
 		return dao.selectCate1();
 	}
-	
+
+
+
 	public List<CateVO> selectCate2(@RequestParam String cate1) {
 		return dao.selectCate2(cate1);
 	}

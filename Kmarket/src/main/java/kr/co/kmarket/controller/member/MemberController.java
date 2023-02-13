@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.security.Principal;
+
 @Slf4j
 @Controller
 public class MemberController {
@@ -49,8 +52,15 @@ public class MemberController {
     }
 
     @GetMapping("/member/login")
-    public String login(){
-        return "/member/login";
+    public String login(Principal principal){
+
+        if(principal != null){
+            return "redirect:/";
+        }else{
+            return "/member/login";
+        }
+
+
     }
 
 

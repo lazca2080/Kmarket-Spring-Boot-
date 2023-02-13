@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfigration {
 	
@@ -18,9 +20,23 @@ public class SecurityConfigration {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
+		/**
+		 * 인가(접근권한) 설정
+		 *
+		 * Whitelist 방식 : 모든 접속 인증필요, 특정 부분 허용
+		 * Blacklist 방식 : 모든 접속 허용, 부분 인증필요
+		 *
+		 * antMatchers("/test") X
+		 * antMatchers("/test/**") O
+		 * mvcMatchers("/test") O
+		 * */
 		// 인가(접근권한) 설정
-		http.authorizeHttpRequests().antMatchers("/").permitAll();
-		
+
+		http.authorizeHttpRequests().antMatchers("/").permitAll(); // 모든 자원에 대해서 모든 사용자 접근 허용
+		http.authorizeHttpRequests().antMatchers("/admin/**").hasAnyRole("7", "5"); // admin 하위 모든 링크에 대해서 admin(level : 7)에게만 허용
+		http.authorizeHttpRequests().antMatchers("/product/cart", "/product/complete", "/product/order").authenticated();
+		//http.authorizeHttpRequests().antMatchers("/member/login").not().authenticated();
+
 		// 사이트 위변조 요청 방지
 		http.csrf().disable();
 
