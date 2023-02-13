@@ -21,5 +21,7 @@ public class CsVO {
 	private String rdate;
 	private int hit;
 	private String reply;
-	
+
+	// 추가
+	private int pg;
 }
