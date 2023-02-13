@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ModuleApiController {
-
+	
+	@Value("${resource_path}")
+	private String resource_path;
+	
 	@GetMapping("/prodImg/{prodCate1}/{prodCate2}/{img}")
 	public ResponseEntity<Resource> showImage(@PathVariable("prodCate1") String prodCate1, @PathVariable("prodCate2") String prodCate2, @PathVariable("img") String img){
 		String os = System.getProperty("os.name").toLowerCase();
@@ -28,9 +32,9 @@ public class ModuleApiController {
 		String imageRoot = "";
 		
 		if(os.contains("win")) {
-			imageRoot = "C:/Users/PJH/file/"+prodCate1+"/"+prodCate2+"/";
+			imageRoot = resource_path+prodCate1+"/"+prodCate2+"/";
 		}else if(os.contains("linux")) {
-			imageRoot = "/Home/prodImg/";
+			imageRoot = "/home/Img/"+prodCate1+"/"+prodCate2+"/";
 		}
 		
 		imageRoot = imageRoot + img;
