@@ -1,49 +1,41 @@
 $(function(){
-	
-	// 메인, 상품 영역 베스트 상품 스크롤
-	
-	$(".slider > ul").bxSlider({
-		easing: "linear",
-	});
+	// 메인, 상품 영역 베스트 상품 스크롤 -----------------------------------------------------
+	$(".slider > ul").bxSlider({ easing: "linear", });
 	
     var best = $("aside > .best");
 
 	$(window).scroll(function () {
 	    var t = $(this).scrollTop();
-
-    if (t > 620) {
-	    best.css({
-	        position: "fixed",
-	        top: "0",
-    	});
-    } else {
-    	best.css({ position: "static" });
-    }
-	});
+	    if (t > 620) { best.css({ position: "fixed", top: "0", });
+	    } else { best.css({ position: "static" }); } 
+    });
+    // 메인, 상품 영역 베스트 상품 스크롤 -----------------------------------------------------
 	
-	/* 원 단위 콤마 */
+	/* 상품 수량 증감 ---------------------------------------------------------------------*/
+	// 상품 가격
 	var vPrice = document.getElementById('price');
+	// 상품 판매 가격
 	var vSellPrice = document.getElementById('sellPrice');
+	// 상품 최종 가격(판매 가격 + 배송비)
 	var vTotalPrice = document.getElementById('totalPrice');
 	
 	let price      = Number(vPrice.innerText);
 	let sellPrice  = Number(vSellPrice.innerText);
 	let totalPrice = Number(vTotalPrice.innerText);
 
-	/* 상품 수량 증감 */
 	var increase = document.querySelector('button[class=increase]');
 	var decrease = document.querySelector('button[class=decrease]');
 	var num = document.querySelector('input[name=num]');
 	
-	/* 증가 버튼 */
+	/* 증가 버튼 ------------------------------------------------------------------------*/
 	increase.addEventListener('click', function(){
 		num.setAttribute('value', Number(num.value)+1);
-		totalPrice = totalPrice + sellPrice
+		totalPrice = Number(totalPrice) + sellPrice
 		vTotalPrice.innerText = (totalPrice).toLocaleString();
-		
 	});
+	/* 증가 버튼 ------------------------------------------------------------------------*/
 	
-	/* 감소 버튼 */
+	/* 감소 버튼 ------------------------------------------------------------------------*/
 	decrease.addEventListener('click', function(){
 		if(Number(num.value) > 1){
 			num.setAttribute('value', Number(num.value)-1);
@@ -53,17 +45,65 @@ $(function(){
 			return false;
 		}
 	});
+	/* 감소 버튼 ------------------------------------------------------------------------*/
 	
+	/* 원 단위 콤마 -------------------------------------------------------------------- */
 	vPrice.innerText      = price.toLocaleString();
 	vSellPrice.innerText  = sellPrice.toLocaleString();
 	vTotalPrice.innerText = totalPrice.toLocaleString();
+	/* 원 단위 콤마 -------------------------------------------------------------------- */
 	
-	// 배송 예정 날짜 수정
+	/* 장바구니 ------------------------------------------------------------------------*/	
+	var cart = document.getElementById('cart')
+	cart.addEventListener('click', function(){
+		
+		let prodNo   = document.getElementById('prodNo').innerText;   // 상품 번호
+		let count    = num.value;                                     // 수량
+		price        = vPrice.innerText.split(',').join('');          // 가격
+		let discount = document.getElementById('discount').innerText; // 할인 율
+		let point    = Math.round(price * 0.01);                      // 적립 포인트
+		let delivery = document.getElementById('delivery').innerText; // 배송 비
+		totalPrice   = (vTotalPrice.innerText).split(',').join('');   // 최종 가격
+		
+		// uid는 컨트롤러 or 서비스에서 principal 이용해서 처리
+		// input type=hidden을 이용한 처리는 변조의 위험이 있음
+		// 마찬가지로 상품과 관련된 모든 정보는 변조의 위험이 있어서 input type=hidden을 사용하지 않음
+	
+		let jsonData = {
+			"prodNo" : prodNo,
+			"count" : count,
+			"price" : price * count,
+			"discount" : discount,
+			"point" : point,
+			"delivery" : delivery,
+			"total" : totalPrice
+		}
+	
+		let prod = JSON.stringify(jsonData);
+		
+		$.ajax({
+			url:'/Kmarket/product/cart',
+			method:'POST',
+			data:{ 'prod' : prod},
+			dataType:'JSON',
+			success: function(data){
+				
+				if(data.result == 1){
+					if(confirm('장바구니에 상품이 담겼습니다. 확인하시겠습니까?')){
+						location.href = "/Kmarket/product/cart"
+					}
+				}else{
+					alert('다시 시도하여 주십시요');
+				}
+			}
+		});
+		
+	});
+	/* 장바구니 ------------------------------------------------------------------------*/
+	
+	// 배송 예정 날짜 수정 ------------------------------------------------------------------
 	// 현재날짜
 	let today = new Date();
-	
-	// 현재 년도
-	let year = today.getFullYear();
 	
 	// 현재 달
 	let month = today.getMonth()+1;
@@ -124,6 +164,6 @@ $(function(){
 		const offset = $(".review").offset();
     	$('html, body').animate({scrollTop: offset.top}, 500);
 	});
-	
+	// 배송 예정 날짜 수정 ------------------------------------------------------------------
 	
 });

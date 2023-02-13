@@ -38,4 +38,19 @@ public class ProductService {
 	public ProductVO selectProduct(String prodNo) {
 		return dao.selectProduct(prodNo);
 	}
+	
+	// 장바구니 등록
+	public int insertCart(ProductVO vo) {
+		return dao.insertCart(vo);
+	}
+	
+	// 장바구니 목록
+	public List<ProductVO> selectCarts(String uid){
+		return dao.selectCarts(uid);
+	}
+	
+	// 장바구니 선택 상품
+	public int checkCart() {
+		return 1;
+	}
 }
