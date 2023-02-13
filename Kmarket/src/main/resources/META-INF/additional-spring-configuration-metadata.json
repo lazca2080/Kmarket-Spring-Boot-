@@ -18,5 +18,10 @@
     "name": "upload_path",
     "type": "java.lang.String",
     "description": "A description for 'upload_path'"
+  },
+  {
+    "name": "resource_path",
+    "type": "java.lang.String",
+    "description": "A description for 'resource_path'"
   }
 ]}
