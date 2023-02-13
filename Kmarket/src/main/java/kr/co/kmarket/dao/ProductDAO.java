@@ -30,4 +30,13 @@ public interface ProductDAO {
 	
 	// 장바구니 목록
 	public List<ProductVO> selectCarts(String uid);
+	
+	// 장바구니 선택 삭제
+	public int deleteCart(@Param("checkList") List<String> checkList, @Param("uid") String uid);
+	
+	// 선택 상품 주문 목록
+	public List<ProductVO> selectCartOrder(@Param("checkList") List<String> checkList, @Param("uid") String uid);
+	
+	// 장바구니 전체 선택 가격
+	public ProductVO selectCartTotal(@Param("uid") String uid);
 }

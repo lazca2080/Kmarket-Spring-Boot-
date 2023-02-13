@@ -63,8 +63,10 @@ $(function(){
 		let discount = document.getElementById('discount').innerText; // 할인 율
 		let point    = Math.round(price * 0.01);                      // 적립 포인트
 		let delivery = document.getElementById('delivery').innerText; // 배송 비
+		if(delivery == '무료배송'){ delivery = 0; }
 		totalPrice   = (vTotalPrice.innerText).split(',').join('');   // 최종 가격
 		
+		console.log(delivery);
 		// uid는 컨트롤러 or 서비스에서 principal 이용해서 처리
 		// input type=hidden을 이용한 처리는 변조의 위험이 있음
 		// 마찬가지로 상품과 관련된 모든 정보는 변조의 위험이 있어서 input type=hidden을 사용하지 않음

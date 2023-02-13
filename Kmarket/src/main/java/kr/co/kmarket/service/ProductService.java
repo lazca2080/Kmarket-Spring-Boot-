@@ -49,8 +49,18 @@ public class ProductService {
 		return dao.selectCarts(uid);
 	}
 	
-	// 장바구니 선택 상품
-	public int checkCart() {
-		return 1;
+	// 장바구니 선택 삭제
+	public int deleteCart(List<String> checkList, String uid) {
+		return dao.deleteCart(checkList, uid);
+	}
+	
+	// 선택 상품 주문 목록
+	public List<ProductVO> selectCartOrder(List<String> checkList, String uid) {
+		return dao.selectCartOrder(checkList, uid);
+	}
+	
+	// 장바구니 전체 선택 가격
+	public ProductVO selectCartTotal(String uid) {
+		return dao.selectCartTotal(uid);
 	}
 }

@@ -52,4 +52,28 @@
 		`km_product` AS b ON a.`prodNo` = b.`prodNo`
 		WHERE `uid`="admin";
 	</select>
+	
+	<!-- 장바구니 선택 삭제 -->
+	<delete id="deleteCart">
+		DELETE FROM `km_product_cart`
+		WHERE `uid`= #{uid} AND `prodNo` IN
+		<foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+			#{checkList}
+		</foreach>
+	</delete>
+	
+	<!-- 선택 상품 주문 목록 -->
+	<select id="selectCartOrder" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT a.*, b.`prodCate1`, b.`prodCate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
+		`km_product` AS b ON a.`prodNo` = b.`prodNo`
+		WHERE `uid`=#{uid} AND a.`prodNo` IN
+		<foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+			#{checkList}
+		</foreach>
+	</select>
+	
+	<!-- 장바구니 전체 선택 가격 -->
+	<select id="selectCartTotal">
+		
+	</select>
 </mapper>
