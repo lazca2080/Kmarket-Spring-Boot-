@@ -45,6 +45,6 @@ $(function(){
 			sellPrice = price.value * (100-(discount.value))/100;	
 		}
 		
-		$('#sellPrice').val(Math.round(sellPrice * 10) /10 );
+		$('#sellPrice').val(Math.round(sellPrice / 10) * 10 );
 	});
 });

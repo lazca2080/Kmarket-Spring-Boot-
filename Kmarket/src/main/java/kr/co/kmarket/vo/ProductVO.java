@@ -51,4 +51,6 @@ public class ProductVO {
 	private String thumb3;
 	private String detail;
 	private String type;
+	private int total;
+	private int count;
 }

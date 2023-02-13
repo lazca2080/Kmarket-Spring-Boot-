@@ -24,4 +24,10 @@ public interface ProductDAO {
 	
 	// 상품 번호에 맞는 상품 불러오기
 	public ProductVO selectProduct(String prodNo);
+	
+	// 장바구니 등록
+	public int insertCart(ProductVO vo);
+	
+	// 장바구니 목록
+	public List<ProductVO> selectCarts(String uid);
 }

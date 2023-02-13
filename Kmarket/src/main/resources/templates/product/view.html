@@ -22,7 +22,7 @@
                             <h1>(주)[[${prod.company}]]</h1>
                             <h2>
                                 상품번호 : 
-                                <span>[[${prod.prodNo}]]</span>
+                                <span id="prodNo">[[${prod.prodNo}]]</span>
                             </h2>
                         </nav>
                         <nav>
@@ -35,7 +35,7 @@
                         <nav>
                             <div class="org_price">
                                 <del id="price">[[${prod.price}]]</del>
-                                <span>[[${prod.discount + "%"}]]</span>
+                                <span id="discount">[[${prod.discount}]]</span>
                             </div>
                             <div class="dis_price">
                                 <ins id="sellPrice">[[${prod.sellPrice}]]</ins>
@@ -43,7 +43,7 @@
                         </nav>
                         <nav>
                         	<th:block th:if="${prod.delivery != 0}">
-                            <span class="delivery">[[${prod.delivery + "원"}]]</span>
+                            <span class="delivery" id="delivery">[[${prod.delivery}]]</span>
                             </th:block>
                             <th:block th:if="${prod.delivery == 0}">
                             <span class="delivery">무료배송</span>
@@ -73,8 +73,8 @@
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
-                            <input type="button" class="cart" value="장바구니">
-                            <input type="button" class="order" value="구매하기">
+                            <input type="button" class="cart" id="cart" value="장바구니">
+                            <input type="button" class="order" id="order" value="구매하기">
                         </div>
                     </div>
                 </article>

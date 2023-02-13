@@ -827,7 +827,7 @@ main > section > section > article .dis_price > .free {
     margin-left: 6px;
 }
 
-#product > .view > .info > .summary .org_price > span::after { content: "↓"; }
+#product > .view > .info > .summary .org_price > span::after { content: "% ↓"; }
 
 #product > .view > .info > .summary .dis_price > ins {
     font-size: 26px;
@@ -840,6 +840,8 @@ main > section > section > article .dis_price > .free {
     font-size: 16px;
     color: #2e8de5;
 }
+
+#product > .view > .info > .summary .delivery::after { content: "원"; }
 
 #product > .view > .info > .summary .origin {
     font-size: 16px;

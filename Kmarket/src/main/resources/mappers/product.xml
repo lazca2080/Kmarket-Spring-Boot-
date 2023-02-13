@@ -31,4 +31,25 @@
 	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
 		SELECT * FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2};
 	</select>
+	
+	<!-- 장바구니 등록 -->
+	<insert id="insertCart">
+		INSERT INTO `km_product_cart` SET
+			`uid`=#{seller},
+			`prodNo`=#{prodNo},
+			`count`=#{count},
+			`price`=#{price},
+			`discount`=#{discount},
+			`point`=#{point},
+			`delivery`=#{delivery},
+			`total`=#{total},
+			`rdate`=NOW();
+	</insert>
+	
+	<!-- 장바구니 목록 -->
+	<select id="selectCarts" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT a.*, b.`prodCate1`, b.`prodCate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
+		`km_product` AS b ON a.`prodNo` = b.`prodNo`
+		WHERE `uid`="admin";
+	</select>
 </mapper>
