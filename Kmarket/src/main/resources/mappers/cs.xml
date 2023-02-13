@@ -13,7 +13,16 @@
 	<select id="selectNtList" resultType="kr.co.kmarket.vo.CsVO">
 		SELECT `no`, `cate`, `cateType1`, `title`, `rdate` FROM km_cs 
 		<if test="cateType1 != null">
-		WHERE `cateType1`= #{cateType1};
-		</if> 
+		WHERE `cateType1`= #{cateType1}
+		</if>
+		order by `no` desc limit #{start}, 10;
 	</select>
+	
+	<select id="selectCountTotal" resultType="int">
+		select count(`no`) from `km_cs` where `parent`=1 
+		<if test="cateType1 != null">	
+		and `cateType1` = #{cateType1};
+		</if>
+	</select>	
+	
 </mapper>
