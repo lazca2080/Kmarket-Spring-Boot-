@@ -29,89 +29,26 @@
                             <th>상품금액</th>
                             <th>할인금액</th>
                             <th>수량</th>
+                            <th>배송비</th>
                             <th>주문금액</th>
                         </tr>
-                        <tr>
+                        <tr th:each="prod:${complete}">
                             <td>
                                 <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
+                                    <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="">
                                     <div>
                                         <h2>
-                                            <a href="#">상품명</a>
+                                            <a th:href="@{/product/view (prodNo = ${prod.prodNo})}">[[${prod.prodName}]]</a>
                                         </h2>
-                                        <p>상품설명</p>
+                                        <p>[[${prod.descript}]]</p>
                                     </div>
                                 </article>
                             </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
-                                    <div>
-                                        <h2>
-                                            <a href="#">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
-                                    <div>
-                                        <h2>
-                                            <a href="#">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
-                        </tr>
-                        <tr class="total">
-                            <td colspan="4"></td>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td>총 상품금액</td>
-                                        <td>
-                                            <span>34,000원</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>총 할인금액</td>
-                                        <td>
-                                            <span>-2,000원</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>배송비</td>
-                                        <td>
-                                            <span>3,000원</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>총 결제금액</td>
-                                        <td>
-                                            <span>35,000</span>원
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
+                            <td>[[${#numbers.formatInteger(prod.price, 0, 'COMMA')  + "원"}]]</td>
+                            <td>[[${#numbers.formatInteger((prod.price + prod.delivery - prod.total), 0, 'COMMA') + "원"}]]</td>
+                            <td>[[${prod.count}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA') + "원"}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA') + "원"}]]</td>
                         </tr>
                     </table>
                 </article>
@@ -124,7 +61,7 @@
                             <td>2008101324568</td>
                             <td rowspan="3">총 결제금액</td>
                             <td rowspan="3">
-                                <span>35,000</span>원
+                                <span>[[${#numbers.formatInteger(total, 0, 'COMMA')}]]</span>원
                             </td>
                         </tr>
                         <tr>

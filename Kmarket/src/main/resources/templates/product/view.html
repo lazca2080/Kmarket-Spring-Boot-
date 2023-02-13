@@ -43,10 +43,10 @@
                         </nav>
                         <nav>
                         	<th:block th:if="${prod.delivery != 0}">
-                            <span class="delivery" id="delivery">[[${prod.delivery}]]</span>
+                            <span class="delivery" id="delivery" th:value="${prod.delivery}">[[${prod.delivery}]]</span>
                             </th:block>
                             <th:block th:if="${prod.delivery == 0}">
-                            <span class="delivery">무료배송</span>
+                            <span class="delivery" id="delivery" value="0">무료배송</span>
                             </th:block>
                             <span class="arrival">모레(금) 7/8 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
@@ -253,5 +253,8 @@
                     </div>
                 </article>
             </section>
+	</th:block>
+	<th:block layout:fragment="script">
+	<script th:src=@{/js/product/view.js}></script>
 	</th:block>
 </html>

@@ -1382,7 +1382,7 @@ main > section > section > article .dis_price > .free {
 
 #product > .order > form input {
     color: #555;
-    padding: 2px 0;
+    padding: 2px 5px;
     border: 1px solid #999;
     box-sizing: border-box;
 }
@@ -1486,7 +1486,7 @@ main > section > section > article .dis_price > .free {
 }
 /* 상품정보 */
 #product > .complete > .info > table tr > th:last-child {
-    width: 200px;
+    width: 100px;
 }
 #product > .complete > .info table tr > td {
     text-align: center;
