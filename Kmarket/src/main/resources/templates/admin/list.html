@@ -35,54 +35,23 @@
                             <th>조회</th>
                             <th>관리</th>
                         </tr>
-                        <tr>
+                        <tr th:each="product : ${products}">
                             <td><input type="checkbox" name="상품코드"></td>
-                            <td><img src="./img/sample_thumb.jpg" class="thumb"></td>
-                            <td>201603292</td>
-                            <td>FreeMovement BLUEFORCE</td>
-                            <td>36,000</td>
-                            <td>10</td>
-                            <td>360</td>
-                            <td>400</td>
-                            <td>홍길동</td>
-                            <td>126</td>
+                            <td><img th:src="@{/prodImg/__${product.prodCate1}__/__${product.prodCate2}__/__${product.thumb1}__}" class="thumb"></td>
+                            <td th:text="${product.prodNo}">201603292</td>
+                            <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
+                            <td th:text="${product.price}">36,000</td>
+                            <td th:text="${product.discount}">10</td>
+                            <td th:text="${product.point}">360</td>
+                            <td th:text="${product.stock}">400</td>
+                            <td th:text="${product.seller}">홍길동</td>
+                            <td th:text="${product.hit}">126</td>
                             <td>
                                 <a href="#">[삭제]</a>
                                 <a href="#">[수정]</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" name="상품코드"></td>
-                            <td><img src="./img/sample_thumb.jpg" class="thumb"></td>
-                            <td>201603292</td>
-                            <td>FreeMovement BLUEFORCE</td>
-                            <td>36,000</td>
-                            <td>10</td>
-                            <td>360</td>
-                            <td>400</td>
-                            <td>홍길동</td>
-                            <td>126</td>
-                            <td>
-                                <a href="#">[삭제]</a>
-                                <a href="#">[수정]</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="상품코드"></td>
-                            <td><img src="./img/sample_thumb.jpg" class="thumb"></td>
-                            <td>201603292</td>
-                            <td>FreeMovement BLUEFORCE</td>
-                            <td>36,000</td>
-                            <td>10</td>
-                            <td>360</td>
-                            <td>400</td>
-                            <td>홍길동</td>
-                            <td>126</td>
-                            <td>
-                                <a href="#">[삭제]</a>
-                                <a href="#">[수정]</a>
-                            </td>
-                        </tr>
+
                     </table>
                     <input type="button" value="선택삭제">
                     <div class="paging">

@@ -37,6 +37,10 @@
 			`sellPrice`=#{sellPrice};
 	</insert>
 
+	<!-- 상품 전체 -->
+	<select id="selectProductList" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT * FROM `km_product`;
+	</select>
 
 	<!-- 카테고리 분류 -->
 	<select id="selectCate1" resultType="kr.co.kmarket.vo.CateVO">

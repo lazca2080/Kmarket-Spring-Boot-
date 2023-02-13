@@ -5,6 +5,8 @@
 
 <mapper namespace="kr.co.kmarket.dao.MemberDAO">
         <!-- 이 쿼리 수행되고 keyProperty: pk값 return -->
+
+        <!-- 일반 회원가입 -->
         <insert id="insertMember" useGeneratedKeys="true" keyProperty="uid">
             INSERT INTO `km_member` SET
                 `uid`= #{uid},
@@ -20,6 +22,8 @@
                 `regip`= #{regip},
                 `rdate`=NOW();
         </insert>
+
+        <!-- 판매자 회원가입 -->
         <insert id="insertMemberSeller" useGeneratedKeys="true" keyProperty="uid">
             INSERT INTO `km_member` SET
                 `uid`= #{uid},
@@ -28,6 +32,7 @@
                 `ceo` = #{ceo},
                 `bizRegNum` = #{bizRegNum},
                 `type`=2,
+                `level`=5,
                 `cornRegNum`=#{cornRegNum},
                 `tel` = #{tel},
                 `fax` = #{fax},
@@ -45,6 +50,7 @@
         select * from `km_member_terms`;
     </select>
 
+    <!-- 아이디 중복 체크-->
     <select id="selectCheckUid" resultType="kr.co.kmarket.vo.MemberVO">
         SELECT COUNT(`uid`) FROM `km_member` WHERE `uid`=#{uid};
     </select>

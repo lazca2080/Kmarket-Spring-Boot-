@@ -21,9 +21,11 @@
 	<select id="selectCate" resultType="kr.co.kmarket.vo.CateVO">
 		SELECT * FROM `km_product_cate2`;
 	</select>
-	
+
+
+
 	<!-- 해당 상품 -->
-	<select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
+	<select id="selectOneProduct" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT * FROM `km_product` WHERE `prodNo`=#{prodNo};
 	</select>
 	

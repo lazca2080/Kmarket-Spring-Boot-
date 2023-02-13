@@ -33,13 +33,16 @@ public class AdminController {
 	}
 
 	// 상품 목록 페이지
-	@GetMapping("admin/list")
-	public String list() {
+	@GetMapping("admin/product/list")
+	public String list(Model m) {
+		List<ProductVO> products = service.selectProductList();
+		m.addAttribute("products", products);
+
 		return "admin/list";
 	}
 	
 	// 상품 등록 페이지
-	@GetMapping("admin/register")
+	@GetMapping("admin/product/register")
 	public String register(Model model) {
 		
 		// 카테고리 분류

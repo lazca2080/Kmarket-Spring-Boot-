@@ -63,7 +63,7 @@ public class ProductController {
 	
 	// 상품 장바구니
 	@GetMapping("product/cart")
-	public String cart(Model model, @AuthenticationPrincipal MyUserDetails myuser) {
+	public String cart(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);

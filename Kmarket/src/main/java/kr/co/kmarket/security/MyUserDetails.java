@@ -28,7 +28,7 @@ public class MyUserDetails implements UserDetails {
 		// 계정이 갖는 권한 목록
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-		authorities.add(new SimpleGrantedAuthority("ROLE_"+user.getType()));
+		authorities.add(new SimpleGrantedAuthority("ROLE_"+user.getLevel()));
 
 		return authorities;
 	}

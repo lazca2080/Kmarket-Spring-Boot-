@@ -7,10 +7,19 @@
 		            <img th:src="@{/img/admin/admin_logo.png}" alt="admin_logo">
 		        </a>
 		        <p>
-		            <span>홍길동님 반갑습니다.</span>
-		            <a href="#">HOME |</a>
-		            <a href="#">로그아웃 |</a>
-		            <a href="#">고객센터</a>
+					<!-- 판매 회원 name -->
+					<th:block th:if="${#authentication.principal.user.level} == '5'">
+						<span>[[${#authentication.principal.user.company}]](판매자)님, 환영합니다.</span>
+						<a th:href="@{/member/logout}">로그아웃</a>
+						<a th:href="@{/cs}">고객센터</a>
+					</th:block>
+
+					<!-- 관리자 -->
+					<th:block th:if="${#authentication.principal.user.level} == '7'">
+						<span>관리자 님, 환영합니다.</span>
+						<a th:href="@{/member/logout}">로그아웃</a>
+						<a th:href="@{/cs}">고객센터</a>
+					</th:block>
 		        </p>
 		    </div>
 		</header>
