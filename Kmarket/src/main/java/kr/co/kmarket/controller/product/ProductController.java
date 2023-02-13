@@ -70,7 +70,7 @@ public class ProductController {
 		model.addAttribute("cate", cate);
 		
 		// 임시용 admin security 설정 완료후 myuser사용하기
-		List<ProductVO> vo = service.selectCarts("admin");
+		List<ProductVO> vo = service.selectCarts(myUser.getUser().getUid());
 		model.addAttribute("prod", vo);
 		
 		return "product/cart";
@@ -79,12 +79,12 @@ public class ProductController {
 	// 장바구니 등록
 	@ResponseBody
 	@PostMapping("product/cart")
-	public Map<String, Integer> insertCart(@RequestParam String prod, HttpServletRequest req) {
+	public Map<String, Integer> insertCart(@RequestParam String prod, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
 		Gson gson = new Gson();
 		ProductVO vo = gson.fromJson(prod, ProductVO.class);
 		
 		// 테스트용 uid
-		vo.setSeller("admin");
+		vo.setSeller(myuser.getUser().getUid());
 		vo.setIp(req.getRemoteAddr());
 				
 		int result = service.insertCart(vo);
@@ -100,7 +100,7 @@ public class ProductController {
 	@PostMapping("product/cart/total")
 	public Map<String, ProductVO> selectCartTotal(@AuthenticationPrincipal MyUserDetails myuser) {
 		// 임시용 uid 추후에 myuser.get 사용하여야함
-		String uid = "admin";
+		String uid = myuser.getUser().getUid();
 		
 		ProductVO total = service.selectCartTotal(uid);
 		
@@ -116,7 +116,7 @@ public class ProductController {
 	public Map<String, Integer> deleteCart(@RequestParam(value="checkList[]") List<String> checkList, @AuthenticationPrincipal MyUserDetails myuser) {
 
 		// 테스트용 uid
-		String uid = "admin";
+		String uid = myuser.getUser().getUid();
 		
 		int result = service.deleteCart(checkList, uid);
 		
@@ -134,7 +134,7 @@ public class ProductController {
 		model.addAttribute("cate", cate);
 		
 		// 전달 받은 상품 정보
-		String uid = "admin"; // 임시
+		String uid = myuser.getUser().getUid(); // 임시
 		
 		// 장바구니에서 넘어온 session 처리
 		HttpSession session = req.getSession();
