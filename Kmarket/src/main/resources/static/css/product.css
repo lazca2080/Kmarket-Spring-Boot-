@@ -1396,6 +1396,7 @@ main > section > section > article .dis_price > .free {
 #product > .order > form > .discount > div > label > input[type=text] {
     display: inline-block;
     outline: none;
+    text-align: right;
 }
 #product > .order > form > .discount > div > span {
     display: block;

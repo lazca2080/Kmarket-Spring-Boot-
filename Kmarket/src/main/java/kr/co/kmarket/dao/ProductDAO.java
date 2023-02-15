@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 
 @Repository
@@ -39,4 +40,7 @@ public interface ProductDAO {
 	
 	// 장바구니 전체 선택 가격
 	public ProductVO selectCartTotal(@Param("uid") String uid);
+	
+	// 주문하기
+	public int insertComplete(OrderVO vo);
 }

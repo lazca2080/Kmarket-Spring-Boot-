@@ -39,4 +39,8 @@ public class MemberVO {
     private String etc3;
     private String etc4;
     private String etc5;
+    
+    // 추가
+    private String payment;
+    private String orderer;
 }

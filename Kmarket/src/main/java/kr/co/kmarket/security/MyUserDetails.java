@@ -44,7 +44,7 @@ public class MyUserDetails implements UserDetails {
 		// 계정이 갖는 아이디
 		return user.getUid();
 	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// 계정 만료 여부(true:만료안됨, false:만료)

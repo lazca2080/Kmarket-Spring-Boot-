@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/productLayout}">
 	<th:block layout:fragment="content">
@@ -35,11 +36,11 @@
                                     <p>[[${prod.descript}]]</p>
                                 </div>
                             </article></td>
-                            <td>[[${prod.count}]]</td>
-                            <td>[[${prod.price}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
                             <td th:if="${prod.delivery == 0}">무료배송</td>
-                            <td th:unless="${prod.delivery == 0}">[[${prod.delivery}]]</td>
-                            <td>[[${prod.total}]]</td>
+                            <td th:unless="${prod.delivery == 0}">[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                         </tr>
                     </table>
                     <div class="final">
@@ -47,19 +48,23 @@
                         <table>
                             <tr>
                                 <td>총</td>
-                                <td>[[${total.count + " 건"}]]</td>
+                                <td>[[${#numbers.formatInteger(total.count, 0, 'COMMA') + " 건"}]]</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>[[${total.price}]]</td>
+                                <td>[[${#numbers.formatInteger(total.price, 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>[[${total.price + total.delivery - total.total}]]</td>
+                                <td>[[${#numbers.formatInteger((total.price + total.delivery - total.total), 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>[[${total.delivery}]]</td>
+                                <td>[[${#numbers.formatInteger(total.delivery, 0, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>적립포인트</td>
+                                <td>[[${#numbers.formatInteger(total.point, 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>
@@ -67,7 +72,7 @@
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>[[${total.total}]]</td>
+                                <td>[[${#numbers.formatInteger(total.total, 0, 'COMMA')}]]</td>
                             </tr>
                         </table>
                         <input type="submit" value="결제하기">
@@ -112,12 +117,12 @@
                         <div>
                             <p>
                                 현재 포인트 : 
-                                <span>7200</span>점
+                                <span class="userPoint">[[${#numbers.formatInteger(point, 0, 'COMMA')}]]</span>점
                             </p>
 
                             <label>
-                                <input type="text" name="point">점
-                                <input type="button" value="적용">
+                                <input type="text" name="point" value="0">점
+                                <input type="button" id="applyPoint" value="적용">
                             </label>
                             <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
                         </div>
@@ -129,10 +134,10 @@
                             <span>신용카드</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type1">신용카드 결제
+                                    <input type="radio" name="payment" value="credit">신용카드 결제
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type2">체크카드 결제
+                                    <input type="radio" name="payment" value="check">체크카드 결제
                                 </label>
                             </p>
                         </div>
@@ -140,10 +145,10 @@
                             <span>계좌이체</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type3">실시간 계좌이체
+                                    <input type="radio" name="payment" value="realTime">실시간 계좌이체
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type4">무통장 입금
+                                    <input type="radio" name="payment" value="deposit">무통장 입금
                                 </label>
                             </p>
                         </div>
@@ -151,10 +156,10 @@
                             <span>기타</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type4">휴대폰 결제
+                                    <input type="radio" name="payment" value="sellPhone">휴대폰 결제
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type5">카카오페이
+                                    <input type="radio" name="payment" value="kakao">카카오페이
                                     <img src="../img/ico_kakaopay.gif" alt="카카오페이">
                                 </label>
                             </p>
@@ -177,5 +182,6 @@
 	<th:block layout:fragment="script">
 		<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<script th:src="@{/js/product/zipcode.js}"></script>
+		<script th:src=@{/js/product/order.js}></script>
 	</th:block>
 </html>
