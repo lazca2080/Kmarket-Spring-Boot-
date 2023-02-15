@@ -169,7 +169,7 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping("product/order")
 	public Map<String, Integer> selectCartOrder(@RequestParam(value="checkList[]") List<String> checkList, HttpServletRequest req) {
-		// 주문하기 버튼과 동시에 배열을 세션에 저장
+		// 주문하기 버튼과 동시에 배열을 세션에 저장test
 		HttpSession session = req.getSession();
 		session.setAttribute("order", checkList);
 		
