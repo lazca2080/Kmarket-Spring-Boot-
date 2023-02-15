@@ -19,7 +19,7 @@ public class IndexController {
 	
 	@GetMapping(value = {"/cs","/cs/index"})
 	public String index(Model model) {
-		List<CsVO> cate = service.selectCs();
+		List<CsVO> cate = service.selectCss();
 		model.addAttribute("cate",cate);
 		log.info("est"+cate);
 		return "/cs/index";

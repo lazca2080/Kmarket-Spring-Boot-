@@ -19,38 +19,38 @@
                             <h2>자주묻는 질문</h2>
                             <ul>
                                 <li class="on">
-                                    <a href="#">회원</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='회원')}">회원</a>
                                 </li>
                                 <li>
-                                    <a href="#">쿠폰/이벤트</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='쿠폰')}">쿠폰/이벤트</a>
                                 </li>
                                 <li>
-                                    <a href="#">주문/결제</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='주문')}">주문/결제</a>
                                 </li>
                                 <li>
-                                    <a href="#">배송</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='배송')}">배송</a>
                                 </li>
                                 <li>
-                                    <a href="#">취소/반품/교환</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='취소')}">취소/반품/교환</a>
                                 </li>
                                 <li>
-                                    <a href="#">여행/숙박/항공</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='여행')}">여행/숙박/항공</a>
                                 </li>
                                 <li>
-                                    <a href="#">안전거래</a>
+                                    <a th:href="@{/cs/faq/list(cateType1='안전')}">안전거래</a>
                                 </li>
                             </ul>
                         </aside>
                         <article>
                             <nav>
-                                <h1>회원</h1>
+                                <h1 th:text="${cateType1}">회원</h1>
                                 <h2>가장 자주 묻는 질문입니다.</h2>
                             </nav>
                             <div>
-                                <h3>가입</h3>
+                                <h3 th:text="${cateType2}">가입</h3>
                                 <ul>
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/cs/faq/list(cateType2=${cateType2}, no=${no})}">
                                             <span>Q.</span>
                                             개인회원과 법인회원에 차이가 있나요?
                                         </a>
@@ -203,5 +203,29 @@
                 </div>
             </section>
     </div>
+</th:block>
+<th:block layout:fragment="script">	
+	<script>
+	$(function(){
+		   
+	       $('.more').click(function(e){
+	           e.preventDefault();
+	           
+	           let item = $(this).parent().find('> li:nth-child(n+4)');
+	           let isVisible = item.is(':visible');
+	           
+	           console.log('isVisible : ' + isVisible);
+	           
+	           if(isVisible && item.css('display') == 'none'){
+	        	   item.slideDown(300);
+	        	   $(this).find('> a').text('간단히보기');
+	           }else if(isVisible && item.css('display') == 'list-item'){
+	        	   item.slideUp(300);
+	        	   $(this).find('> a').text('더보기');
+	   			}
+	           
+	       });
+	   });
+	</script>
 </th:block>
 </html>

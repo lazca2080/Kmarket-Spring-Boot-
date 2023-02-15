@@ -1,4 +1,4 @@
-package kr.co.kmarket.service.cs;
+package kr.co.kmarket.service.cs; 
 
 import java.util.List;
 
@@ -7,17 +7,14 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket.dao.CsDAO;
 import kr.co.kmarket.vo.CsVO;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
-public class IndexService {
+public class FaqService {
 	@Autowired
 	private CsDAO dao;
 	
-	public List<CsVO> selectCss(){
-		return dao.selectCss();
-	}
-	
+	public List<CsVO> selectFaqArticles(String cateType1, String cateType2) {
+		return dao.selectFaqArticles(cateType1,cateType2);
+	};
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.kmarket.entity.UserEntity;
 import kr.co.kmarket.security.MyUserDetails;
@@ -48,8 +49,14 @@ public class NoticeController {
 		return "/cs/notice/list";
 	}
 	
+	// 글 보기
 	@GetMapping("/cs/notice/view")
-	public String view() {
+	public String view(@RequestParam("no") int no, Model model, int pg) {
+		CsVO notice = service.selectCs(no);
+		
+		model.addAttribute("notice",notice);
+		model.addAttribute("pg", pg);
+		log.info("sdf : "+pg);
 		return "/cs/notice/view";
 	}
 }

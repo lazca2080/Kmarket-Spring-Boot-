@@ -7,6 +7,7 @@
 		<link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}">
     	<link rel="stylesheet" th:href="@{/css/cs.css}">
     	<link rel="stylesheet" th:href="@{/css/common.css}">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     	<!--
         날짜 : 2023/02/09
         이름 : 이왕근
@@ -26,5 +27,5 @@
     </body>
     <!-- 푸터 -->
     <th:block th:replace="~{fragments/cs/__footer::_footerFragment}"></th:block>
-	</body>
+	<th:block layout:fragment="script"></th:block>
 </html>

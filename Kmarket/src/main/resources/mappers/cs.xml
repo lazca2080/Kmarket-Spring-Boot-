@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kmarket.dao.CsDAO">
-    <select id="selectCs" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectCss" resultType="kr.co.kmarket.vo.CsVO">
        (select * from km_cs where `cate`='notice' limit 5)
 		UNION
 		(select * from km_cs where `cate`='qna' limit 5)
@@ -25,4 +25,19 @@
 		</if>
 	</select>	
 	
+	<select id="selectCs" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM  `km_cs` WHERE `no`= #{no};
+	</select>
+	
+	<update id="updateArticleHit">
+		UPDATE `km_cs` SET `hit`=`hit`+1 WHERE `no`=#{no};
+	</update>
+	
+	<select id="selectFaqArticles" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs` WHERE `cateType1`= #{cateType1} ORDER BY `cateType2`, `rdate` DESC;
+	</select>
+	
+	<select id="selectArticles">
+		select * from `km_cs` where `cate`=#{cate} and `cateType1`=#{cateType1} order by `no` desc limit ?,10; 
+	</select>
 </mapper>

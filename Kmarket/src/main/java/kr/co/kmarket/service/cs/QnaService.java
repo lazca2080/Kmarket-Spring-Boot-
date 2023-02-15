@@ -7,17 +7,11 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket.dao.CsDAO;
 import kr.co.kmarket.vo.CsVO;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
-public class IndexService {
+public class QnaService {
 	@Autowired
 	private CsDAO dao;
 	
-	public List<CsVO> selectCss(){
-		return dao.selectCss();
-	}
-	
-	
+	public void selectArticles(){};
 }
