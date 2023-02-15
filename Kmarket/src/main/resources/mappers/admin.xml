@@ -37,9 +37,23 @@
 			`sellPrice`=#{sellPrice};
 	</insert>
 
-	<!-- 상품 전체 -->
-	<select id="selectProductList" resultType="kr.co.kmarket.vo.ProductVO">
-		SELECT * FROM `km_product`;
+	<!-- (최고관리자) 상품 목록조회 -->
+	<select id="selectProductsAdmin" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT * FROM `km_product` ORDER BY `prodNo` DESC LIMIT 0,10;
+	</select>
+
+
+	<!-- (판매회원) 판매자 조회 -->
+	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT a.uid,b.* FROM `km_member` AS a
+		JOIN `km_product` AS b ON a.`uid`= b.`seller`
+		WHERE `seller`= #{seller}
+		ORDER BY `prodNo` DESC LIMIT #{start},10;
+	</select>
+
+	<!-- 총 판매글 개수 -->
+	<select id="selectCountTotal" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `km_product` WHERE `seller`=#{seller};
 	</select>
 
 	<!-- 카테고리 분류 -->
