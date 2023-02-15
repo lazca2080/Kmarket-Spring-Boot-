@@ -22,6 +22,6 @@ public interface CsDAO {
 	
 	// 글 페이지
 	public int selectCountTotal(String cateType1);
-	public List<CsVO> selectArticles();
+	public List<CsVO> selectArticles(String cateType1, String cateType2, int start);
 }
 
