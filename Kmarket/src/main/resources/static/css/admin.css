@@ -234,7 +234,7 @@ input {
     box-sizing: border-box;
 }
 
-#admin-product-list
+
 
 input[type=checkbox] {
     width: auto;
@@ -390,6 +390,10 @@ button[type=submit] {
 #admin-product-list {}
 #admin-product-list > section > div  {
     margin-bottom: 10px;
+}
+
+#admin-product-list > section > div > form input[type=submit]{
+    width: 100px;
 }
 
 #admin-product-list > section > table  {

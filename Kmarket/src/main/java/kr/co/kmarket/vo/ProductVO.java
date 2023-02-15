@@ -52,4 +52,7 @@ public class ProductVO {
 	private String type;
 	private int total;
 	private int count;
+
+	// 추가2
+	private String keyWord;
 }
