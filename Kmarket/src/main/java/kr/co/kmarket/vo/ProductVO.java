@@ -45,7 +45,6 @@ public class ProductVO {
 	private String rdate;
 	
 	// 추가
-	
 	private String thumb1;
 	private String thumb2;
 	private String thumb3;

@@ -71,7 +71,7 @@ $(function(){
 					totalChange(0, 0, 0, 0, 0);
 					
 					// 전체 선택 상태에서 일부 상품 체크를 해제 or 체크했을 때 계산이 되어야하므로 상단 전역 변수 수정
-					totalCount    = data.result.count
+					prodCount    = data.result.count
 					totalPrice    = data.result.price
 					totalDelivery = data.result.delivery
 					totalPoint    = data.result.point

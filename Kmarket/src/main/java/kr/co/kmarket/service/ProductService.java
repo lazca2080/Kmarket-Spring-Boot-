@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,5 +65,10 @@ public class ProductService {
 	// 장바구니 전체 선택 가격
 	public ProductVO selectCartTotal(String uid) {
 		return dao.selectCartTotal(uid);
+	}
+	
+	// 주문하기
+	public int insertComplete(OrderVO vo) {
+		return dao.insertComplete(vo);
 	}
 }

@@ -76,4 +76,26 @@
 	<select id="selectCartTotal" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT COUNT(`cartNo`) AS count, SUM(`price`) AS price, SUM(`point`) AS point, SUM(`delivery`) AS delivery, SUM(`total`) AS total FROM `km_product_cart` WHERE `uid`=#{uid};
 	</select>
+	
+	<!-- 주문하기 -->
+	<insert id="insertComplete">
+		INSERT INTO `km_product_order` SET
+			`ordNo`=#{ordNo},
+			`ordUid`=#{ordUid},
+			`ordCount`=#{ordCount},
+			`ordPrice`=#{ordPrice},
+			`ordDiscount`=#ordDiscount{},
+			`ordDelivery`=#{ordDelivery},
+			`savePoint`=#{savePoint},
+			`usedPoint`=#{usedPoint},
+			`ordTotPrice`=#{ordTotPrice},
+			`recipName`=#{recipName},
+			`recipHp`=#{recipHp},
+			`recipZip`=#{recipZip},
+			`recipAddr1`=#{recipAddr1},
+			`recipAddr2`=#{recipAddr2},
+			`ordPayment`=#{ordPayment},
+			`ordComplete`=1,
+			`ordDate`=NOW()
+	</insert>
 </mapper>

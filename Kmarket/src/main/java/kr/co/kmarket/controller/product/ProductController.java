@@ -1,8 +1,11 @@
 package kr.co.kmarket.controller.product;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +27,8 @@ import com.google.gson.Gson;
 import kr.co.kmarket.security.MyUserDetails;
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.MemberVO;
+import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -161,6 +166,7 @@ public class ProductController {
 		
 		model.addAttribute("prod", prod);
 		model.addAttribute("total", total);
+		model.addAttribute("point", myuser.getUser().getPoint());
 		
 		return "product/order";
 	}
@@ -169,7 +175,7 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping("product/order")
 	public Map<String, Integer> selectCartOrder(@RequestParam(value="checkList[]") List<String> checkList, HttpServletRequest req) {
-		// 주문하기 버튼과 동시에 배열을 세션에 저장test
+		// 주문하기 버튼과 동시에 배열을 세션에 저장
 		HttpSession session = req.getSession();
 		session.setAttribute("order", checkList);
 		
@@ -177,10 +183,9 @@ public class ProductController {
 		map.put("result", 1);
 		return map;
 	}
-	
 	// 상품 주문 완료
 	@GetMapping("product/complete")
-	public String complete(Model model, HttpServletRequest req) {
+	public String complete(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
@@ -199,6 +204,34 @@ public class ProductController {
 		model.addAttribute("total", totalPrice);
 		
 		return "product/complete";
-	}	
+	}
+	
+	@PostMapping("product/complete")
+	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser) {
+		Gson gson = new Gson();
+		OrderVO vo = gson.fromJson(order, OrderVO.class);
+		
+		String uid = myuser.getUser().getUid();
+		int point = myuser.getUser().getPoint();
+		
+		// 랜덤 숫자
+		vo.setOrdNo((int)Math.random()*10000000);
+		
+		// point 검증 -> input value값은 개발자 도구에서 수정이 가능하고 수정 된 상태로 넘겨짐
+		// 따라서 서버에서 한번 더 검증을 거쳐야함
+		if(vo.getSavePoint() < 5000) { 
+			vo.setSavePoint(0); 
+		}else if(vo.getSavePoint() > point) {
+			vo.setSavePoint(0);
+		}
+		log.info(""+ vo.getRecipZip());
+		
+		//int result = service.insertComplete(vo);
+		
+		Map<String, Integer> map = new HashMap<>();
+		//map.put("result", result);
+		
+		return map;
+	}
 
 }
