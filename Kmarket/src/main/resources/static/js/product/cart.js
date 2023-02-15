@@ -6,7 +6,7 @@ let totalDelivery = 0;
 let totalPoint    = 0;
 let totalTotal    = 0;
 
-function totalChange(prodCount, totalPrice, totalPoint, totalTotal){
+function totalChange(prodCount, totalPrice, totalPoint, totalDelivery ,totalTotal){
 	document.querySelector('td[class=count]').innerText = prodCount.toLocaleString();
 	document.querySelector('td[class=price]').innerText = totalPrice.toLocaleString();
 	document.querySelector('td[class=delivery]').innerText = totalDelivery.toLocaleString();
@@ -18,23 +18,23 @@ function totalChange(prodCount, totalPrice, totalPoint, totalTotal){
 function checkProd(prodNo){
 	if($('.'+prodNo).is(':checked')){
 		prodCount     += 1;
-		totalCount    += Number(document.getElementById(prodNo + 'count').innerText);
-		totalPrice    += Number(document.getElementById(prodNo + 'price').innerText);
-		totalDelivery += Number(document.getElementById(prodNo + 'delivery').innerText);
-		totalPoint    += Number(document.getElementById(prodNo + 'point').innerText);
-		totalTotal    += Number(document.getElementById(prodNo + 'total').innerText);
+		totalCount    += Number(document.getElementById(prodNo + 'count').innerText.replace(',', ''));
+		totalPrice    += Number(document.getElementById(prodNo + 'price').innerText.replace(',', ''));
+		totalDelivery += Number(document.getElementById(prodNo + 'delivery').innerText.replace(',', ''));
+		totalPoint    += Number(document.getElementById(prodNo + 'point').innerText.replace(',', ''));
+		totalTotal    += Number(document.getElementById(prodNo + 'total').innerText.replace(',', ''));
 		
-		totalChange(prodCount, totalPrice, totalPoint, totalTotal);
+		totalChange(prodCount, totalPrice, totalPoint, totalDelivery, totalTotal);
 		
 	}else if(!$('.'+prodNo).is(':checked')) {
 		prodCount     -= 1;
-		totalCount    -= Number(document.getElementById(prodNo + 'count').innerText);
-		totalPrice    -= Number(document.getElementById(prodNo + 'price').innerText);
-		totalDelivery -= Number(document.getElementById(prodNo + 'delivery').innerText);
-		totalPoint    -= Number(document.getElementById(prodNo + 'point').innerText);
-		totalTotal    -= Number(document.getElementById(prodNo + 'total').innerText);
+		totalCount    -= Number(document.getElementById(prodNo + 'count').innerText.replace(',', ''));
+		totalPrice    -= Number(document.getElementById(prodNo + 'price').innerText.replace(',', ''));
+		totalDelivery -= Number(document.getElementById(prodNo + 'delivery').innerText.replace(',', ''));
+		totalPoint    -= Number(document.getElementById(prodNo + 'point').innerText.replace(',', ''));
+		totalTotal    -= Number(document.getElementById(prodNo + 'total').innerText.replace(',', ''));
 		
-		totalChange(prodCount, totalPrice, totalPoint, totalTotal);
+		totalChange(prodCount, totalPrice, totalPoint, totalDelivery, totalTotal);
 	}
 }
 $(function(){
@@ -53,7 +53,24 @@ $(function(){
 			url:'/Kmarket/product/cart/total',
 			method:'POST',
 			success: function(data){
-				
+				if($('input[name=all]').is(':checked')){
+					totalChange(0, 0, 0, 0, 0);
+					totalCount    = data.result.count
+					totalPrice    = data.result.price
+					totalDelivery = data.result.delivery
+					totalPoint    = data.result.point
+					totalTotal    = data.result.total
+					totalChange(prodCount, totalPrice, totalPoint, totalDelivery, totalTotal);
+				}else{
+					totalChange(0, 0, 0, 0, 0);
+					totalCount    = 0
+					totalPrice    = 0
+					totalDelivery = 0
+					totalPoint    = 0
+					totalTotal    = 0
+					$('input[name=prodNo]').attr('checked', false);
+					checkList=[];
+				}
 			}
 		});
 	});
@@ -66,7 +83,6 @@ $(function(){
 		});
 		
 		let jsonData = { 'checkList' : checkList };
-		let prodNo = JSON.stringify(jsonData);
 		
 		$.ajax({
 			url:'/Kmarket/product/checkCart',
@@ -74,7 +90,6 @@ $(function(){
 			data: jsonData,
 			dataType:'JSON',
 			success: function(data){
-				
 				if(checkList.length == data.result){
 					alert('삭제 되었습니다.');
 					location.href = "/Kmarket/product/cart";
@@ -85,6 +100,7 @@ $(function(){
 		});
 	});
 	
+	// 주문하기
 	$('.cart > form').submit(function(e){
 		checkList = [];
 		$('input[name=prodNo]:checked').each(function(){ checkList.push($(this).val()); });
