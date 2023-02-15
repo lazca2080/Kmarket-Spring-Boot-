@@ -71,6 +71,7 @@ public class ProductController {
 		
 		// 임시용 admin security 설정 완료후 myuser사용하기
 		List<ProductVO> vo = service.selectCarts(myUser.getUser().getUid());
+		
 		model.addAttribute("prod", vo);
 		
 		return "product/cart";
@@ -99,7 +100,6 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping("product/cart/total")
 	public Map<String, ProductVO> selectCartTotal(@AuthenticationPrincipal MyUserDetails myuser) {
-		// 임시용 uid 추후에 myuser.get 사용하여야함
 		String uid = myuser.getUser().getUid();
 		
 		ProductVO total = service.selectCartTotal(uid);
@@ -143,7 +143,7 @@ public class ProductController {
 		List<String> checkList = (List<String>) session.getAttribute("order");
 		
 		// 장바구니가 비워져있는 경우 cart로 이동
-		if(checkList == null) { return "product/cart?success=101"; }
+		if(checkList == null) { return "product/cart"; }
 		
 		// 선택된 상품 조회
 		List<ProductVO> prod = service.selectCartOrder(checkList, uid);

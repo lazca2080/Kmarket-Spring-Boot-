@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ProductService {
 	

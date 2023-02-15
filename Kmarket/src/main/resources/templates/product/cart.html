@@ -39,12 +39,12 @@
                                     <p>[[${prod.descript}]]</p>
                                 </div>
                             </article></td>
-                            <td th:id="${prod.prodNo + 'count'}">[[${prod.count}]]</td>
-                            <td th:id="${prod.prodNo + 'price'}">[[${prod.price}]]</td>
-                            <td th:id="${prod.prodNo + 'discount'}">[[${prod.discount}]]</td>
-                            <td th:id="${prod.prodNo + 'point'}">[[${prod.point}]]</td>
-                            <td th:id="${prod.prodNo + 'delivery'}">[[${prod.delivery}]]</td>
-                            <td th:id="${prod.prodNo + 'total'}">[[${prod.total}]]</td>
+                            <td th:id="${prod.prodNo + 'count'}">[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
+                            <td th:id="${prod.prodNo + 'price'}">[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
+                            <td th:id="${prod.prodNo + 'discount'}">[[${#numbers.formatInteger(prod.discount, 0, 'COMMA')}]]</td>
+                            <td th:id="${prod.prodNo + 'point'}">[[${#numbers.formatInteger(prod.point, 0, 'COMMA')}]]</td>
+                            <td th:id="${prod.prodNo + 'delivery'}">[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA')}]]</td>
+                            <td th:id="${prod.prodNo + 'total'}">[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                         </tr>
                     </table>
                     <input type="button" name="del" class='del' value="선택삭제">
@@ -81,7 +81,7 @@
                </form>
             </section>
 	</th:block>
-	<th:block layout:fragment="content">
+	<th:block layout:fragment="script">
 	<script th:src=@{/js/product/cart.js}></script>
-	</th:block>>
+	</th:block>
 </html>

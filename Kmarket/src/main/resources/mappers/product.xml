@@ -22,10 +22,8 @@
 		SELECT * FROM `km_product_cate2`;
 	</select>
 
-
-
 	<!-- 해당 상품 -->
-	<select id="selectOneProduct" resultType="kr.co.kmarket.vo.ProductVO">
+	<select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT * FROM `km_product` WHERE `prodNo`=#{prodNo};
 	</select>
 	
@@ -52,7 +50,7 @@
 	<select id="selectCarts" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT a.*, b.`prodCate1`, b.`prodCate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
 		`km_product` AS b ON a.`prodNo` = b.`prodNo`
-		WHERE `uid`="admin";
+		WHERE `uid`=#{uid};
 	</select>
 	
 	<!-- 장바구니 선택 삭제 -->
@@ -75,7 +73,7 @@
 	</select>
 	
 	<!-- 장바구니 전체 선택 가격 -->
-	<select id="selectCartTotal">
-		
+	<select id="selectCartTotal" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT COUNT(`cartNo`) AS count, SUM(`price`) AS price, SUM(`point`) AS point, SUM(`delivery`) AS delivery, SUM(`total`) AS total FROM `km_product_cart` WHERE `uid`=#{uid};
 	</select>
 </mapper>
