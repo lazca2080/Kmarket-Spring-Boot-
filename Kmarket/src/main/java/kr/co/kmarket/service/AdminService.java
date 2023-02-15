@@ -24,10 +24,23 @@ public class AdminService {
 	@Autowired
 	private AdminDAO dao;
 
-	// 상품 전체목록
-	public List<ProductVO> selectProductList(){
-		return dao.selectProductList();
+	// (최고관리자) 상품 목록조회
+	public List<ProductVO> selectProductsAdmin(){
+		return dao.selectProductsAdmin();
 	}
+
+	// (판매회원) 판매자 조회
+	public List<ProductVO> selectProducts(int start, String seller){
+		return dao.selectProducts(start, seller);
+	}
+
+
+
+	// 전체 상품 게시물 조회
+	public int getTotalcount(String seller){
+		return dao.selectCountTotal(seller);
+	}
+
 	// 상품 등록
 	public void register(ProductVO vo) {
 		
@@ -126,4 +139,8 @@ public class AdminService {
 		
 		return file;
 	}
+
+
+
+
 }

@@ -44,7 +44,7 @@
                             <td th:text="${product.discount}">10</td>
                             <td th:text="${product.point}">360</td>
                             <td th:text="${product.stock}">400</td>
-                            <td th:text="${product.seller}">홍길동</td>
+                            <td th:text="${product.company}">홍길동</td>
                             <td th:text="${product.hit}">126</td>
                             <td>
                                 <a href="#">[삭제]</a>
@@ -55,21 +55,22 @@
                     </table>
                     <input type="button" value="선택삭제">
                     <div class="paging">
-                        <span class="prev">
-                            <a href="#"><&nbsp;이전</a>
+                        <span th:if="${pages.groupStart > 1}" class="prev">
+                            <a th:href="|@{/}admin/product/list/${pages.groupStart-1)}|"><&nbsp;이전</a>
                         </span>
+
                         <span class="num">
-                            <a href="#" class="on">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">6</a>
-                            <a href="#">7</a>
+                            <th:block th:each="i : ${#numbers.sequence(pages.groupStart, pages.groupEnd)}">
+                                <a th:href="|@{/}admin/product/list/${i}|"
+                                   th:classappend="${pages.currentPage == i ? 'on': ''}"
+                                   th:text="${i}">1</a>
+                            </th:block>
                         </span>
-                        <span class="next">
-                            <a href="#">다음&nbsp;></a>
+
+                        <span th:if="${pages.groupEnd < pages.lastPage}" class="next">
+                            <a th:href="|@{/}admin/product/list/${pages.groupEnd+1}|">다음&nbsp;></a>
                         </span>
+
                     </div>
                 </section>
                 <p class="ico info">
