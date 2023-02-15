@@ -57,6 +57,19 @@ $(function(){
 		}
 		
 		let order = JSON.stringify(jsonData);
+		console.log('ordCount : '+count);
+		console.log('ordPrice : '+price);
+		console.log('ordDiscount : '+discount);
+		console.log('ordDelivery : '+delivery);
+		console.log('savaPoint : '+savaPoint);
+		console.log('usedPoint : '+point.value);
+		console.log('ordTotPrice : '+totalPrice);
+		console.log('recipName : '+orderer);
+		console.log('recipHp : '+hp);
+		console.log('recipZip : '+zip);
+		console.log('recipAddr1 : '+addr1);
+		console.log('recipAddr2 : '+addr2);
+		console.log('ordPayment : '+$('input[name=payment]:checked').val());
 		
 		$.ajax({
 			url:'/Kmarket/product/complete',
@@ -64,9 +77,6 @@ $(function(){
 			data: { "order" : order } ,
 			dataType:'',
 			success: function(data){
-				if(data.result == 1){
-				}else{
-				}
 			}
 		});
 		

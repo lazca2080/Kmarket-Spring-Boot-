@@ -208,12 +208,15 @@ public class ProductController {
 	
 	@PostMapping("product/complete")
 	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser) {
+		/*
 		Gson gson = new Gson();
 		OrderVO vo = gson.fromJson(order, OrderVO.class);
-		
+		*/
 		String uid = myuser.getUser().getUid();
 		int point = myuser.getUser().getPoint();
 		
+		log.info(order);
+		/*
 		// 랜덤 숫자
 		vo.setOrdNo((int)Math.random()*10000000);
 		
@@ -228,6 +231,7 @@ public class ProductController {
 		
 		//int result = service.insertComplete(vo);
 		
+		*/
 		Map<String, Integer> map = new HashMap<>();
 		//map.put("result", result);
 		
