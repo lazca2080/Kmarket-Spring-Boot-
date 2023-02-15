@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.co.kmarket.config.PagingConfig;
 import kr.co.kmarket.entity.UserEntity;
 import kr.co.kmarket.security.MyUserDetails;
 import kr.co.kmarket.vo.PageVO;
@@ -41,26 +40,39 @@ public class AdminController {
 	{
 		UserEntity member =  myUserDetails.getUser();
 
-		//log.info("member Uid : " + member.getUid());
-		//log.info("member Level : " + member.getLevel());
+		String seller = member.getUid(); // uid
+		int level = member.getLevel(); // uid level
 
-		String seller = member.getUid();
-		int level = member.getLevel();
+		int currentPage = service.getCurrentPage(pg);
+		int start = service.getLimitStart(currentPage);
 
-		PageVO pages = new PagingConfig().getPageVO(pg, service.getTotalcount(seller));
+		int total = service.selectCountTotalAdmin();
+		//int total = service.selectCountTotalSeller(seller);
+		int lastPage = service.getLastPageNum(total);
+		int pageStartNum = service.getPageStartNum(total, start);
+		int groups[] = service.getPageGroup(currentPage, lastPage);
 
 		// 판매회원 일 경우 보일 게시글
 		if(level == 5){
-			List<ProductVO> products = service.selectProducts(pages.getStart(), seller);
+			// 판매자 자기 자신 상품목록만 보여져야 하기 때문에 seller 추가
+			List<ProductVO> products = service.selectProducts(start, seller);
 			log.info("member Uid : " + seller);
-			log.info("start : " +pages.getStart());
+			log.info("start : " + start);
 
 			m.addAttribute("products", products);
-			m.addAttribute("pages",pages);
+			m.addAttribute("currentPage", currentPage);
+			m.addAttribute("lastPage", lastPage);
+			m.addAttribute("pageStartNum", pageStartNum);
+			m.addAttribute("groups", groups);
 		}else if(level == 7){
 		// 최고관리자 일 경우 보일 상품 전체 게시글
-			List<ProductVO> products = service.selectProductsAdmin();
+			List<ProductVO> products = service.selectProductsAdmin(start);
+
 			m.addAttribute("products", products);
+			m.addAttribute("currentPage", currentPage);
+			m.addAttribute("lastPage", lastPage);
+			m.addAttribute("pageStartNum", pageStartNum);
+			m.addAttribute("groups", groups);
 		}
 
 		return "admin/product/list";

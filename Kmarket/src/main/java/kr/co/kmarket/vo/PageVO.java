@@ -13,4 +13,5 @@ public class PageVO {
     private int groupStart;
     private int groupEnd;
     private int start;
+    private int[] groups;
 }

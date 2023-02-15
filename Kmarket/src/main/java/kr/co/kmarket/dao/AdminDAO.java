@@ -18,7 +18,7 @@ public interface AdminDAO {
 	public void register(ProductVO vo);
 
 	// (최고관리자) 상품 목록조회
-	public List<ProductVO> selectProductsAdmin();
+	public List<ProductVO> selectProductsAdmin(@Param("start") int start);
 
 	// (판매회원) 판매자 조회
 	public List<ProductVO> selectProducts(@Param("start") int start, @Param("seller") String seller);
@@ -27,6 +27,9 @@ public interface AdminDAO {
 	public List<CateVO> selectCate1();
 	public List<CateVO> selectCate2(@RequestParam String cate1);
 
-	// admin-product-list 상품 총합
-	public int selectCountTotal(String seller);
+	// (admin) 판매 게시물 총 개수
+	public int selectCountTotalAdmin();
+
+	// (seller) 판매 게시물 총 개수
+	public int selectCountTotalSeller(String seller);
 }

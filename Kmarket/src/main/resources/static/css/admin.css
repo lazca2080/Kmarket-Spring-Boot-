@@ -234,6 +234,8 @@ input {
     box-sizing: border-box;
 }
 
+#admin-product-list
+
 input[type=checkbox] {
     width: auto;
     margin-right: 6px;
