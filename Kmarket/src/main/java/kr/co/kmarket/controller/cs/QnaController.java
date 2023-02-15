@@ -18,7 +18,23 @@ public class QnaController {
 	
 	@GetMapping("/cs/qna/list")
 	public String list(String cateType1, String cateType2, String pg, Model model) {
-		//List<CsVO> qna = service.selectArticles(cateType1, cateType2);
+		//UserEntity user = myUser.getUser();
+		
+		int  currentPage = service.getCurrentPage(pg);
+		int start        = service.getLimitStart(currentPage);
+		int total       = service.getTotalCount(cateType1);
+		int  lastPage    = service.getLastPageNum(total);
+		int pageStartNum = service.getPageStartNum(total, start);
+		int[] groups     = service.getPageGroup(currentPage, lastPage);
+		
+		//List<CsVO> qna = service.selectArticles(cateType1, cateType2, start);
+		
+		//model.addAttribute("user", user);
+		//model.addAttribute("qna",qna);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum);
+		model.addAttribute("groups", groups);
 		
 		return "/cs/qna/list";
 	}
