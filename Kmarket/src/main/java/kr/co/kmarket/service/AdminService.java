@@ -29,8 +29,12 @@ public class AdminService {
 		return dao.selectProductsAdmin(start);
 	}
 	// (판매회원) 판매자 조회
-	public List<ProductVO> selectProducts(int start, String seller){
-		return dao.selectProducts(start, seller);
+	public List<ProductVO> selectProducts(int start,
+										  String seller,
+										  String searchType,
+										  String keyword)
+	{
+		return dao.selectProducts(start, seller, searchType, keyword);
 	}
 
 

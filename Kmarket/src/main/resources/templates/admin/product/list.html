@@ -13,17 +13,17 @@
                 </nav>
                 <section>
                     <div>
-                        <form action="">
+                        <form name="search-form">
                             <select name="searchType">
                                 <option value="prodName">상품명</option>
-                                <option value="prodCode">상품코드</option>
+                                <option value="prodNo">상품코드</option>
                                 <option value="seller">판매자</option>
                             </select>
-                            <input type="text" name="keyWord">
-                            <input type="submit" value="검색하기">
+                            <input type="text" name="keyword">
+                            <input type="submit" value="검색하기" onclick="getSearchList()">
                         </form>
                     </div>
-                    <table>
+                    <table id="board">
                         <tr>
                             <th><input type="checkbox" name="all"></th>
                             <th>이미지</th>

@@ -54,5 +54,6 @@ public class ProductVO {
 	private int count;
 
 	// 추가2
+	private String searchType;
 	private String keyWord;
 }
