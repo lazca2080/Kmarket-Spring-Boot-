@@ -11,15 +11,11 @@
     </select>
 	
 	<select id="selectNtList" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT `no`, `cate`, `cateType1`, `title`, `rdate` FROM km_cs 
-		<if test="cateType1 != null">
-		WHERE `cateType1`= #{cateType1}
-		</if>
-		order by `no` desc limit #{start}, 10;
+		SELECT * FROM `km_cs` WHERE `parent`=0 AND `cate`=#{cate} AND `cateType1`= #{cateType1} ORDER BY `no` DESC LIMIT #{start},10;
 	</select>
 	
 	<select id="selectCountTotal" resultType="int">
-		select count(`no`) from `km_cs` where `parent`=1 
+		select count(`no`) from `km_cs` where `parent`=0 
 		<if test="cateType1 != null">	
 		and `cateType1` = #{cateType1};
 		</if>
@@ -37,7 +33,12 @@
 		SELECT * FROM `km_cs` WHERE `cateType1`= #{cateType1} ORDER BY `cateType2`, `rdate` DESC;
 	</select>
 	
-	<select id="selectArticles">
-		select * from `km_cs` where `cate`=#{cate} and `cateType1`=#{cateType1} order by `no` desc limit #{start},10; 
+	<select id="selectArticles" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs` WHERE `parent`=0 AND `cate`=#{cate}
+		<if test="cateType1 != null">
+		AND `cateType1`= #{cateType1} 
+		</if> 
+		ORDER BY `no` DESC LIMIT #{start},10;
+		 
 	</select>
 </mapper>

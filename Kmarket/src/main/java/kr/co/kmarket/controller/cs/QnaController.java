@@ -16,8 +16,8 @@ public class QnaController {
 	@Autowired
 	private QnaService service;
 	
-	@GetMapping("/cs/qna/list")
-	public String list(String cateType1, String cateType2, String pg, Model model) {
+	@GetMapping("cs/qna/list")
+	public String list(String cate, String cateType1, String pg, Model model) {
 		//UserEntity user = myUser.getUser();
 		
 		int  currentPage = service.getCurrentPage(pg);
@@ -27,26 +27,27 @@ public class QnaController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		//List<CsVO> qna = service.selectArticles(cateType1, cateType2, start);
+		List<CsVO> qna = service.selectArticles(cate, cateType1, start);
 		
 		//model.addAttribute("user", user);
-		//model.addAttribute("qna",qna);
+		model.addAttribute("qna",qna);
+		model.addAttribute("cateType1",cateType1);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
 		
-		return "/cs/qna/list";
+		return "cs/qna/list";
 	}
 	
-	@GetMapping("/cs/qna/view")
+	@GetMapping("cs/qna/view")
 	public String view() {
-		return "/cs/qna/view";
+		return "cs/qna/view";
 	}
 	
-	@GetMapping("/cs/qna/write")
+	@GetMapping("cs/qna/write")
 	public String write() {
-		return "/cs/qna/write";
+		return "cs/qna/write";
 	}
 	
 }
