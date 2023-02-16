@@ -20,7 +20,8 @@
                                 <option value="seller">판매자</option>
                             </select>
                             <input type="text" name="keyword">
-                            <input type="submit" value="검색하기" onclick="getSearchList()">
+                            <input type="hidden" name="pageNum" value="1">
+                            <input type="submit" value="검색하기">
                         </form>
                     </div>
                     <table id="board">
@@ -56,23 +57,45 @@
 
                     </table>
                     <input type="button" value="선택삭제">
-                    <div class="paging">
+                    <th:block th:if="${#strings.isBlank(keyword)}">
+                        <div class="paging">
                         <span th:if="${groups[0]>1}" class="prev">
                             <a th:href="@{/admin/product/list(pg=${groups[0]-1})}"><&nbsp;이전</a>
                         </span>
 
-                        <span class="num">
+                            <span class="num">
                             <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
                                 <a th:href="@{/admin/product/list(pg=${i})}"
                                    th:classappend="${i==currentPage ? 'on': ''}"
-                                   >[[${i}]]</a>
+                                >[[${i}]]</a>
                             </th:block>
                         </span>
 
-                        <span th:if="${groups[1]<lastPage}" class="next">
+                            <span th:if="${groups[1]<lastPage}" class="next">
                             <a th:href="@{/admin/product/list(pg=${groups[1]+1})}">다음&nbsp;></a>
                         </span>
-                    </div>
+                        </div>
+                    </th:block>
+
+
+<!--                    <div class="paging" th:if="searchType != null">-->
+<!--                        <span th:if="${groups[0]>1}" class="prev">-->
+<!--                            <a th:href="@{/admin/product/list(pg=${groups[0]-1})}"><&nbsp;이전</a>-->
+<!--                        </span>-->
+
+<!--                        <span class="num">-->
+<!--                            <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">-->
+<!--                                <a th:href="@{/admin/product/list(pg=${i})}"-->
+<!--                                   th:classappend="${i==currentPage ? 'on': ''}"-->
+<!--                                >[[${i}]]</a>-->
+<!--                            </th:block>-->
+<!--                        </span>-->
+
+<!--                        <span th:if="${groups[1]<lastPage}" class="next">-->
+<!--                            <a th:href="@{/admin/product/list(pg=${groups[1]+1})}">다음&nbsp;></a>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
                 </section>
                 <p class="ico info">
                     <strong>Tip!</strong>

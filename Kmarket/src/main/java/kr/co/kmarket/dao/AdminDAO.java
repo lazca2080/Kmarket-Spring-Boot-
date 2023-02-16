@@ -22,9 +22,10 @@ public interface AdminDAO {
 
 	// (판매회원) 판매자 조회
 	public List<ProductVO> selectProducts(@Param("start") int start,
-										  @Param("seller") String seller,
+										  @Param("uid") String seller,
 										  @Param("searchType") String searchType,
-										  @Param("keyword") String keyword
+										  @Param("keyword") String keyword,
+										  @Param("level") int level
 	);
 
 	// 카테고리 분류
@@ -32,8 +33,10 @@ public interface AdminDAO {
 	public List<CateVO> selectCate2(@RequestParam String cate1);
 
 	// (admin) 판매 게시물 총 개수
-	public int selectCountTotalAdmin();
-
-	// (seller) 판매 게시물 총 개수
-	public int selectCountTotalSeller(String seller);
+	public int selectCountTotal(@Param("level") int level,
+								@Param("uid") String seller,
+								@Param("searchType") String searchType,
+								@Param("keyword") String keyword
+	);
+;
 }
