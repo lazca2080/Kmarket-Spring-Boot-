@@ -43,10 +43,12 @@
 	</select>
 
 	<!-- (판매회원) 판매자 조회 -->
-	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
+	<select id="selectProducts" parameterType="kr.co.kmarket.vo.ProductVO" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT a.uid,b.* FROM `km_member` AS a
 		JOIN `km_product` AS b ON a.`uid`= b.`seller`
-		WHERE `seller`= #{seller}
+		WHERE 1=1
+		<include refid="searchTypeANDKeyword"/>
+		<include refid="sellerType2"/>
 		ORDER BY `prodNo` DESC LIMIT #{start},10;
 	</select>
 
@@ -68,4 +70,26 @@
 	<select id="selectCate2" resultType="kr.co.kmarket.vo.CateVO">
 		SELECT * FROM `km_product_cate2` WHERE `cate1` = #{cate1};
 	</select>
+
+	<sql id="searchTypeANDKeyword">
+		<if test="searchType != null">
+			<choose>
+				<when test='searchType == "prodName"'>
+					AND prodName LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test='searchType == "prodNo"'>
+					AND prodNo LIKE CONCAT('%',#{keyword},'%')
+				</when>
+				<when test='searchType == "seller"'>
+					AND seller LIKE CONCAT('%',#{keyword},'%')
+				</when>
+			</choose>
+		</if>
+	</sql>
+
+	<sql id="sellerType2">
+		<if test="type == 2">
+			AND `uid`=#{uid}
+		</if>
+	</sql>
 </mapper>

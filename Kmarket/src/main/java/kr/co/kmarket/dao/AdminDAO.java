@@ -21,7 +21,11 @@ public interface AdminDAO {
 	public List<ProductVO> selectProductsAdmin(@Param("start") int start);
 
 	// (판매회원) 판매자 조회
-	public List<ProductVO> selectProducts(@Param("start") int start, @Param("seller") String seller);
+	public List<ProductVO> selectProducts(@Param("start") int start,
+										  @Param("seller") String seller,
+										  @Param("searchType") String searchType,
+										  @Param("keyword") String keyword
+	);
 
 	// 카테고리 분류
 	public List<CateVO> selectCate1();
