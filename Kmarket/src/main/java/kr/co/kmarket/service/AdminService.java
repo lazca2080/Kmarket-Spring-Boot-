@@ -32,9 +32,10 @@ public class AdminService {
 	public List<ProductVO> selectProducts(int start,
 										  String seller,
 										  String searchType,
-										  String keyword)
+										  String keyword,
+										  int level)
 	{
-		return dao.selectProducts(start, seller, searchType, keyword);
+		return dao.selectProducts(start, seller, searchType, keyword, level);
 	}
 
 
@@ -154,14 +155,11 @@ public class AdminService {
 		return currentPage;
 	}
 
-	// (admin) 판매게시물 총 개수
-	public int selectCountTotalAdmin(){
-		return dao.selectCountTotalAdmin();
-	}
-
-	// (seller) 판매게시물 총 개수
-	public int selectCountTotalSeller(String seller){
-		return dao.selectCountTotalSeller(seller);
+	/***
+	 * Level과 Seller(uid)로 따져서 admin, seller 구분
+	 * */
+	public int selectCountTotal(int level, String seller, String searchType, String keyword){
+		return dao.selectCountTotal(level, seller, searchType, keyword);
 	}
 
 	// 마지막 페이지 번호

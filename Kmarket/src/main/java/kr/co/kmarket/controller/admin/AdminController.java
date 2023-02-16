@@ -1,6 +1,5 @@
 package kr.co.kmarket.controller.admin;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import kr.co.kmarket.entity.UserEntity;
 import kr.co.kmarket.security.MyUserDetails;
-import kr.co.kmarket.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,49 +32,35 @@ public class AdminController {
 		return "admin/index";
 	}
 
-//	@GetMapping("adminSearch")
-//	@ResponseBody
-//	public List<ProductVO> getSeachList(@RequestParam("searchType") String searchType,
-//										@RequestParam("keyword") String keyword){
-//		return service.selectProducts(start, seller)
-//	}
-
-
 	// 상품 목록 페이지
 	@GetMapping("admin/product/list")
 	public String list(String pg, Model m, @AuthenticationPrincipal MyUserDetails myUserDetails,
-					   @RequestParam(value = "searchType", defaultValue = "prodName") String searchType,
+					   @RequestParam(value = "searchType", required = false) String searchType,
 					   @RequestParam(value = "keyword", required = false) String keyword) throws Exception
 	{
 		UserEntity member =  myUserDetails.getUser();
-
 		String seller = member.getUid(); // uid
 		int level = member.getLevel(); // uid level
 
+		int total = service.selectCountTotal(level, seller, searchType, keyword);
 		int currentPage = service.getCurrentPage(pg);
 		int start = service.getLimitStart(currentPage);
-		int total = service.selectCountTotalAdmin();
-		//int total = service.selectCountTotalSeller(seller);
 		int lastPage = service.getLastPageNum(total);
 		int pageStartNum = service.getPageStartNum(total, start);
 		int groups[] = service.getPageGroup(currentPage, lastPage);
 
-		// 판매회원 일 경우 보일 게시글
-		if(level == 5){
-			// 판매자 자기 자신 상품목록만 보여져야 하기 때문에 seller 추가
-			List<ProductVO> products = service.selectProducts(start, seller, searchType, keyword);
-			log.info("searchType : ", searchType);
-			log.info("keyword ", keyword);
-			m.addAttribute("products", products);
-		}else if(level == 7){
-			// 최고관리자 일 경우 보일 상품 전체 게시글
-			List<ProductVO> products = service.selectProductsAdmin(start);
-			m.addAttribute("products", products);
-		}
+		List<ProductVO> products = service.selectProducts(start, seller, searchType, keyword, level);
+
+		m.addAttribute("products", products);
 		m.addAttribute("currentPage", currentPage);
 		m.addAttribute("lastPage", lastPage);
 		m.addAttribute("pageStartNum", pageStartNum);
 		m.addAttribute("groups", groups);
+		m.addAttribute("keyword", keyword);
+
+
+		log.info("searchType : " + searchType);
+		log.info("keyword : " + keyword);
 		return "admin/product/list";
 	}
 	
