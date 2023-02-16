@@ -8,7 +8,7 @@ import lombok.Setter;
 public class OrderVO {
 	
 	private int ordNo;
-	private int ordUid;
+	private String ordUid;
 	private int ordCount;
 	private int ordPrice;
 	private int ordDiscount;

@@ -58,19 +58,24 @@
                     <table border="0">
                         <tr>
                             <td>주문번호</td>
-                            <td>2008101324568</td>
+                            <td>[[${order.ordNo}]]</td>
                             <td rowspan="3">총 결제금액</td>
                             <td rowspan="3">
-                                <span>[[${#numbers.formatInteger(total, 0, 'COMMA')}]]</span>원
+                                <span>[[${#numbers.formatInteger(order.ordTotPrice, 0, 'COMMA')}]]</span>원
                             </td>
                         </tr>
                         <tr>
                             <td>결제방법</td>
-                            <td>신용카드</td>
+                            <td th:if="${order.ordPayment == 'credit'}">신용카드 결제</td>
+                            <td th:if="${order.ordPayment == 'check'}">체크카드 결제</td>
+                            <td th:if="${order.ordPayment == 'realTime'}">실시간 계좌이체</td>
+                            <td th:if="${order.ordPayment == 'deposit'}">무통장 입금</td>
+                            <td th:if="${order.ordPayment == 'sellPhone'}">휴대폰 결제</td>
+                            <td th:if="${order.ordPayment == 'kakao'}">카카오페이</td>
                         </tr>
                         <tr>
                             <td>주문자/연락처</td>
-                            <td>홍길동/010-1234-1234</td>
+                            <td>[[${order.recipName}]]/[[${order.recipHp}]]</td>
                         </tr>
                     </table>
                 </article>
@@ -80,20 +85,20 @@
                     <table border="0">
                         <tr>
                             <td>수취인</td>
-                            <td>홍길동</td>
+                            <td>[[${order.recipName}]]</td>
                             <td>주문자 정보</td>
                         </tr>
                         <tr>
                             <td>연락처</td>
-                            <td>010-1234-1234</td>
+                            <td>[[${order.recipHp}]]</td>
                             <td rowspan="2">
-                                홍길동
-                                <br> 010-1234-1234
+                                [[${order.recipName}]]
+                                <br> [[${order.recipHp}]]
                             </td>
                         </tr>
                         <tr>
                             <td>배송지 주소</td>
-                            <td>부산광역시 강남구 대연동 123 10층</td>
+                            <td>[[${order.recipAddr1 +  order.recipAddr2}]]</td>
                         </tr>
                     </table>
                 </article>
