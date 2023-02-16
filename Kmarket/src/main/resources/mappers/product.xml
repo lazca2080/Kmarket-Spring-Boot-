@@ -29,7 +29,15 @@
 	
 	<!-- 카테고리별 상품 목록 -->
 	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
-		SELECT * FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2};
+		SELECT * FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2}
+		<choose>
+			<when test="sort == 'sold'"> ORDER BY `sold` DESC; </when>
+			<when test="sort == 'lowPrice'"> ORDER BY `price` ASC; </when>
+			<when test="sort == 'highPrice'"> ORDER BY `price` DESC; </when>
+			<when test="sort == 'score'"> ORDER BY `score` DESC; </when>
+			<when test="sort == 'review'"> ORDER BY `review` DESC; </when>
+			<when test="sort == 'date'"> ORDER BY `rdate` DESC; </when>
+		</choose>
 	</select>
 	
 	<!-- 장바구니 등록 -->

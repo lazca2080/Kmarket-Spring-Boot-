@@ -33,8 +33,8 @@ public class ProductService {
 	}
 	
 	// 상품 카테고리에 맞는 상품 리스트
-	public List<ProductVO> selectProducts(String prodCate1, String prodCate2){
-		return dao.selectProducts(prodCate1, prodCate2);
+	public List<ProductVO> selectProducts(String prodCate1, String prodCate2, String sort){
+		return dao.selectProducts(prodCate1, prodCate2, sort);
 	}
 	
 	// 상품번호에 맞는 상품 불러오기
