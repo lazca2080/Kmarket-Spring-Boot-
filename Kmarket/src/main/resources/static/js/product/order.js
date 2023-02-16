@@ -65,7 +65,7 @@ $(function(){
 		console.log('usedPoint : '+point.value);
 		console.log('ordTotPrice : '+totalPrice);
 		console.log('recipName : '+orderer);
-		console.log('recipHp : '+hp);
+		console.log('recipHptest : '+hp);
 		console.log('recipZip : '+zip);
 		console.log('recipAddr1 : '+addr1);
 		console.log('recipAddr2 : '+addr2);
