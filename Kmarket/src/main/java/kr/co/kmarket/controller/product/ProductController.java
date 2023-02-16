@@ -44,14 +44,17 @@ public class ProductController {
 	
 	// 상품 목록
 	@GetMapping("product/list")
-	public String list(Model model, String prodCate1, String prodCate2) {
+	public String list(Model model, String prodCate1, String prodCate2, String sort) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
 		
-		// 상품 카테고리에 맞는 상품 리스트
-		List<ProductVO> products = service.selectProducts(prodCate1, prodCate2);
-		model.addAttribute("prods", products);
+		List<ProductVO> products = service.selectProducts(prodCate1, prodCate2, sort);
+		model.addAttribute("prods", products);			
+		
+		model.addAttribute("prodCate1", prodCate1);
+		model.addAttribute("prodCate2", prodCate2);
+		model.addAttribute("sort", sort);
 		
 		return "product/list";
 	}
@@ -163,10 +166,18 @@ public class ProductController {
 			ProductVO order = (ProductVO) session.getAttribute("order");
 			ProductVO prod  = service.selectProduct(order.getProdNo());
 			order.setProdName(prod.getProdName());
-			order.setDescript(order.getDescript());
+			order.setDescript(prod.getDescript());
 			order.setProdCate1(prod.getProdCate1());
 			order.setProdCate2(prod.getProdCate2());
 			order.setThumb2(prod.getThumb2());
+			
+			List<String> checkList = new ArrayList<>();
+			checkList.add(order.getProdNo());
+			session.setAttribute("cartCheckList", checkList);
+			
+			List<ProductVO> product = service.selectCartOrder(checkList, uid);
+			session.setAttribute("complete", product);
+			
 			model.addAttribute("prod", order);
 			model.addAttribute("total", order);
 			model.addAttribute("user", myuser.getUser());
@@ -209,6 +220,7 @@ public class ProductController {
 		// 주문하기 버튼과 동시에 주문 상품번호 배열을 세션에 저장
 		HttpSession session = req.getSession();
 		session.setAttribute("cartCheckList", checkList);
+		System.out.println("checkList :  "+ checkList);
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", 1);
@@ -217,11 +229,12 @@ public class ProductController {
 	// 상품 주문 완료
 	@GetMapping("product/complete")
 	public String complete(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
+		HttpSession session = req.getSession();
+		
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
 		
-		HttpSession session = req.getSession();
 		@SuppressWarnings("unchecked")
 		List<ProductVO> complete = (List<ProductVO>) session.getAttribute("complete");
 		OrderVO order = (OrderVO) session.getAttribute("order");
@@ -237,10 +250,10 @@ public class ProductController {
 	@Transactional
 	@PostMapping("product/complete")
 	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser, HttpServletRequest req) {
+		HttpSession session = req.getSession();
 		String uid = myuser.getUser().getUid();
 		int point = myuser.getUser().getPoint();
-		
-		HttpSession session = req.getSession();
+		String type = (String) session.getAttribute("type"); 
 		
 		Gson gson = new Gson();
 		OrderVO vo = gson.fromJson(order, OrderVO.class);
@@ -277,16 +290,19 @@ public class ProductController {
 		// km_product_order insert
 		int result = service.insertComplete(vo);
 		
-		// km_product_order_item insert
-		@SuppressWarnings("unchecked")
-		List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
-		service.insertCompleteItem(randOrdNo, uid, checkList);
-		
 		// km_member_point insert
 		service.insertCompletePoint(randOrdNo, uid, vo.getSavePoint());
 		
-		// km_product_cart delete
-		service.deleteCompleteCart(uid, checkList);
+		// km_product_order_item insert
+		@SuppressWarnings("unchecked")
+		List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
+		System.out.println(checkList);
+		service.insertCompleteItem(randOrdNo, uid, checkList);
+		
+		if(type == "cart") {
+			// km_product_cart delete
+			service.deleteCompleteCart(uid, checkList);
+		}
 		
 		// 이 밑으로 많이 지저분함 수정 필수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		

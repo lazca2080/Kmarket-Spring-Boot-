@@ -15,22 +15,22 @@
                 </nav>
                 <ul class="sort">
                     <li>
-                        <a href="#" class="on">판매많은순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='sold')}" th:classappend="${sort} == 'sold' ? 'on'">판매많은순</a>
                     </li>
                     <li>
-                        <a href="#">낮은가격순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='lowPrice')}" th:classappend="${sort} == 'lowPrice' ? 'on'">낮은가격순</a>
                     </li>
                     <li>
-                        <a href="#">높은가격순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='highPrice')}" th:classappend="${sort} == 'highPrice' ? 'on'">높은가격순</a>
                     </li>
                     <li>
-                        <a href="#">평점높은순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='score')}" th:classappend="${sort} == 'score' ? 'on'">평점높은순</a>
                     </li>
                     <li>
-                        <a href="#">후기많은순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='review')}" th:classappend="${sort} == 'review' ? 'on'">후기많은순</a>
                     </li>
                     <li>
-                        <a href="#">최근등록순</a>
+                        <a th:href="@{/product/list (prodCate1=${prodCate1}, prodCate2=${prodCate2}, sort='date')}" th:classappend="${sort} == 'date' ? 'on'">최근등록순</a>
                     </li>
                 </ul>
                 <table>

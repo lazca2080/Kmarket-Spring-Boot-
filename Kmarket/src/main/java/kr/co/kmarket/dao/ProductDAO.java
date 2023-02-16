@@ -21,7 +21,7 @@ public interface ProductDAO {
 	public List<CateVO> selectCate();
 	
 	// 상품 카테고리에 맞는 상품 리스트
-	public List<ProductVO> selectProducts(@Param("prodCate1") String prodCate1, @Param("prodCate2") String prodCate2);
+	public List<ProductVO> selectProducts(@Param("prodCate1") String prodCate1, @Param("prodCate2") String prodCate2, @Param("sort") String sort);
 	
 	// 상품 번호에 맞는 상품 불러오기
 	public ProductVO selectProduct(String prodNo);
