@@ -13,8 +13,8 @@ public class NoticeService {
 	@Autowired
 	private CsDAO dao;
 	
-	public List<CsVO> selectNtList(String cateType1, int start){
-		return dao.selectNtList(cateType1,start);
+	public List<CsVO> selectArticles(String cate, String cateType1, int start){
+		return dao.selectArticles(cate,cateType1,start);
 	}
 	
 	public CsVO selectCs(int no) {
@@ -22,7 +22,6 @@ public class NoticeService {
 		dao.updateArticleHit(no);
 		return vo;
 	}
-	
 	
 	// 페이지 시작값
 		public int getLimitStart(int currentPage) {
@@ -75,4 +74,5 @@ public class NoticeService {
 			
 			return groups;
 		}
+		
 }

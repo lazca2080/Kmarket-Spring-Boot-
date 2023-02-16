@@ -25,8 +25,8 @@ public class NoticeController {
 	private NoticeService service;
 	
 
-	@GetMapping("/cs/notice/list")
-	public String list(@AuthenticationPrincipal MyUserDetails myUser, Model model, String cateType1, String pg) {
+	@GetMapping("cs/notice/list")
+	public String list(@AuthenticationPrincipal MyUserDetails myUser, Model model, String cate, String cateType1, String pg) {
 		//UserEntity user = myUser.getUser();
 		
 		int  currentPage = service.getCurrentPage(pg);
@@ -36,27 +36,30 @@ public class NoticeController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		List<CsVO> notice = service.selectNtList(cateType1, start);
+		if(cate == null) { cate="notice"; }
+		
+		List<CsVO> notice = service.selectArticles(cate,cateType1,start);
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("notice",notice);
+		model.addAttribute("cate",cate);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
 		
-		log.info("sdf : "+groups[1]);
-		return "/cs/notice/list";
+		log.info("sdf : "+ currentPage);
+		return "cs/notice/list";
 	}
 	
 	// 글 보기
-	@GetMapping("/cs/notice/view")
+	@GetMapping("cs/notice/view")
 	public String view(@RequestParam("no") int no, Model model, int pg) {
 		CsVO notice = service.selectCs(no);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("pg", pg);
 		log.info("sdf : "+pg);
-		return "/cs/notice/view";
+		return "cs/notice/view";
 	}
 }

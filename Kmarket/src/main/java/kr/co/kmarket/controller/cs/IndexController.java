@@ -17,11 +17,11 @@ public class IndexController {
 	@Autowired
 	private IndexService service;
 	
-	@GetMapping(value = {"/cs","/cs/index"})
+	@GetMapping(value = {"cs", "cs/index"})
 	public String index(Model model) {
 		List<CsVO> cate = service.selectCss();
 		model.addAttribute("cate",cate);
 		log.info("est"+cate);
-		return "/cs/index";
+		return "cs/index";
 	}
 }

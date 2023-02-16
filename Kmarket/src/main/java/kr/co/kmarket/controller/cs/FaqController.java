@@ -19,7 +19,7 @@ public class FaqController {
 	@Autowired
 	private FaqService service;
 	
-	@GetMapping("/cs/faq/list")
+	@GetMapping("cs/faq/list")
 	public String list(String cateType1, String cateType2, String no, Model model) {
 		List<CsVO> faq = service.selectFaqArticles(cateType1, cateType2); 
 		
@@ -29,11 +29,11 @@ public class FaqController {
 		model.addAttribute("faq", faq);
 		
 		log.info("sdf : "+cateType2);
-		return "/cs/faq/list";
+		return "cs/faq/list";
 	}
 	
-	@GetMapping("/cs/faq/view")
+	@GetMapping("cs/faq/view")
 	public String view() {
-		return "/cs/faq/view";
+		return "cs/faq/view";
 	}
 }

@@ -13,8 +13,8 @@ public class QnaService {
 	@Autowired
 	private CsDAO dao;
 	
-	public void selectArticles(String cateType1, String cateType2, int start){
-		//return dao.selectArticles(cateType1, cateType2, start);
+	public List<CsVO> selectArticles(String cate, String cateType1, int start){
+		return dao.selectArticles(cate, cateType1, start);
 	};
 	
 	// 페이지 시작값
