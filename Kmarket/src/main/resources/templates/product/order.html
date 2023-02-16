@@ -95,19 +95,19 @@
                             <tr>
                                 <td>우편번호</td>
                                 <td>
-                                    <input type="text" name="zip" id="zip">
+                                    <input type="text" name="zip" id="zip" th:value="${user.zip}" readonly="readonly">
                                     <input type="button" onclick="zipcode()" value="검색">
                                 </td>
                             </tr>
                             <tr>
                                 <td>기본주소</td>
                                 <td>
-                                    <input type="text" name="addr1" id="addr1">
+                                    <input type="text" name="addr1" id="addr1" th:value="${user.addr1}" readonly="readonly">
                                 </td>
                             </tr>
                             <tr>
                                 <td>상세주소</td>
-                                <td><input type="text" name="addr2" id="addr2"></td>
+                                <td><input type="text" name="addr2" id="addr2" th:value="${user.addr2}"></td>
                             </tr>
                         </table>
                     </article>
@@ -117,7 +117,7 @@
                         <div>
                             <p>
                                 현재 포인트 : 
-                                <span class="userPoint">[[${#numbers.formatInteger(point, 0, 'COMMA')}]]</span>점
+                                <span class="userPoint">[[${#numbers.formatInteger(user.point, 0, 'COMMA')}]]</span>점
                             </p>
 
                             <label>

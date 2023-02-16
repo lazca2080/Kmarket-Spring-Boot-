@@ -71,4 +71,19 @@ public class ProductService {
 	public int insertComplete(OrderVO vo) {
 		return dao.insertComplete(vo);
 	}
+	
+	// 주문 상품 삽입
+	public int insertCompleteItem(int ordNo, String uid, List<String> checkList) {
+		return dao.insertCompleteItem(ordNo, uid, checkList);
+	}
+	
+	// 포인트 적입
+	public int insertCompletePoint(int ordNo, String uid, int point) {
+		return dao.insertCompletePoint(ordNo, uid, point);
+	};
+	
+	// 장바구니 주문 상품 삭제
+	public int deleteCompleteCart(String uid, List<String> checkList) {
+		return dao.deleteCompleteCart(uid, checkList);
+	}
 }

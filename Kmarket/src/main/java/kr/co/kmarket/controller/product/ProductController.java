@@ -1,10 +1,12 @@
 package kr.co.kmarket.controller.product;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,11 +92,21 @@ public class ProductController {
 		Gson gson = new Gson();
 		ProductVO vo = gson.fromJson(prod, ProductVO.class);
 		
-		// 테스트용 uid
+		HttpSession session = req.getSession();
+		
 		vo.setSeller(myuser.getUser().getUid());
 		vo.setIp(req.getRemoteAddr());
-				
-		int result = service.insertCart(vo);
+		
+		int result = 0;
+		
+		if(vo.getType().equals("cart")) {
+			result = service.insertCart(vo);
+			session.setAttribute("type", "cart");
+		}else if(vo.getType().equals("order")) {
+			result = 9527;
+			session.setAttribute("type", "order");
+			session.setAttribute("order", vo);
+		}
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
@@ -141,32 +154,50 @@ public class ProductController {
 		// 전달 받은 상품 정보
 		String uid = myuser.getUser().getUid(); // 임시
 		
-		// 장바구니에서 넘어온 session 처리
+		// 장바구니, 구매하기에서 넘어온 session 처리
 		HttpSession session = req.getSession();
+		String type = (String) session.getAttribute("type");
 		
-		@SuppressWarnings("unchecked")
-		List<String> checkList = (List<String>) session.getAttribute("order");
-		
-		// 장바구니가 비워져있는 경우 cart로 이동
-		if(checkList == null) { return "product/cart"; }
-		
-		// 선택된 상품 조회
-		List<ProductVO> prod = service.selectCartOrder(checkList, uid);
-		session.setAttribute("complete", prod);
-		
-		// 상품 총합 계산
-		ProductVO total = new ProductVO();
-		total.setCount(prod.size());
-		for(ProductVO vo:prod) {
-			total.setPrice(total.getPrice() + vo.getPrice());
-			total.setDelivery(total.getDelivery() + vo.getDelivery());
-			total.setPoint(total.getPoint() + vo.getPoint());
-			total.setTotal(total.getTotal() + vo.getTotal());
+		if(type == "order") {
+			// 구매하기에서 넘어 왔을 때
+			ProductVO order = (ProductVO) session.getAttribute("order");
+			ProductVO prod  = service.selectProduct(order.getProdNo());
+			order.setProdName(prod.getProdName());
+			order.setDescript(order.getDescript());
+			order.setProdCate1(prod.getProdCate1());
+			order.setProdCate2(prod.getProdCate2());
+			order.setThumb2(prod.getThumb2());
+			model.addAttribute("prod", order);
+			model.addAttribute("total", order);
+			model.addAttribute("user", myuser.getUser());
+			
+		}else if(type == "cart") {
+			// 장바구니에서 넘어 왔을 때
+			@SuppressWarnings("unchecked")
+			List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
+			
+			// 장바구니가 비워져있는 경우 cart로 이동
+			if(checkList == null) { return "product/cart"; }
+			
+			// 선택된 상품 조회
+			List<ProductVO> prod = service.selectCartOrder(checkList, uid);
+			session.setAttribute("complete", prod);
+			
+			// 상품 총합 계산
+			ProductVO total = new ProductVO();
+			total.setCount(prod.size());
+			for(ProductVO vo:prod) {
+				total.setPrice(total.getPrice() + vo.getPrice());
+				total.setDelivery(total.getDelivery() + vo.getDelivery());
+				total.setPoint(total.getPoint() + vo.getPoint());
+				total.setTotal(total.getTotal() + vo.getTotal());
+			}
+			
+			model.addAttribute("prod", prod);
+			model.addAttribute("total", total);
+			model.addAttribute("user", myuser.getUser());
 		}
 		
-		model.addAttribute("prod", prod);
-		model.addAttribute("total", total);
-		model.addAttribute("point", myuser.getUser().getPoint());
 		
 		return "product/order";
 	}
@@ -175,9 +206,9 @@ public class ProductController {
 	@ResponseBody
 	@PostMapping("product/order")
 	public Map<String, Integer> selectCartOrder(@RequestParam(value="checkList[]") List<String> checkList, HttpServletRequest req) {
-		// 주문하기 버튼과 동시에 배열을 세션에 저장
+		// 주문하기 버튼과 동시에 주문 상품번호 배열을 세션에 저장
 		HttpSession session = req.getSession();
-		session.setAttribute("order", checkList);
+		session.setAttribute("cartCheckList", checkList);
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", 1);
@@ -193,47 +224,74 @@ public class ProductController {
 		HttpSession session = req.getSession();
 		@SuppressWarnings("unchecked")
 		List<ProductVO> complete = (List<ProductVO>) session.getAttribute("complete");
+		OrderVO order = (OrderVO) session.getAttribute("order");
 		if(complete == null) { return "product/cart"; }
 		
-		int totalPrice = 0;
-		for(ProductVO total:complete) {
-			totalPrice = totalPrice + total.getTotal(); 
-		}
-		
 		model.addAttribute("complete", complete);
-		model.addAttribute("total", totalPrice);
+		model.addAttribute("order", order);
 		
 		return "product/complete";
 	}
 	
+	@ResponseBody
+	@Transactional
 	@PostMapping("product/complete")
-	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser) {
-		/*
-		Gson gson = new Gson();
-		OrderVO vo = gson.fromJson(order, OrderVO.class);
-		*/
+	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser, HttpServletRequest req) {
 		String uid = myuser.getUser().getUid();
 		int point = myuser.getUser().getPoint();
 		
-		log.info(order);
-		/*
-		// 랜덤 숫자
-		vo.setOrdNo((int)Math.random()*10000000);
+		HttpSession session = req.getSession();
+		
+		Gson gson = new Gson();
+		OrderVO vo = gson.fromJson(order, OrderVO.class);
+		vo.setOrdUid(uid);
+		
+		// 고유번호 ------------ 수정 필요 -------------
+		SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+		String now = sdf.format(new Date());
+		
+		Random random = new Random(1000000000);
+		int rand = random.nextInt();
+		int randOrdNo = rand + Integer.parseInt(now);
+		// 고유번호 ------------ 수정 필요 -------------
+		
+		vo.setOrdNo(randOrdNo);
+		
+		session.setAttribute("order", vo);
 		
 		// point 검증 -> input value값은 개발자 도구에서 수정이 가능하고 수정 된 상태로 넘겨짐
 		// 따라서 서버에서 한번 더 검증을 거쳐야함
-		if(vo.getSavePoint() < 5000) { 
-			vo.setSavePoint(0); 
-		}else if(vo.getSavePoint() > point) {
-			vo.setSavePoint(0);
+		if(vo.getUsedPoint() < 5000) {
+			// 사용한 포인트가 5000원 미만일 때
+			// usedPoint 값은 적용을 눌러야만 차감된 상태로 넘어옴
+			// js에서 비정상 포인트일 때 작동을 막아놓음
+			// vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+			vo.setUsedPoint(0);
+		}else if(vo.getUsedPoint() > point) {
+			// vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+			vo.setUsedPoint(0);
 		}
-		log.info(""+ vo.getRecipZip());
 		
-		//int result = service.insertComplete(vo);
+		// 이 밑으로 많이 지저분함 수정 필수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		
-		*/
+		// km_product_order insert
+		int result = service.insertComplete(vo);
+		
+		// km_product_order_item insert
+		@SuppressWarnings("unchecked")
+		List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
+		service.insertCompleteItem(randOrdNo, uid, checkList);
+		
+		// km_member_point insert
+		service.insertCompletePoint(randOrdNo, uid, vo.getSavePoint());
+		
+		// km_product_cart delete
+		service.deleteCompleteCart(uid, checkList);
+		
+		// 이 밑으로 많이 지저분함 수정 필수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		
 		Map<String, Integer> map = new HashMap<>();
-		//map.put("result", result);
+		map.put("result", result);
 		
 		return map;
 	}

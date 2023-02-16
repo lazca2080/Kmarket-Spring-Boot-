@@ -84,7 +84,7 @@
 			`ordUid`=#{ordUid},
 			`ordCount`=#{ordCount},
 			`ordPrice`=#{ordPrice},
-			`ordDiscount`=#ordDiscount{},
+			`ordDiscount`=#{ordDiscount},
 			`ordDelivery`=#{ordDelivery},
 			`savePoint`=#{savePoint},
 			`usedPoint`=#{usedPoint},
@@ -98,4 +98,31 @@
 			`ordComplete`=1,
 			`ordDate`=NOW()
 	</insert>
+	
+	<!-- 주문 상품 입력 -->
+	<insert id="insertCompleteItem">
+		INSERT INTO `km_product_order_item` (`prodNo`, `ordNo`, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total`)
+		SELECT `prodNo`, #{ordNo}, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total` FROM `km_product_cart`
+		WHERE `uid`=#{uid} AND `prodNo` IN
+		<foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+			#{checkList}
+		</foreach>
+	</insert>
+	
+	<!-- 포인트 입력 -->
+	<insert id="insertCompletePoint">
+		INSERT INTO `km_member_point` SET
+			`uid`=#{uid},
+			`ordNo`=#{ordNo},
+			`point`=#{point},
+			`pointDate`=NOW();
+	</insert>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteCompleteCart">
+		DELETE FROM `km_product_cart` WHERE `uid`=#{uid} AND `prodNO` IN
+		<foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+			#{checkList}
+		</foreach>
+	</delete>
 </mapper>

@@ -71,6 +71,7 @@ $(function(){
 		// 마찬가지로 상품과 관련된 모든 정보는 변조의 위험이 있어서 input type=hidden을 사용하지 않음
 	
 		let jsonData = {
+			"type" : 'cart',
 			"prodNo" : prodNo,
 			"count" : count,
 			"price" : price * count,
@@ -101,6 +102,53 @@ $(function(){
 		
 	});
 	/* 장바구니 ------------------------------------------------------------------------*/
+	
+	/* 구매하기 ------------------------------------------------------------------------*/	
+	var order = document.getElementById('order');
+	order.addEventListener('click', function(){
+		let prodNo   = document.getElementById('prodNo').innerText;   // 상품 번호
+		let count    = num.value;                                     // 수량
+		price        = vPrice.innerText.split(',').join('');          // 가격
+		let discount = document.getElementById('discount').innerText; // 할인 율
+		let point    = Math.round(price * 0.01);                      // 적립 포인트
+		let delivery = document.getElementById('delivery').innerText; // 배송 비
+		if(delivery == '무료배송'){ delivery = 0; }
+		totalPrice   = (vTotalPrice.innerText).split(',').join('');   // 최종 가격
+		
+		let jsonData = {
+			"type" : 'order',
+			"prodNo" : prodNo,
+			"count" : count,
+			"price" : price * count,
+			"discount" : discount,
+			"point" : point,
+			"delivery" : delivery,
+			"total" : totalPrice
+		}
+	
+		let prod = JSON.stringify(jsonData);
+		
+		console.log(jsonData);
+		console.log(prod);
+		
+		$.ajax({
+			url:'/Kmarket/product/cart',
+			method:'POST',
+			data:{ 'prod' : prod},
+			dataType:'JSON',
+			success: function(data){
+				
+				if(data.result == 9527){
+					if(confirm('구매 하시겠습니까?')){
+						location.href = "/Kmarket/product/order";
+					}
+				}else{
+					alert('다시 시도하여 주십시요' + data.result);
+				}
+			}
+		});
+	});
+	/* 구매하기 ------------------------------------------------------------------------*/
 	
 	// 배송 예정 날짜 수정 ------------------------------------------------------------------
 	// 현재날짜

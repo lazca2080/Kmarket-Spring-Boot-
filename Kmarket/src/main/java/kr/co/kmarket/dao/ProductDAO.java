@@ -43,4 +43,13 @@ public interface ProductDAO {
 	
 	// 주문하기
 	public int insertComplete(OrderVO vo);
+	
+	// 주문 상품 삽입
+	public int insertCompleteItem(@Param("ordNo") int ordNo, @Param("uid") String uid, @Param("checkList") List<String> checkList);
+	
+	// 적립 포인트
+	public int insertCompletePoint(@Param("ordNo") int ordNo, @Param("uid") String uid, @Param("point") int point);
+	
+	// 장바구니 주문 상품 삭제
+	public int deleteCompleteCart(@Param("uid") String uid, @Param("checkList") List<String> checkList);
 }
