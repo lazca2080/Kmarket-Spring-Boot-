@@ -46,7 +46,6 @@
 		<include refid="sellerLevel5"/>
 		ORDER BY `prodNo` DESC LIMIT #{start},10;
 	</select>
-
 	<!--
 		1. 총 게시글 수 구한다(admin).
 		2. 일반 판매회원이면 자기가 올린 게시글 수만 가져옴

@@ -56,8 +56,8 @@ public class AdminController {
 		m.addAttribute("lastPage", lastPage);
 		m.addAttribute("pageStartNum", pageStartNum);
 		m.addAttribute("groups", groups);
+		m.addAttribute("searchType", searchType);
 		m.addAttribute("keyword", keyword);
-
 
 		log.info("searchType : " + searchType);
 		log.info("keyword : " + keyword);
