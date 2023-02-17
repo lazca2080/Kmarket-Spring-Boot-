@@ -27,7 +27,7 @@
 		SELECT * FROM `km_product` WHERE `prodNo`=#{prodNo};
 	</select>
 	
-	<!-- 카테고리별 상품 목록 -->
+	<!-- 카테고리별 상품 목록1 -->
 	<select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
 		SELECT * FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2}
 		<choose>
