@@ -6,15 +6,15 @@
 <mapper namespace="kr.co.kmarket.dao.ProductDAO">
 	<!-- index -->
 	<select id="selectIndex" resultType="kr.co.kmarket.vo.ProductVO">
-		(SELECT b.* FROM (SELECT  'sold' AS `type`, a.* FROM `km_product` a ORDER BY `sold` DESC LIMIT 5) AS b)
+		(SELECT  'sold' AS `type`, a.* FROM `km_product` a ORDER BY `sold` DESC LIMIT 5)
 		UNION
-		(SELECT b.* FROM (SELECT  'hit' AS `type`, a.* FROM `km_product` a ORDER BY `hit` DESC LIMIT 8) AS b)
+		(SELECT  'hit' AS `type`, a.* FROM `km_product` a ORDER BY `hit` DESC LIMIT 8)
 		UNION
-		(SELECT b.* FROM (SELECT  'score' AS `type`, a.* FROM `km_product` a ORDER BY `score` DESC LIMIT 8) AS b)
+		(SELECT  'score' AS `type`, a.* FROM `km_product` a ORDER BY `score` DESC LIMIT 8)
 		UNION
-		(SELECT b.* FROM (SELECT  'new' AS `type`, a.* FROM `km_product` a ORDER BY `rdate` DESC LIMIT 8) AS b)
+		(SELECT  'new' AS `type`, a.* FROM `km_product` a ORDER BY `rdate` DESC LIMIT 8)
 		UNION
-		(SELECT b.* FROM (SELECT  'discount' AS `type`, a.* FROM `km_product` a ORDER BY `discount` DESC LIMIT 8) AS b)
+		(SELECT  'discount' AS `type`, a.* FROM `km_product` a ORDER BY `discount` DESC LIMIT 8)
 	</select>
 	
 	<!-- category -->
@@ -133,4 +133,17 @@
 			#{checkList}
 		</foreach>
 	</delete>
+	
+	<!-- 검색 -->
+	<select id="searchProduct" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT * FROM `km_product` WHERE `prodName` LIKE CONCAT('%', #{keyWord}, '%')
+		<choose>
+			<when test="sort == 'sold'"> ORDER BY `sold` DESC; </when>
+			<when test="sort == 'lowPrice'"> ORDER BY `price` ASC; </when>
+			<when test="sort == 'highPrice'"> ORDER BY `price` DESC; </when>
+			<when test="sort == 'score'"> ORDER BY `score` DESC; </when>
+			<when test="sort == 'review'"> ORDER BY `review` DESC; </when>
+			<when test="sort == 'date'"> ORDER BY `rdate` DESC; </when>
+		</choose>
+	</select>
 </mapper>

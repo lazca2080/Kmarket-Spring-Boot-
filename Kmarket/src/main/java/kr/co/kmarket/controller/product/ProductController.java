@@ -220,7 +220,6 @@ public class ProductController {
 		// 주문하기 버튼과 동시에 주문 상품번호 배열을 세션에 저장
 		HttpSession session = req.getSession();
 		session.setAttribute("cartCheckList", checkList);
-		System.out.println("checkList :  "+ checkList);
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", 1);
@@ -311,5 +310,22 @@ public class ProductController {
 		
 		return map;
 	}
-
+	
+	@GetMapping("product/search")
+	public String search(Model model, String keyWord, String sort) {
+		// 카테고리 분류
+		Map<String, List<CateVO>> cate = service.selectCate();
+		model.addAttribute("cate", cate);
+		
+		model.addAttribute("keyWord", keyWord);
+		
+		List<ProductVO> search = service.searchProduct(keyWord, sort);
+		
+		model.addAttribute("prods", search);
+		model.addAttribute("sort", sort);
+		model.addAttribute("size", search.size());
+		
+		return "product/search";
+	}
+	
 }

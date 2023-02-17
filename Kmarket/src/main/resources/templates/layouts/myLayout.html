@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">    
+    <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>    
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>    
+    <link rel="stylesheet" th:href="@{/css/my.css}">
+</head>
+<body>
+    <div id="wrapper">
+    	<th:block th:replace="~{fragments/my/_header::headerFragment}"></th:block>
+        <div id="my">
+			<th:block th:replace="~{fragments/my/_nav::navFragment}"></th:block>
+			<div th:class="${type}">
+				<th:block th:replace="~{fragments/my/_ul::ulFragment}"></th:block>
+				<th:block layout:fragment="content"></th:block>
+			</div>
+        </div>
+    </div>    
+    <th:block th:replace="~{fragments/my/_footer::footerFragment}"></th:block>
+	<th:block layout:fragment="script"></th:block>
+</body>
+</html>
