@@ -812,7 +812,9 @@ footer  p > strong {
      background-image: url('../img/cs/cs_sprites.png');
      background-position: -628px -652px;
  }
- #cs > .qna > .list > article > .page > .num {}
+ #cs > .qna > .list > article > .page > .num {
+ 	 font-weight: bold
+ }
  #cs > .qna > .list > article > .page > .on {
      background: #006cff;
      border-radius: 17px;

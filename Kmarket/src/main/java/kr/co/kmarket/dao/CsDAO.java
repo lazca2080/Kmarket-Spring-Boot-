@@ -19,6 +19,9 @@ public interface CsDAO {
 	public List<CsVO> selectFaqArticles(@Param("cateType1") String cateType1, @Param("cateType2") String cateType2);
 	
 	
+	//글 작성
+	public int insertArticle(CsVO vo);
+	
 	
 	// 글 페이지
 	public int selectCountTotal(String cateType1);
