@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.kmarket.dao.ProductDAO;
+import kr.co.kmarket.repository.ProductRepo;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
@@ -85,5 +86,10 @@ public class ProductService {
 	// 장바구니 주문 상품 삭제
 	public int deleteCompleteCart(String uid, List<String> checkList) {
 		return dao.deleteCompleteCart(uid, checkList);
+	}
+	
+	// 검색
+	public List<ProductVO> searchProduct(String keyWord, String sort) {
+		return dao.searchProduct(keyWord, sort);
 	}
 }

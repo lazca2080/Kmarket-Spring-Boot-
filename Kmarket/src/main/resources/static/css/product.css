@@ -565,6 +565,17 @@ main > section > section > article .dis_price > .free {
     box-sizing: border-box;
 }
 
+#product > .none {
+    padding: 130px;
+    box-sizing: border-box;
+    background: #f3f3f1;
+    height: 425px;
+}
+
+#product > .none > nav > h2 {
+	padding-top: 10px;
+}
+
 #product > .list {}
 
 #product > section > nav {

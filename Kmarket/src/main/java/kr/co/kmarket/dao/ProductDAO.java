@@ -52,4 +52,7 @@ public interface ProductDAO {
 	
 	// 장바구니 주문 상품 삭제
 	public int deleteCompleteCart(@Param("uid") String uid, @Param("checkList") List<String> checkList);
+	
+	// 상품 검색
+	public List<ProductVO> searchProduct(@Param("keyWord") String kewWord, @Param("sort") String sort);
 }
