@@ -71,14 +71,14 @@
                 <section class="qna">
                     <h1>
                         문의하기
-                        <a th:href="@{/cs/qna/list}">
+                        <a th:href="@{/cs/qna/list (cate='qna', cateType1='회원')}">
                             전체보기
                         </a>
                     </h1>
                     <ul>
                     	<th:block th:each="cate:${cate}">
-                        <li th:if="${cate.cate == 'qna'}">
-                            <a th:href="@{/cs/qna/view(cateType1=${cateType1}, no=${no})}" class="title" th:text="${cate.title}">
+                        <li th:if="${cate.cate = 'qna'}">
+                            <a th:href="@{/cs/qna/view(cateType1='qna', no=${no})}" class="title" th:text="${cate.title}">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
                                     <span class="uid" th:text="${cate.uid}">chh***</span>

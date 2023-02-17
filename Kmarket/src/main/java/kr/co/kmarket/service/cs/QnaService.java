@@ -17,6 +17,21 @@ public class QnaService {
 		return dao.selectArticles(cate, cateType1, start);
 	};
 	
+	public CsVO selectCs(int no) {
+		CsVO vo = dao.selectCs(no);
+		dao.updateArticleHit(no);
+		return vo;
+	}
+	
+	public int insertArticle(CsVO vo) {
+		int result = 0;
+		
+		result = dao.insertArticle(vo);
+		
+		return result;
+		
+	}
+	
 	// 페이지 시작값
 			public int getLimitStart(int currentPage) {
 				return (currentPage - 1) * 10;
