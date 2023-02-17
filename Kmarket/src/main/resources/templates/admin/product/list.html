@@ -25,7 +25,7 @@
                     </div>
                     <table id="board">
                         <tr>
-                            <th><input type="checkbox" name="all"></th>
+                            <th><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"></th>
                             <th>이미지</th>
                             <th>상품코드</th>
                             <th>상품명</th>
@@ -37,8 +37,9 @@
                             <th>조회</th>
                             <th>관리</th>
                         </tr>
+
                         <tr th:each="product : ${products}">
-                            <td><input type="checkbox" name="상품코드"></td>
+                            <td><input type="checkbox" name="check" th:value="${product.prodNo}"></td>
                             <td><img th:src="@{/prodImg/__${product.prodCate1}__/__${product.prodCate2}__/__${product.thumb1}__}" class="thumb"></td>
                             <td th:text="${product.prodNo}">201603292</td>
                             <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
@@ -49,13 +50,13 @@
                             <td th:text="${product.company}">홍길동</td>
                             <td th:text="${product.hit}">126</td>
                             <td>
-                                <a href="#">[삭제]</a>
-                                <a href="#">[수정]</a>
+                                <a href="#" class="remove">[삭제]</a>
+                                <a href="#" class="modify">[수정]</a>
                             </td>
                         </tr>
 
                     </table>
-                    <input type="button" value="선택삭제">
+                    <input type="button" style="cursor:pointer" value="선택삭제" onclick="checkDelete()">
 
                     <div class="paging">
                         <span th:if="${groups[0]>1}" class="prev">

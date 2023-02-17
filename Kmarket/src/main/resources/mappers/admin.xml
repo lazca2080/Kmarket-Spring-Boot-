@@ -72,6 +72,10 @@
 		SELECT * FROM `km_product_cate2` WHERE `cate1` = #{cate1};
 	</select>
 
+	<delete id="deleteProduct">
+		DELETE FROM `km_product` WHERE `prodNo`=#{prodNo};
+	</delete>
+
 	<!-- ================ 공통 키 ===================== -->
 	<sql id="searchTypeANDKeyword">
 		<if test="searchType != null">

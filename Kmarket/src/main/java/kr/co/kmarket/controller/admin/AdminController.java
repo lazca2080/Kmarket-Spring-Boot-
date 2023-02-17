@@ -98,4 +98,39 @@ public class AdminController {
 		
 		return map;
 	};
+
+	// 상품삭제
+	@PostMapping("admin/product/oneDelete")
+	@ResponseBody
+	public Map<String, Object> productOneDelete(@RequestParam("chkNo") String chkNo){
+//		log.info("oneDelete...");
+//		log.info("chkNo : " + chkNo);
+		int result = 0;
+
+		result = service.deleteProduct(chkNo);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+
+		return map;
+	}
+
+	// 상품삭제 (체크박스)
+	@PostMapping("admin/product/delete")
+	@ResponseBody
+	public Map<String, Object> productDelete(@RequestParam("valueArr") String[] valueArr){
+		log.info("delete Product ...");
+		int size = valueArr.length;
+		int result = 0;
+
+		// prodNo 받아오기 때문에 647,646,645 이렇게 받아온다.
+		for(int i=0; i<size; i++){
+			result = service.deleteProduct(valueArr[i]);
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+
+		return map;
+	}
 }

@@ -38,8 +38,6 @@ public class AdminService {
 		return dao.selectProducts(start, seller, searchType, keyword, level);
 	}
 
-
-
 	// 상품 등록
 	public void register(ProductVO vo) {
 		
@@ -64,7 +62,10 @@ public class AdminService {
 		return dao.selectCate1();
 	}
 
-
+	// 상품삭제
+	public int deleteProduct(String prodNo){
+		return dao.deleteProduct(prodNo);
+	}
 
 	public List<CateVO> selectCate2(@RequestParam String cate1) {
 		return dao.selectCate2(cate1);
