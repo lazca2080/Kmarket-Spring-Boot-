@@ -99,6 +99,8 @@ public class AdminController {
 		return map;
 	};
 
+	
+
 	// 상품삭제
 	@PostMapping("admin/product/oneDelete")
 	@ResponseBody

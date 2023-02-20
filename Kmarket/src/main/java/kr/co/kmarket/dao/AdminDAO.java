@@ -38,6 +38,9 @@ public interface AdminDAO {
 								@Param("searchType") String searchType,
 								@Param("keyword") String keyword
 	);
+	// 상품 업데이트
+	public int updateProduct(ProductVO vo);
+
 	// 상품삭제
 	public int deleteProduct(String prodNo);
 ;

@@ -3,34 +3,9 @@
     이름 : 조광호
     내용 : admin 상품 수정 및 삭제
 */
-
-// 전체 체크 클릭 시
-function selectAll(selectAll) {
-    // name=check인 10개의 체크박스 리턴됨.
-	const checkboxes = document.getElementsByName('check');
-
-	checkboxes.forEach((checkbox) => {
-		checkbox.checked = selectAll.checked;
-	})
-}
-
 $(function(){
-	let checkObj = document.getElementsByName("check");
-	let rowCount = checkObj.length;
-	/**
-     *  단일체크 처리
-     *  모두 선택된 체크박스 중에서 단 하나라도 체크 해제되면 allCheck 박스만 해제되는 코드
-     */
-	$("input[name='check']").click(function(){
-		if($("input[name='check']:checked").length == rowCount){
-			$("input[name='allCheck']")[0].checked = true;
-		} else {
-			$("input[name='allCheck']")[0].checked = false;
-		}
-	});
-
     // 상품삭제
-    $(document).on("click", ".remove", (e)=>{
+    $('.remove').click(function(e){
         e.preventDefault();
 
         let delOk = confirm("정말 삭제하시겠습니까?")
@@ -50,7 +25,7 @@ $(function(){
                     if(data.result == 1){
                         alert([chkNo] + '번 상품이 성공적으로 삭제되었습니다.')
                         console.log(productNow)
-                        productNow.parent().parent().hide();
+                        productNow.parent().parent().remove();
                     }else{
                         alert('delete fail...')
                     }
@@ -60,78 +35,78 @@ $(function(){
     });
 
     // 상품 수정
-    $(document).on("click", ".modify", (e)=>{
+    $('.modify').click(function(e){
         e.preventDefault();
-    
-        let tr = $(this).parent().css("color", "red");
-        console.log(tr)
-        // let td = tr.children();
-        // let txt = $(this).text();
 
-        // // 수정할 DOM 찾기
-        // let prodName = td.eq(3);
-        // let price = td.eq(4);
-        // let discount = td.eq(5);
-        // let point = td.eq(6);
-        // let stock = td.eq(7);
-        
-        // // 내용 가져오기
-        // let content1 = prodName.text();
-        // console.log(content1);
-        // let content2 = price.text();
-        // console.log(content2);
-        // let content3 = discount.text()
-        // console.log(content3);
-        // let content4 = point.text();
-        // console.log(content4);
-        // let content5 = stock.text();
-        // console.log(content5);
-    
-        // if(txt == '[수정]'){
-        //     $(this).text('[수정완료]');
-        //     prodName.html('<textarea>'+content1+'</textarea>');
-        // }
-    
-    })
+        let tr  = $(this).parent().parent();
+        let td = tr.children();
+        let txt = $(this).text();
 
+         // 수정할 DOM 찾기
+         let prodName = td.eq(3);
+         let price = td.eq(4);
+         let discount = td.eq(5);
+         let point = td.eq(6);
+         let stock = td.eq(7);
+
+         // 내용 가져오기
+         let content1 = prodName.text();
+         let content2 = price.text();
+         let content3 = discount.text()
+         let content4 = point.text();
+         let content5 = stock.text();
+
+         if(txt == '[수정]'){
+             $(this).text('[수정완료]').css('white-space','nowrap');
+
+             prodName.html('<textarea style="resize:none; width:300px; height:80px;">' + content1 + '</textarea>');
+             price.html('<textarea style="resize:none; width:100px; height:20px;">' + content2 + '</textarea>');
+             discount.html('<textarea style="resize:none; width:50px; height:20px;">' + content3 + '</textarea>');
+             point.html('<textarea style="resize:none; width:50px; height:20px;">' + content4 + '</textarea>');
+             stock.html('<textarea style="resize:none; width:50px; height:20px;">' + content5 + '</textarea>');
+             prodName.focus();
+         }else{
+            $(this).text('수정');
+
+            let prodNo   = $(this).attr('data-no');
+            let content1 = prodName.children(0).val();
+            let content2 = price.children(0).val();
+            let content3 = discount.children(0).val();
+            let content4 = point.children(0).val();
+            let content5 = stock.children(0).val();
+
+
+            let jsonData = {
+                "prodNo":prodNo,
+                "prodName":content1,
+                "price":content2,
+                "discount":content3,
+                "point":content4,
+                "stock":content5
+            };
+
+            fetch("", {
+                method:"post",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                body:jsonData,
+            })
+            .then((response)=> console.log("response: ", response))
+            .catch((error) => console.log("eroor : ", error))
+            
+            console.log(1)
+            
+         }
+
+    });
 });
 
 
 
-// 상품삭제(선택삭제)
-function checkDelete(){
-    let url = "/Kmarket/admin/product/delete";
-    let replaceUrl = "/Kmarket/admin/product/list";
-    let valueArr = new Array();
-    let deleteList = document.getElementsByName("check");
 
-    for(let i = 0; i<deleteList.length; i++){
-        if(deleteList[i].checked){
-            valueArr.push(deleteList[i].value);
-        }
-    }
 
-    if(valueArr == 0){
-        alert('선택된 상품이 없습니다.')
-    }else{
-        confirm('정말 삭제하시겠습니까?')
-        console.log(valueArr);
-        $.ajax({
-            url: url,
-            method: 'post',
-            traditional: true,
-            data:{valueArr : valueArr},
-            dataType:'json',
-            success: (data)=>{
-                if(data.result == 1){
-                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
-                    location.replace(replaceUrl);
-                }else{
-                    alert('삭제 실패')
-                }
-            }
-        })
-    }
-}
+
+
 
 

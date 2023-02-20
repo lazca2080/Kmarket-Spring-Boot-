@@ -38,7 +38,7 @@
                             <th>관리</th>
                         </tr>
 
-                        <tr th:each="product : ${products}">
+                        <tr th:each="product : ${products}" id="product">
                             <td><input type="checkbox" name="check" th:value="${product.prodNo}"></td>
                             <td><img th:src="@{/prodImg/__${product.prodCate1}__/__${product.prodCate2}__/__${product.thumb1}__}" class="thumb"></td>
                             <td th:text="${product.prodNo}">201603292</td>
@@ -50,8 +50,8 @@
                             <td th:text="${product.company}">홍길동</td>
                             <td th:text="${product.hit}">126</td>
                             <td>
-                                <a href="#" class="remove">[삭제]</a>
-                                <a href="#" class="modify">[수정]</a>
+                                <a href="#" class="remove" th:data-no="${product.prodNo}">[삭제]</a>
+                                <a href="#" class="modify" th:data-no="${product.prodNo}">[수정]</a>
                             </td>
                         </tr>
 
