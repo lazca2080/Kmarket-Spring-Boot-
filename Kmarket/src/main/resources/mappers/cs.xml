@@ -5,9 +5,9 @@
 
 <mapper namespace="kr.co.kmarket.dao.CsDAO">
     <select id="selectCss" resultType="kr.co.kmarket.vo.CsVO">
-       (select * from km_cs where `cate`='notice' limit 5)
+       (select * from km_cs_notice limit 5)
 		UNION
-		(select * from km_cs where `cate`='qna' limit 5)
+		(select * from km_cs_qna limit 5)
     </select>
 	
 	<select id="selectNtList" resultType="kr.co.kmarket.vo.CsVO">
@@ -34,10 +34,8 @@
 	</select>
 	
 	<select id="selectArticles" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM `km_cs` WHERE `parent`=0 AND `cate`=#{cate}
-		<if test="cateType1 != null">
+		SELECT * FROM `km_cs_notice` WHERE `parent`=0 
 		AND `cateType1`= #{cateType1} 
-		</if> 
 		ORDER BY `no` DESC LIMIT #{start},10;
 	</select>
 	
