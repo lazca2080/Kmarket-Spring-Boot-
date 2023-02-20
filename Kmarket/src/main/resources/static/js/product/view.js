@@ -128,9 +128,6 @@ $(function(){
 	
 		let prod = JSON.stringify(jsonData);
 		
-		console.log(jsonData);
-		console.log(prod);
-		
 		$.ajax({
 			url:'/Kmarket/product/cart',
 			method:'POST',
@@ -143,7 +140,7 @@ $(function(){
 						location.href = "/Kmarket/product/order";
 					}
 				}else{
-					alert('다시 시도하여 주십시요' + data.result);
+					alert('다시 시도하여 주십시요');
 				}
 			}
 		});

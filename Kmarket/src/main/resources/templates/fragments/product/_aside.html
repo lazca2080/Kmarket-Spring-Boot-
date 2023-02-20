@@ -129,15 +129,15 @@
 	                    </div>
 	                    <article>
 		                    <h2>[[${best.prodName}]]</h2>
-		                    <div class="org_price">
-		                        <del>[[${best.price}]]</del>
+		                    <div class="org_price" th:if="${best.discount != 0}">
+		                        <del>[[${#numbers.formatInteger(best.price, 0, 'COMMA')}]]</del>
 		                        <span>
-		                            [[${best.discount + "%"}]]
+		                            [[${#numbers.formatInteger(best.discount, 0, 'COMMA') + "%"}]]
 		                        </span>
 		                    </div>
 		                    <div class="dis_price">
 		                        <ins>
-		                            [[${best.sellPrice}]]
+		                            [[${#numbers.formatInteger(best.sellPrice, 0, 'COMMA')}]]
 		                        </ins>
 		                    </div>
 	                    </article>

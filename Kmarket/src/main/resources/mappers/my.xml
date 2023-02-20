@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kmarket.dao.MyDAO">
+	<select id="selectMyHomeOrder" resultType="kr.co.kmarket.vo.OrderVO">
+		SELECT a.*, b.`prodNo`, b.`prodName`, b.`prodCate1`, b.`prodCate2`, b.`thumb2`, b.`company`, c.`ordDate` FROM `km_product_order_item` AS a JOIN
+		`km_product` AS b ON a.`prodNo` = b.`prodNo` JOIN
+		`km_product_order` AS c ON a.`ordNo` = c.`ordNo` WHERE `uid`='testAdmin';
+	</select>
+	
+	<select id="selectMyHomePoint" resultType="kr.co.kmarket.vo.PointVO">
+		SELECT * FROM `km_member_point` WHERE `uid` = 'testAdmin';
+	</select>
+	
+	<select id="selectMyHomeReview" resultType="kr.co.kmarket.vo.ReviewVO">
+		SELECT a.*, b.`prodName` FROM `km_product_review` AS a JOIN
+		`km_product` AS b ON a.`prodNo` = b.`prodNo` WHERE `uid`='testAdmin';
+	</select>
+	
+	<select id="selectMyHomeCs" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs_qna` a WHERE `uid`='testAdmin' ORDER BY `no` DESC;
+	</select>
+
+
+	<!-- 참고용... 사용은 가능하나 sql문을 새로 짜야함 
+	<select id="selectMyHome" resultMap="MyVO">
+		SELECT a.*, b.`thumb2`, c.*, d.*, e.* FROM `km_product_order_item` AS a LEFT JOIN
+		`km_product` AS b ON a.`prodNo` = b.`prodNo` LEFT JOIN
+		`km_member_point` AS c ON a.`uid` = c.`uid` LEFT JOIN
+		`km_product_review` AS d ON c.`uid` = d.`uid` LEFT JOIN
+		`km_cs_qna` AS e ON d.`uid` = e.`uid` WHERE a.`uid`='testAdmin'
+	</select>
+	
+	<resultMap type="kr.co.kmarket.vo.MyVO" id="MyVO">
+		<collection property="order" resultMap="OrderVO"/>
+		<collection property="point" resultMap="PointVO"/>
+		<collection property="review" resultMap="ReviewVO"/>
+		<collection property="cs" resultMap="CsVO"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.kmarket.vo.OrderVO" id="OrderVO">
+		<id property="ordNo" column="ordNo"/>
+		<id property="ordUid" column="ordUid"/>
+		<id property="ordCount" column="ordCount"/>
+		<id property="ordPrice" column="ordPrice"/>
+		<id property="ordDiscount" column="ordDiscount"/>
+		<id property="ordDelivery" column="ordDelivery"/>
+		<id property="savePoint" column="savePoint"/>
+		<id property="usedPoint" column="usedPoint"/>
+		<id property="ordTotPrice" column="ordTotPrice"/>
+		<id property="recipName" column="recipName"/>
+		<id property="recipHp" column="recipHp"/>
+		<id property="recipZip" column="recipZip"/>
+		<id property="recipAddr1" column="recipAddr1"/>
+		<id property="recipAddr2" column="recipAddr2"/>
+		<id property="ordPayment" column="ordPayment"/>
+		<id property="ordComplete" column="ordComplete"/>
+		<id property="ordDate" column="ordDate"/>
+		<id property="thumb2" column="thumb2"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.kmarket.vo.PointVO" id="PointVO">
+		<id property="pointNo" column="ordNo"/>
+		<id property="uid" column="ordNo"/>
+		<id property="type" column="ordNo"/>
+		<id property="ordNo" column="ordNo"/>
+		<id property="point" column="ordNo"/>
+		<id property="pointDate" column="ordNo"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.kmarket.vo.ReviewVO" id="ReviewVO">
+		<id property="revNo" column="revNo"/>
+		<id property="prodNo" column="prodNo"/>
+		<id property="content" column="content"/>
+		<id property="uid" column="uid"/>
+		<id property="rating" column="rating"/>
+		<id property="regip" column="regip"/>
+		<id property="rdate" column="rdate"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.kmarket.vo.CsVO" id="CsVO">
+		<id property="no" column="no"/>
+		<id property="uid" column="uid"/>
+		<id property="parent" column="parent"/>
+		<id property="cate" column="cate"/>
+		<id property="cateType1" column="cateType1"/>
+		<id property="cateType2" column="cateType2"/>
+		<id property="title" column="title"/>
+		<id property="content" column="content"/>
+		<id property="regip" column="regip"/>
+		<id property="rdate" column="rdate"/>
+		<id property="hit" column="hit"/>
+		<id property="reply" column="reply"/>
+	</resultMap>
+	-->
+	
+</mapper>
