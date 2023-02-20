@@ -20,20 +20,20 @@ public class MyService {
 	@Autowired
 	private MyDAO dao;
 	
-	public List<OrderVO> selectMyHomeOrder() {
-		return dao.selectMyHomeOrder();
+	public List<OrderVO> selectMyHomeOrder(String uid) {
+		return dao.selectMyHomeOrder(uid);
 	}
 	
-	public List<PointVO> selectMyHomePoint() {
-		return dao.selectMyHomePoint();
+	public List<PointVO> selectMyHomePoint(String uid) {
+		return dao.selectMyHomePoint(uid);
 	}
 	
-	public List<ReviewVO> selectMyHomeReview() {
-		return dao.selectMyHomeReview();
+	public List<ReviewVO> selectMyHomeReview(String uid) {
+		return dao.selectMyHomeReview(uid);
 	}
 	
-	public List<CsVO> selectMyHomeCs() {
-		return dao.selectMyHomeCs();
+	public List<CsVO> selectMyHomeCs(String uid) {
+		return dao.selectMyHomeCs(uid);
 	}
 	
 	

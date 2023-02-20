@@ -7,20 +7,20 @@
 	<select id="selectMyHomeOrder" resultType="kr.co.kmarket.vo.OrderVO">
 		SELECT a.*, b.`prodNo`, b.`prodName`, b.`prodCate1`, b.`prodCate2`, b.`thumb2`, b.`company`, c.`ordDate` FROM `km_product_order_item` AS a JOIN
 		`km_product` AS b ON a.`prodNo` = b.`prodNo` JOIN
-		`km_product_order` AS c ON a.`ordNo` = c.`ordNo` WHERE `uid`='testAdmin';
+		`km_product_order` AS c ON a.`ordNo` = c.`ordNo` WHERE `uid`=#{uid};
 	</select>
 	
 	<select id="selectMyHomePoint" resultType="kr.co.kmarket.vo.PointVO">
-		SELECT * FROM `km_member_point` WHERE `uid` = 'testAdmin';
+		SELECT * FROM `km_member_point` WHERE `uid` = #{uid};
 	</select>
 	
 	<select id="selectMyHomeReview" resultType="kr.co.kmarket.vo.ReviewVO">
 		SELECT a.*, b.`prodName` FROM `km_product_review` AS a JOIN
-		`km_product` AS b ON a.`prodNo` = b.`prodNo` WHERE `uid`='testAdmin';
+		`km_product` AS b ON a.`prodNo` = b.`prodNo` WHERE `uid`= #{uid};
 	</select>
 	
 	<select id="selectMyHomeCs" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM `km_cs_qna` a WHERE `uid`='testAdmin' ORDER BY `no` DESC;
+		SELECT * FROM `km_cs_qna` a WHERE `uid`= #{uid} ORDER BY `no` DESC;
 	</select>
 
 

@@ -37,39 +37,14 @@
                                 <th>비고</th>
                                 <th>유효기간</th>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>                                
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
+                            <tr th:each="point:${point}">
+                                <td class="date">[[${point.pointDate.substring(0,10)}]]</td>
+                                <td class="type">[[${point.type}]]</td>
+                                <td class="ordNo">[[${point.ordNo}]]</td>                                
+                                <td class="point">[[${point.point}]]</td>
+                                <td class="desc">[[${point.descript}]]</td>
+                                <td class="expire">[[${point.pointExpired.substring(0,10)}]]</td>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">100</td>
-                                <td class="desc">상품 리뷰 작성 추가 포인트</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            
                         </table>
 
                         <p class="page">

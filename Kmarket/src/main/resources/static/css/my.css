@@ -1114,7 +1114,7 @@ footer p > strong {
     width: 84px;
     height: 20px;
     font-size: 0px;
-    background-image: url('../img/my_rating_star.png');
+    background-image: url('/Kmarket/img/my/my_rating_star.png');
     background-repeat: no-repeat;
     background-position: 36px 0px;    
 }
