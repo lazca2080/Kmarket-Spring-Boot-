@@ -26,7 +26,7 @@ public class NoticeController {
 	
 
 	@GetMapping("cs/notice/list")
-	public String list(@AuthenticationPrincipal MyUserDetails myUser, Model model, String cate, String cateType1, String pg) {
+	public String list(@AuthenticationPrincipal MyUserDetails myUser, Model model, String cateType1, String pg) {
 		//UserEntity user = myUser.getUser();
 		
 		int  currentPage = service.getCurrentPage(pg);
@@ -36,13 +36,12 @@ public class NoticeController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		if(cate == null) { cate="notice"; }
+		//if(cate == null) { cate="notice"; }
 		
-		List<CsVO> notice = service.selectArticles(cate,cateType1,start);
+		List<CsVO> notice = service.selectArticles(cateType1,start);
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("notice",notice);
-		model.addAttribute("cate",cate);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
