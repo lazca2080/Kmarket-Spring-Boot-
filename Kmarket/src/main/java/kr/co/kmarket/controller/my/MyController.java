@@ -29,10 +29,11 @@ public class MyController {
 	public String home(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "home");
 		
-		List<OrderVO> order = service.selectMyHomeOrder();
-		List<PointVO> point = service.selectMyHomePoint();
-		List<ReviewVO> review = service.selectMyHomeReview();
-		List<CsVO> cs = service.selectMyHomeCs();
+     	String uid = myUser.getUser().getUid();
+		List<OrderVO> order = service.selectMyHomeOrder(uid);
+		List<PointVO> point = service.selectMyHomePoint(uid);
+		List<ReviewVO> review = service.selectMyHomeReview(uid);
+		List<CsVO> cs = service.selectMyHomeCs(uid);
 		
 		model.addAttribute("order", order);
 		model.addAttribute("point", point);
@@ -43,46 +44,67 @@ public class MyController {
 	}
 	
 	@GetMapping("my/ordered")
-	public String ordered(Model model) {
+	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "ordered");
 		
-		List<OrderVO> order = service.selectMyHomeOrder();
+		String uid = myUser.getUser().getUid();
+		
+		List<OrderVO> order = service.selectMyHomeOrder(uid);
 		model.addAttribute("order", order);
 		
 		return "my/ordered";
 	}
 	
 	@GetMapping("my/point")
-	public String point(Model model) {
+	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "point");
+		
+		String uid = myUser.getUser().getUid();
+		
+		List<PointVO> point = service.selectMyHomePoint(uid);
+		model.addAttribute("point", point);
 		
 		return "my/point";
 	}
 	
 	@GetMapping("my/coupon")
-	public String coupon(Model model) {
+	public String coupon(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "coupon");
+		
+		String uid = myUser.getUser().getUid();
 		
 		return "my/coupon";
 	}
 	
 	@GetMapping("my/review")
-	public String review(Model model) {
+	public String review(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "review");
+		
+		String uid = myUser.getUser().getUid();
+		
+		List<ReviewVO> review = service.selectMyHomeReview(uid);
+		model.addAttribute("review", review);
 		
 		return "my/review";
 	}
 	
 	@GetMapping("my/qna")
-	public String qna(Model model) {
+	public String qna(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "qna");
+		
+		String uid = myUser.getUser().getUid();
+		
+		List<CsVO> cs = service.selectMyHomeCs(uid);
+		model.addAttribute("qna", cs);
 		
 		return "my/qna";
 	}
 	
 	@GetMapping("my/info")
-	public String info(Model model) {
+	public String info(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "info");
+		
+		String uid = myUser.getUser().getUid();
 		
 		return "my/info";
 	}

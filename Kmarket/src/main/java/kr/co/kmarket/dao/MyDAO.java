@@ -16,11 +16,11 @@ import kr.co.kmarket.vo.ReviewVO;
 public interface MyDAO {
 	
 	// MyHomeOrder
-	public List<OrderVO> selectMyHomeOrder();
+	public List<OrderVO> selectMyHomeOrder(String uid);
 	// MyHomePoint	
-	public List<PointVO> selectMyHomePoint();
+	public List<PointVO> selectMyHomePoint(String uid);
 	// MyHomeReview	
-	public List<ReviewVO> selectMyHomeReview();
+	public List<ReviewVO> selectMyHomeReview(String uid);
 	// MyHomeCs
-	public List<CsVO> selectMyHomeCs();
+	public List<CsVO> selectMyHomeCs(String uid);
 }

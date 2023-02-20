@@ -34,7 +34,7 @@ public class SecurityConfigration {
 
 		http.authorizeHttpRequests().antMatchers("/").permitAll(); // 모든 자원에 대해서 모든 사용자 접근 허용
 		http.authorizeHttpRequests().antMatchers("/admin/**").hasAnyRole("7", "5"); // admin 하위 모든 링크에 대해서 admin(level : 7)에게만 허용
-		http.authorizeHttpRequests().antMatchers("/product/cart", "/product/complete", "/product/order").authenticated();
+		http.authorizeHttpRequests().antMatchers("/product/cart", "/product/complete", "/product/order", "/my/**").authenticated();
 		//http.authorizeHttpRequests().antMatchers("/member/login").not().authenticated();
 
 		// 사이트 위변조 요청 방지
