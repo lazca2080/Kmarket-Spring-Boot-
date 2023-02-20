@@ -36,8 +36,9 @@ public class AdminController {
 	@GetMapping("admin/product/list")
 	public String list(String pg, Model m, @AuthenticationPrincipal MyUserDetails myUserDetails,
 					   @RequestParam(value = "searchType", required = false) String searchType,
-					   @RequestParam(value = "keyword", required = false) String keyword) throws Exception
-	{
+					   @RequestParam(value = "keyword", required = false) String keyword)
+			throws Exception {
+
 		UserEntity member =  myUserDetails.getUser();
 		String seller = member.getUid(); // uid
 		int level = member.getLevel(); // uid level
@@ -59,8 +60,6 @@ public class AdminController {
 		m.addAttribute("searchType", searchType);
 		m.addAttribute("keyword", keyword);
 
-		log.info("searchType : " + searchType);
-		log.info("keyword : " + keyword);
 		return "admin/product/list";
 	}
 	
@@ -105,8 +104,6 @@ public class AdminController {
 	@PostMapping("admin/product/oneDelete")
 	@ResponseBody
 	public Map<String, Object> productOneDelete(@RequestParam("chkNo") String chkNo){
-//		log.info("oneDelete...");
-//		log.info("chkNo : " + chkNo);
 		int result = 0;
 
 		result = service.deleteProduct(chkNo);
