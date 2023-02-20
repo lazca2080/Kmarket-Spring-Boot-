@@ -555,7 +555,7 @@ main > section > section > article .dis_price > .free {
     vertical-align: text-bottom;
     width: 55px;
     height: 13px;
-    background-image: url(./img/ico_freeshipping.gif);
+    background-image: url(/Kmarket/img/ico_freeshipping.gif);
 }
 
 /* 상품목록 */
@@ -852,7 +852,18 @@ main > section > section > article .dis_price > .free {
     color: #2e8de5;
 }
 
+
+
 #product > .view > .info > .summary .delivery::after { content: "원"; }
+#product > .view > .info > .summary .free {
+	display: inline-block;
+    font-size: 0;
+    vertical-align: text-bottom;
+    width: 55px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-image: url(/Kmarket/img/ico_freeshipping.gif);
+}
 
 #product > .view > .info > .summary .origin {
     font-size: 16px;

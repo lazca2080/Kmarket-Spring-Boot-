@@ -36,17 +36,18 @@
                             </div>
                             <h2>[[${hit.prodName}]]</h2>
                             <p>[[${hit.descript}]]</p>
-                            <div class="org_price">
-                                <del>[[${hit.price}]]</del>
+                            <div class="org_price" th:if="${hit.discount != 0}">
+                                <del>[[${#numbers.formatInteger(hit.price, 0, 'COMMA')}]]</del>
                                 <span>
-                                    [[${hit.discount + "%"}]]
+                                    [[${#numbers.formatInteger(hit.discount, 0, 'COMMA') + "%"}]]
                                 </span>
                             </div>
                             <div class="dis_price">
                                 <ins>
-                                    [[${hit.sellPrice}]]
+                                    [[${#numbers.formatInteger(hit.sellPrice, 0, 'COMMA')}]]
                                 </ins>
-                                <span class="free">무료배송</span>
+                                <span class="free" th:if="${hit.delivery == 0}">무료배송</span>
+                                <span th:if="${hit.delivery != 0}">배송비 [[${hit.delivery + "원"}]]</span>
                             </div>
                         </a>
                     </article>
@@ -63,17 +64,18 @@
                             </div>
                             <h2>[[${score.prodName}]]</h2>
                             <p>[[${score.descript}]]</p>
-                            <div class="org_price">
-                                <del>[[${score.price}]]</del>
+                            <div class="org_price" th:if="${score.discount != 0}">
+                                <del>[[${#numbers.formatInteger(score.price, 0, 'COMMA')}]]</del>
                                 <span>
-                                    [[${score.discount + "%"}]]
+                                    [[${#numbers.formatInteger(score.discount, 0, 'COMMA') + "%"}]]
                                 </span>
                             </div>
                             <div class="dis_price">
                                 <ins>
-                                    [[${score.sellPrice}]]
+                                    [[${#numbers.formatInteger(score.sellPrice, 0, 'COMMA')}]]
                                 </ins>
-                                <span class="free">무료배송</span>
+                                <span class="free" th:if="${score.delivery == 0}">무료배송</span>
+                                <span th:if="${score.delivery != 0}">배송비 [[${score.delivery + "원"}]]</span>
                             </div>
                         </a>
                     </article>
@@ -90,17 +92,18 @@
                             </div>
                             <h2>[[${newProd.prodName}]]</h2>
                             <p>[[${newProd.descript}]]</p>
-                            <div class="org_price">
-                                <del>[[${newProd.price}]]</del>
+                            <div class="org_price" th:if="${newProd.discount != 0}">
+                                <del>[[${#numbers.formatInteger(newProd.price, 0, 'COMMA')}]]</del>
                                 <span>
-                                    [[${newProd.discount + "%"}]]
+                                    [[${#numbers.formatInteger(newProd.discount, 0, 'COMMA') + "%"}]]
                                 </span>
                             </div>
                             <div class="dis_price">
                                 <ins>
-                                    [[${newProd.sellPrice}]]
+                                    [[${#numbers.formatInteger(newProd.sellPrice, 0, 'COMMA')}]]
                                 </ins>
-                                <span class="free">무료배송</span>
+                                <span class="free" th:if="${newProd.delivery == 0}">무료배송</span>
+                                <span th:if="${newProd.delivery != 0}">배송비 [[${newProd.delivery + "원"}]]</span>
                             </div>
                         </a>
                     </article>
@@ -117,17 +120,18 @@
                             </div>
                             <h2>[[${discount.prodName}]]</h2>
                             <p>[[${discount.descript}]]</p>
-                            <div class="org_price">
-                                <del>[[${discount.price}]]</del>
+                            <div class="org_price" th:if="${discount.discount != 0}">
+                                <del>[[${#numbers.formatInteger(discount.price, 0, 'COMMA')}]]</del>
                                 <span>
-                                    [[${discount.discount + "%"}]]
+                                    [[${#numbers.formatInteger(discount.discount, 0, 'COMMA') + "%"}]]
                                 </span>
                             </div>
                             <div class="dis_price">
                                 <ins>
-                                    [[${discount.sellPrice}]]
+                                    [[${#numbers.formatInteger(discount.sellPrice, 0, 'COMMA')}]]
                                 </ins>
-                                <span class="free">무료배송</span>
+                                <span class="free" th:if="${discount.delivery == 0}">무료배송</span>
+                                <span th:if="${discount.delivery != 0}">배송비 [[${discount.delivery + "원"}]]</span>
                             </div>
                         </a>
                     </article>

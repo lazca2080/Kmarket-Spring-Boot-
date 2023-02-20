@@ -220,11 +220,13 @@ public class ProductController {
 		// 주문하기 버튼과 동시에 주문 상품번호 배열을 세션에 저장
 		HttpSession session = req.getSession();
 		session.setAttribute("cartCheckList", checkList);
+		session.setAttribute("type", "cart");
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", 1);
 		return map;
 	}
+	
 	// 상품 주문 완료
 	@GetMapping("product/complete")
 	public String complete(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
@@ -290,7 +292,8 @@ public class ProductController {
 		int result = service.insertComplete(vo);
 		
 		// km_member_point insert
-		service.insertCompletePoint(randOrdNo, uid, vo.getSavePoint());
+		// 구매 확정 시 포인트 적립하는걸로 변경
+		// service.insertCompletePoint(randOrdNo, uid, vo.getSavePoint());
 		
 		// km_product_order_item insert
 		@SuppressWarnings("unchecked")

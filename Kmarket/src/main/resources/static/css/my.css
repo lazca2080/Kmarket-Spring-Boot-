@@ -197,6 +197,10 @@ footer p > strong {
 }
 
 /* my ê³µí†µ */
+#my .home > section > article > table .thumb > img { width: 80px; height: 80px;}
+#my .ordered > section > article > table .thumb > img { width: 80px; height: 80px;}
+
+
 #my {}
 #my > nav {
     width: 100%;
@@ -294,7 +298,7 @@ footer p > strong {
     top: -2px;
     width: 8px;
     height: 13px;
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     background-position: -160px -50px;
 }
 
@@ -338,7 +342,7 @@ footer p > strong {
     width: 35px;
     height: 14px;
     margin-top: -10px;
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     background-position: 0 -279px;
     font-size: 0;
 }
@@ -355,14 +359,63 @@ footer p > strong {
     color: #444;
 }
 
-#my > .home > section > article > table tr {}
-#my > .home > section > article > table th {
+#my > div > section .point > table tr > th { text-align: center; }
+#my > div > section .point > table tr > td { text-align: center; }
+#my > div > section .point > table tr > th:nth-child(1) { width: 120px; }
+#my > div > section .point > table tr > th:nth-child(2) { width: 90px; }
+#my > div > section .point > table tr > th:nth-child(3) { width: 120px; }
+#my > div > section .point > table tr > th:nth-child(4) { width: 90px; }
+#my > div > section .point > table tr > th:nth-child(5) {}
+#my > div > section .point > table tr > th:nth-child(6) {}
+
+#my > div > section .review > table { table-layout : fixed; }
+#my > div > section .review > table tr > th { text-align: center; }
+#my > div > section .review > table tr > th:nth-child(1) { width: 40px; }
+#my > div > section .review > table tr > th:nth-child(2) { width: 280px; }
+#my > div > section .review > table tr > th:nth-child(3) { width: 280px; }
+#my > div > section .review > table tr > th:nth-child(4) { width: 110px; }
+#my > div > section .review > table tr > th:nth-child(5) {}
+
+#my > div > section .review > table tr > td { text-align: center; }
+#my > div > section .review > table tr > td:nth-child(3) {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+#my > div > section .review > table tr > td:nth-child(2) {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+#my > div > section .qna > table { table-layout : fixed; }
+#my > div > section .qna > table tr > th { text-align: center; }
+#my > div > section .qna > table tr > td { text-align: center; }
+#my > div > section .qna > table tr > th:nth-child(1) { width: 40px; }
+#my > div > section .qna > table tr > th:nth-child(2) { width: 85px; }
+#my > div > section .qna > table tr > th:nth-child(3) { width: 85px; }
+#my > dive > section .qna > table tr > th:nth-child(4) { width: 350px; }
+
+#my > div > section .qna > table tr > td:nth-child(2) {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+#my > div > section .qna > table tr > td:nth-child(4) {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+#my > div > section > article > table tr {}
+#my > div > section > article > table th {
     padding: 6px;
     background-color: #a5a7a5;
     box-sizing: border-box;
     color: #fff;
 }
-#my > .home > section > article > table td {
+#my > div > section > article > table td {
     padding: 10px;            
     border-left: 1px solid #f1f1f1;
     border-bottom: 1px solid #aaa;
@@ -375,7 +428,10 @@ footer p > strong {
 #my > .home > section > article > table .thumb {
     float:left;
 }
+
+#my > .home > section > article > table .empty > td { text-align: center; }
 #my > .home > section > article > table ul {
+	width: 350px;
     float:left;
     margin-left: 10px;
     margin-right: 10px;
@@ -384,6 +440,23 @@ footer p > strong {
 #my > .home > section > article > table ul > li {
     margin: 4px 0;
 }        
+
+#my > .home > section > article > table ul > .prodName {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #fff;
+    margin: 4px 0;
+}        
+
+#my > .home > section > article > table ul > .prodName > a {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #fff;
+    margin: 4px 0;
+}        
+
 #my > .home > section > article > table .prodPrice {
     margin-top: 6px;
     font-family: 'ê³ ë”•';
@@ -392,14 +465,14 @@ footer p > strong {
     color: #222;
 }
 #my > .home > section > article > table .prodPrice::after {
-    content: 'ì›';
+    content: '원';
     font-size: 12px;            
 }
 #my > .home > section > article > table .confirm > a {
     display: block;
     width: 90px;
     height: 19px;            
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     font-size: 0;            
 }
 
@@ -433,7 +506,7 @@ footer p > strong {
     width: 84px;
     height: 20px;
     font-size: 0px;
-    background-image: url('../img/my_rating_star.png');
+    background-image: url('/Kmarket/img/my/my_rating_star.png');
     background-repeat: no-repeat;
     background-position: 36px 0px;    
 }
@@ -452,7 +525,7 @@ footer p > strong {
 #my > .home > section > .myinfo > h3 {
     width: 96px;
     height: 15px;
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     background-position: -144px -281px;
     font-size: 0;
 }
@@ -481,7 +554,7 @@ footer p > strong {
 #my > .home > section > .myinfo > div > div > span {
     display: inline-block;
     height: 11px;
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     font-size: 0;
 }
 
@@ -503,7 +576,7 @@ footer p > strong {
     width: 33px;
     height: 11px;
     margin-left: 10px;
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     background-position: -423px -822px;
     font-size: 0;
 }
@@ -540,12 +613,12 @@ footer p > strong {
     height: 11px;
     margin-right: 20px;
     margin-top: 6px;
-    background: url('../img/my_sprites.png') no-repeat 0px -227px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat 0px -227px;
     font-size: 0;
 }
 
 #my > .ordered > section > article > .byDate > ul {
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     
 }
 #my > .ordered > section > article > .byDate > ul > li {
@@ -564,11 +637,11 @@ footer p > strong {
 }
 
 #my > .ordered > section > article > .byDate > ul a:hover {
-    background: url('../img/my_sprites.png') no-repeat -377px -908px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -377px -908px;
     color: rgb(255, 255, 255);
 }
 #my > .ordered > section > article > .byDate > ul a.on {
-    background: url('../img/my_sprites.png') no-repeat -377px -908px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -377px -908px;
     color: rgb(255, 255, 255);
 }
 #my > .ordered > section > article > .byDate > ul a > em {
@@ -592,7 +665,7 @@ footer p > strong {
 #my > .ordered > section > article > .byDate > p {
     width: 190px;
     height: 29px;
-    background: url('../img/my_sprites.png') no-repeat -461px -879px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -461px -879px;
     padding: 5px;
     box-sizing: border-box;
 }
@@ -610,7 +683,7 @@ footer p > strong {
     height: 27px;
     border: none;
     font-size: 0;
-    background: url('../img/my_sprites.png') no-repeat -491px -80px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -491px -80px;
 }        
 
 #my > .ordered > section > article > table {
@@ -644,30 +717,37 @@ footer p > strong {
     float:left;
 }
 #my > .ordered > section > article > table ul {
+	width: 350px;
     float:left;
     margin-left: 10px;
     margin-right: 10px;
-
 }
+
+#my > .ordered > section > article > table ul > .prodName {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 #my > .ordered > section > article > table ul > li {
     margin: 4px 0;
 }        
 #my > .ordered > section > article > table .prodPrice {
     margin-top: 6px;
-    font-family: 'ê³ ë”•';
+    font-family: '고딕';
     font-size: 16px;
     font-weight: bold;
     color: #222;
 }
 #my > .ordered > section > article > table .prodPrice::after {
-    content: 'ì›';
+    content: '원';
     font-size: 12px;            
 }
 #my > .ordered > section > article > table .confirm > a {
     display: block;
     width: 90px;
     height: 19px;            
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     font-size: 0;            
 }
 
@@ -715,12 +795,12 @@ footer p > strong {
 }
 
 #my > .ordered > section > article > .page > .prev {
-    background: url('../img/my_sprites2.png') no-repeat 0 -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat 0 -300px;
     font-size: 0;
 }
 
 #my > .ordered > section > article > .page > .next {
-    background: url('../img/my_sprites2.png') no-repeat -120px -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
 }
 /* my - point(í¬ì¸íŠ¸ë‚´ì—­) */
@@ -747,12 +827,12 @@ footer p > strong {
     height: 11px;
     margin-right: 20px;
     margin-top: 6px;
-    background: url('../img/my_sprites.png') no-repeat 0px -227px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat 0px -227px;
     font-size: 0;
 }
 
 #my > .point > section > article > .byDate > ul {
-    background-image: url('../img/my_sprites.png');
+    background-image: url('/Kmarket/img/my/my_sprites.png');
     
 }
 #my > .point > section > article > .byDate > ul > li {
@@ -771,11 +851,11 @@ footer p > strong {
 }
 
 #my > .point > section > article > .byDate > ul a:hover {
-    background: url('../img/my_sprites.png') no-repeat -377px -908px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -377px -908px;
     color: rgb(255, 255, 255);
 }
 #my > .point > section > article > .byDate > ul a.on {
-    background: url('../img/my_sprites.png') no-repeat -377px -908px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -377px -908px;
     color: rgb(255, 255, 255);
 }
 #my > .point > section > article > .byDate > ul a > em {
@@ -799,7 +879,7 @@ footer p > strong {
 #my > .point > section > article > .byDate > p {
     width: 190px;
     height: 29px;
-    background: url('../img/my_sprites.png') no-repeat -461px -879px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -461px -879px;
     padding: 5px;
     box-sizing: border-box;
 }
@@ -817,7 +897,7 @@ footer p > strong {
     height: 27px;
     border: none;
     font-size: 0;
-    background: url('../img/my_sprites.png') no-repeat -491px -80px;
+    background: url('/Kmarket/img/my/my_sprites.png') no-repeat -491px -80px;
 }        
 
 #my > .point > section > article > table {
@@ -876,12 +956,12 @@ footer p > strong {
 }
 
 #my > .point > section > article > .page > .prev {
-    background: url('../img/my_sprites2.png') no-repeat 0 -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat 0 -300px;
     font-size: 0;
 }
 
 #my > .point > section > article > .page > .next {
-    background: url('../img/my_sprites2.png') no-repeat -120px -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
 }
 
@@ -1064,12 +1144,12 @@ footer p > strong {
 }
 
 #my > .review > section > article > .page > .prev {
-    background: url('../img/my_sprites2.png') no-repeat 0 -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat 0 -300px;
     font-size: 0;
 }
 
 #my > .review > section > article > .page > .next {
-    background: url('../img/my_sprites2.png') no-repeat -120px -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
 }
 
@@ -1126,10 +1206,10 @@ footer p > strong {
     box-sizing: border-box;
 }
 #my > .qna > section > article > table .answerRow div.question {
-    background: url('../img/my_ico_question.gif') no-repeat 0px 24px;
+    background: url('/Kmarket/img/my/my_ico_question.gif') no-repeat 0px 24px;
 }
 #my > .qna > section > article > table .answerRow div.answer {
-    background: url('../img/my_ico_answer.gif') no-repeat 0px 24px;
+    background: url('/Kmarket/img/my/my_ico_answer.gif') no-repeat 0px 24px;
 }
 #my > .qna > section > article > table .answerRow div > p {
     margin-bottom: 10px;
@@ -1163,12 +1243,12 @@ footer p > strong {
 }
 
 #my > .qna > section > article > .page > .prev {
-    background: url('../img/my_sprites2.png') no-repeat 0 -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat 0 -300px;
     font-size: 0;
 }
 
 #my > .qna > section > article > .page > .next {
-    background: url('../img/my_sprites2.png') no-repeat -120px -300px;
+    background: url('/Kmarket/img/my/my_sprites2.png') no-repeat -120px -300px;
     font-size: 0;
 }
 
@@ -1244,7 +1324,7 @@ footer p > strong {
     width: 160px;
     height: 30px;
     margin: 10px auto;
-    background-image: url('../img/btn_my_change.png');
+    background-image: url('/Kmarket/img/my/btn_my_change.png');
     color: #fff;
     font-family: 'ë‹ì›€';
     border: none;
