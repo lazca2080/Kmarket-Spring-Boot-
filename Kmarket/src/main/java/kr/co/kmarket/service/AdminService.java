@@ -62,6 +62,11 @@ public class AdminService {
 		return dao.selectCate1();
 	}
 
+	// 상품업데이트
+	public int updateProduct(ProductVO vo){
+		return dao.updateProduct(vo);
+	}
+
 	// 상품삭제
 	public int deleteProduct(String prodNo){
 		return dao.deleteProduct(prodNo);

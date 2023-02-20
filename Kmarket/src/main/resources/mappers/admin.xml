@@ -57,7 +57,7 @@
 				`seller` = #{uid}
 			</if>
 			<if test="level == 7">
-				1=1
+				AND 1=1
 			</if>
 		</where>
 		<include refid="searchTypeANDKeyword"/>
@@ -71,6 +71,17 @@
 	<select id="selectCate2" resultType="kr.co.kmarket.vo.CateVO">
 		SELECT * FROM `km_product_cate2` WHERE `cate1` = #{cate1};
 	</select>
+
+	<update id="updateProduct">
+		UPDATE `km_product` SET
+			`prodName`=#{prodName},
+			`price`=#{price},
+			`discount`=#{discount},
+			`point`=#{point},
+			`stock`=#{stock}
+		WHERE
+			`prodNo`=#{prodNo};
+	</update>
 
 	<delete id="deleteProduct">
 		DELETE FROM `km_product` WHERE `prodNo`=#{prodNo};
