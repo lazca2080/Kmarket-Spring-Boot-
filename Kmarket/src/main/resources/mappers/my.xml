@@ -4,6 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.kmarket.dao.MyDAO">
+	<!-- 메인 -->
 	<select id="selectMyHomeOrder" resultType="kr.co.kmarket.vo.OrderVO">
 		SELECT a.*, b.`prodNo`, b.`prodName`, b.`prodCate1`, b.`prodCate2`, b.`thumb2`, b.`company`, c.`ordDate` FROM `km_product_order_item` AS a JOIN
 		`km_product` AS b ON a.`prodNo` = b.`prodNo` JOIN
@@ -23,77 +24,68 @@
 		SELECT * FROM `km_cs_qna` a WHERE `uid`= #{uid} ORDER BY `no` DESC;
 	</select>
 
+	<!-- 판매자 정보 -->
+	<select id="selectCompany" resultType="kr.co.kmarket.vo.MemberVO">
+		SELECT * FROM `km_member` WHERE `company`=#{company};
+	</select>
 
-	<!-- 참고용... 사용은 가능하나 sql문을 새로 짜야함 
-	<select id="selectMyHome" resultMap="MyVO">
-		SELECT a.*, b.`thumb2`, c.*, d.*, e.* FROM `km_product_order_item` AS a LEFT JOIN
-		`km_product` AS b ON a.`prodNo` = b.`prodNo` LEFT JOIN
-		`km_member_point` AS c ON a.`uid` = c.`uid` LEFT JOIN
-		`km_product_review` AS d ON c.`uid` = d.`uid` LEFT JOIN
-		`km_cs_qna` AS e ON d.`uid` = e.`uid` WHERE a.`uid`='testAdmin'
+	<!-- 주문 정보 -->
+	<select id="selectOrder" resultMap="MyVO">
+		SELECT b.*, a.`recipName`, a.`recipHp`, a.`recipZip`,a.`recipAddr1`, a.`recipAddr2`, a.`ordDate`,c.`prodCate1`, c.`prodCate2`, c.`thumb2`, c.`company` , c.`prodName` FROM `km_product_order` AS a JOIN
+		`km_product_order_item` AS b ON a.`ordNo` = b.`ordNo` JOIN
+		`km_product` AS c ON b.`prodNo` = c.`prodNo` WHERE a.`ordNo` = #{ordNo};
 	</select>
 	
 	<resultMap type="kr.co.kmarket.vo.MyVO" id="MyVO">
 		<collection property="order" resultMap="OrderVO"/>
-		<collection property="point" resultMap="PointVO"/>
-		<collection property="review" resultMap="ReviewVO"/>
-		<collection property="cs" resultMap="CsVO"/>
+		<collection property="product" resultMap="ProductVO"/>
 	</resultMap>
 	
 	<resultMap type="kr.co.kmarket.vo.OrderVO" id="OrderVO">
+		<id property="prodNo" column="prodNo"/>
 		<id property="ordNo" column="ordNo"/>
-		<id property="ordUid" column="ordUid"/>
-		<id property="ordCount" column="ordCount"/>
-		<id property="ordPrice" column="ordPrice"/>
-		<id property="ordDiscount" column="ordDiscount"/>
-		<id property="ordDelivery" column="ordDelivery"/>
-		<id property="savePoint" column="savePoint"/>
-		<id property="usedPoint" column="usedPoint"/>
-		<id property="ordTotPrice" column="ordTotPrice"/>
+		<id property="uid" column="uid"/>
+		<id property="count" column="count"/>
+		<id property="price" column="price"/>
+		<id property="discount" column="discount"/>
+		<id property="point" column="point"/>
+		<id property="delivery" column="delivery"/>
+		<id property="total" column="total"/>
 		<id property="recipName" column="recipName"/>
 		<id property="recipHp" column="recipHp"/>
 		<id property="recipZip" column="recipZip"/>
 		<id property="recipAddr1" column="recipAddr1"/>
 		<id property="recipAddr2" column="recipAddr2"/>
-		<id property="ordPayment" column="ordPayment"/>
-		<id property="ordComplete" column="ordComplete"/>
 		<id property="ordDate" column="ordDate"/>
+		<id property="deliStatus" column="deliStatus"/>
+	</resultMap>
+	
+	<resultMap type="kr.co.kmarket.vo.ProductVO" id="ProductVO">
+		<id property="prodCate1" column="prodCate1"/>
+		<id property="prodCate2" column="prodCate2"/>
 		<id property="thumb2" column="thumb2"/>
+		<id property="company" column="company"/>
+		<id property="prodName" column="prodName"/>
 	</resultMap>
 	
-	<resultMap type="kr.co.kmarket.vo.PointVO" id="PointVO">
-		<id property="pointNo" column="ordNo"/>
-		<id property="uid" column="ordNo"/>
-		<id property="type" column="ordNo"/>
-		<id property="ordNo" column="ordNo"/>
-		<id property="point" column="ordNo"/>
-		<id property="pointDate" column="ordNo"/>
-	</resultMap>
+	<!-- 리뷰 작성여부 -->
+	<select id="selectRevStatus" resultType="int">
+		SELECT `revStatus` FROM `km_product_order_item` WHERE `uid`=#{uid} and `prodNo`=#{prodNo};
+	</select>
 	
-	<resultMap type="kr.co.kmarket.vo.ReviewVO" id="ReviewVO">
-		<id property="revNo" column="revNo"/>
-		<id property="prodNo" column="prodNo"/>
-		<id property="content" column="content"/>
-		<id property="uid" column="uid"/>
-		<id property="rating" column="rating"/>
-		<id property="regip" column="regip"/>
-		<id property="rdate" column="rdate"/>
-	</resultMap>
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="kr.co.kmarket.vo.ReviewVO">
+		INSERT INTO `km_product_review` SET
+			`prodNo`=#{prodNo},
+			`content`=#{content},
+			`uid`=#{uid},
+			`rating`=#{rating},
+			`regip`=#{regip},
+			`rdate`=NOW();
+	</insert>
 	
-	<resultMap type="kr.co.kmarket.vo.CsVO" id="CsVO">
-		<id property="no" column="no"/>
-		<id property="uid" column="uid"/>
-		<id property="parent" column="parent"/>
-		<id property="cate" column="cate"/>
-		<id property="cateType1" column="cateType1"/>
-		<id property="cateType2" column="cateType2"/>
-		<id property="title" column="title"/>
-		<id property="content" column="content"/>
-		<id property="regip" column="regip"/>
-		<id property="rdate" column="rdate"/>
-		<id property="hit" column="hit"/>
-		<id property="reply" column="reply"/>
-	</resultMap>
-	-->
+	<update id="updateRevStatus">
+		UPDATE `km_product_order_item` SET `revStatus`= 1 WHERE `uid`=#{uid} and `prodNo`=#{prodNo};
+	</update>
 	
 </mapper>

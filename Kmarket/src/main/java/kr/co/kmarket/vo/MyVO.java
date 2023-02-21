@@ -17,11 +17,13 @@ import lombok.Setter;
 @ToString
 public class MyVO {
 	
-	private List<OrderVO> order;
+	private OrderVO order;
 	
 	private List<PointVO> point;
 	
 	private List<ReviewVO> review;
 	
 	private List<CsVO> cs;
+	
+	private ProductVO product;
 }

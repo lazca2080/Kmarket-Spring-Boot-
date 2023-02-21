@@ -44,6 +44,9 @@ public class OrderVO {
 	private int point;
 	private int delivery;
 	private int total;
+	private int price;
+	private int deliStatus;
+	private int purConfirm;
 	
 	
 }

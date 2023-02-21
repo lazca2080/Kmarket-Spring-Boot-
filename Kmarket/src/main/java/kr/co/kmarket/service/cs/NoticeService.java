@@ -13,15 +13,16 @@ public class NoticeService {
 	@Autowired
 	private CsDAO dao;
 	
-	public List<CsVO> selectArticles(String cateType1, int start){
-		return dao.selectArticles(cateType1,start);
+	public List<CsVO> selectNoticeArticles(String cateType1, int start){
+		return dao.selectNoticeArticles(cateType1,start);
 	}
 	
-	public CsVO selectCs(int no) {
-		CsVO vo = dao.selectCs(no);
-		dao.updateArticleHit(no);
+	public CsVO selectNCs(int no) {
+		CsVO vo = dao.selectNCs(no);
+		dao.updateNArticleHit(no);
 		return vo;
 	}
+	
 	
 	// 페이지 시작값
 		public int getLimitStart(int currentPage) {
@@ -40,7 +41,7 @@ public class NoticeService {
 		
 		// 전체 게시물 갯수
 		public int getTotalCount(String cateType1) {
-			return dao.selectCountTotal(cateType1);
+			return dao.selectNoticeCountTotal(cateType1);
 		}
 		
 		// 마지막 페이지 번호

@@ -11,12 +11,12 @@
                 <section class="notice">
                     <h1>
                         공지사항
-                        <a th:href="@{/cs/notice/list(cate='notice')}">전체보기</a>
+                        <a th:href="@{/cs/notice/list}">전체보기</a>
                     </h1>
                     
                     <ul>
                     	<th:block th:each="cate:${cate}">
-                        <li th:if="${cate.cate == 'notice'}">
+                        <li th:if="${cate.cateType1 == '고객서비스'}">
                             <a href="#" class="title" th:text="${cate.title}">[안내] 홰외결제 사칭 문자 주의</a>
                             <span class="date" th:text="${#strings.substring(cate.rdate, 2, 10)}">23.02.07</span>
                         </li>
@@ -71,14 +71,14 @@
                 <section class="qna">
                     <h1>
                         문의하기
-                        <a th:href="@{/cs/qna/list (cate='qna', cateType1='회원')}">
+                        <a th:href="@{/cs/qna/list (cateType1='회원')}">
                             전체보기
                         </a>
                     </h1>
                     <ul>
                     	<th:block th:each="cate:${cate}">
-                        <li th:if="${cate.cate = 'qna'}">
-                            <a th:href="@{/cs/qna/view(cateType1='qna', no=${no})}" class="title" th:text="${cate.title}">
+                        <li th:if="${cate.cateType1 == '회원'}">
+                            <a th:href="@{/cs/qna/view(cateType1='회원', no=${no})}" class="title" th:text="${cate.title}">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
                                     <span class="uid" th:text="${cate.uid}">chh***</span>

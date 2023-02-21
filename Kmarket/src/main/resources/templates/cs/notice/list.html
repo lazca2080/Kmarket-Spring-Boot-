@@ -45,7 +45,7 @@
                             <th:block th:each="notice:${notice}">
                                 <tr>
                                     <td>
-                                        <a th:href="@{/cs/notice/view(cate=${notice.cate} ,cateType1=${notice.cateType1}, no=${notice.no}, pg=${currentPage})}" th:text="${notice.title}">[안내] 해외결제 사칭 문자 주의</a>
+                                        <a th:href="@{/cs/notice/view(cateType1=${notice.cateType1}, no=${notice.no}, pg=${currentPage})}" th:text="${notice.title}">[안내] 해외결제 사칭 문자 주의</a>
                                     </td>
                                     <td th:text="${#strings.substring(notice.rdate, 2, 10)}">2023.02.07</td>
                                 </tr>

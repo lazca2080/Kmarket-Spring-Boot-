@@ -7,35 +7,96 @@
     <select id="selectCss" resultType="kr.co.kmarket.vo.CsVO">
        (select * from km_cs_notice limit 5)
 		UNION
-		(select * from km_cs_qna limit 5)
+		(select * from km_cs_qna limit 5);
     </select>
+
+	<select id="selectNCs" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM  `km_cs_notice` WHERE `no`= #{no};
+	</select>
 	
+	<select id="selectFCs" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM  `km_cs_faq` WHERE `no`= #{no};
+	</select>
 	
-	<select id="selectCountTotal" resultType="int">
-		select count(`no`) from `km_cs_notice` where `parent`=0 and `cateType1` = #{cateType1};
+	<select id="selectQCs" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM  `km_cs_qna` WHERE `no`= #{no};
+	</select>
+
+
+
+	<select id="selectNoticeCountTotal" resultType="int">
+		select count(`no`) from `km_cs_notice` where `parent`=0 
+		<if test="cateType1 != null">
+		and `cateType1` = #{cateType1};
+		</if>
+	</select>
+	
+	<select id="selectFaqCountTotal" resultType="int">
+		select count(`no`) from `km_cs_faq` where `parent`=0 and `cateType1` = #{cateType1};
 	</select>	
 	
-	<select id="selectCs" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM  `km_cs` WHERE `no`= #{no};
+	<select id="selectQnaCountTotal" resultType="int">
+		select count(`no`) from `km_cs_qna` where `parent`=1 
+		<if test="cateType1 != null">
+		and `cateType1` = #{cateType1};
+		</if>
 	</select>
 	
-	<update id="updateArticleHit">
-		UPDATE `km_cs` SET `hit`=`hit`+1 WHERE `no`=#{no};
+	
+	
+	<update id="updateNArticleHit">
+		UPDATE `km_cs_notice` SET `hit`=`hit`+1 WHERE `no`=#{no};
 	</update>
 	
+	<update id="updateFArticleHit">
+		UPDATE `km_cs_faq` SET `hit`=`hit`+1 WHERE `no`=#{no};
+	</update>
+	
+	<update id="updateQArticleHit">
+		UPDATE `km_cs_qna` SET `hit`=`hit`+1 WHERE `no`=#{no};
+	</update>
+	
+	
+	
+	
 	<select id="selectFaqArticles" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM `km_cs` WHERE `cateType1`= #{cateType1} ORDER BY `cateType2`, `rdate` DESC;
+		SELECT * FROM `km_cs_faq` WHERE `cateType1`= #{cateType1} ORDER BY `cateType2`, `rdate` DESC;
 	</select>
 	
-	<select id="selectArticles" resultType="kr.co.kmarket.vo.CsVO">
+	<select id="selectNoticeArticles" resultType="kr.co.kmarket.vo.CsVO">
 		SELECT * FROM `km_cs_notice` WHERE `parent`=0 
-		AND `cateType1`= #{cateType1} 
+		<if test="cateType1 != null">
+		AND `cateType1`= #{cateType1}
+		</if> 
 		ORDER BY `no` DESC LIMIT #{start},10;
 	</select>
 	
-	<insert id="insertArticle">
-		insert into `km_cs` set `cate`= 'qna', `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
+	<select id="selectQnaArticles" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs_qna` WHERE `parent`=1 
+		<if test="cateType1 != null">
+		AND `cateType1`= #{cateType1}
+		</if> 
+		ORDER BY `no` DESC LIMIT #{start},10;
+	</select>
+	
+	
+	
+	<insert id="NinsertArticle">
+		insert into `km_cs_notice` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
 		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
 	</insert>
+	
+	<insert id="QinsertArticle">
+		insert into `km_cs_qna` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
+		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
+	</insert>
+	
+	<insert id="FinsertArticle">
+		insert into `km_cs_faq` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
+		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
+	</insert>
+	
+	
+	
 	
 </mapper>
