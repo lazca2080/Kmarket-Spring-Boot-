@@ -8,7 +8,7 @@
 
                     <article class="latest">
                         <h3>최근주문내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{/my/ordered}" class="more">더보기</a>
                         <table border="0">
                             <tr>
                                 <th>날짜</th>
@@ -18,7 +18,7 @@
                             </tr>
                             <tr th:each="order:${order}">
                                 <td class="date">[[${order.ordDate.substring(0,10)}]]</td>
-                                <td>
+                                <td class="info">
                                     <a th:href="@{/product/view (prodNo=${order.prodNo})}" class="thumb"><img th:src="@{/prodImg/__${order.prodCate1}__/__${order.prodCate2}__/__${order.thumb2}__}" alt=""></a>
                                     <ul>
                                         <li class="company"><a href="#">[[${order.company}]]</li>
@@ -27,10 +27,13 @@
                                         <li class="prodPrice">34,000</li>
                                     </ul>
                                 </td>
-                                <td class="status">배송완료</td>
+                                <td class="status" th:if="${order.deliStatus == 0}">주문 접수 중</td>
+                                <td class="status" th:if="${order.deliStatus == 1}">배송 준비 중</td>
+                                <td class="status" th:if="${order.deliStatus == 2}">배송 중</td>
+                                <td class="status" th:if="${order.deliStatus == 3}">배송 완료</td>
                                 <td class="confirm">
-                                    <a href="#" class="receive">수취확인</a>
-                                    <a href="#" class="review">상품평</a>
+                                    <a href="#" class="receive" th:data-no="${order.deliStatus}">수취확인</a>
+                                    <a href="#" class="review" th:data-no="${order.prodNo}">상품평</a>
                                     <a href="#" class="refund">반품신청</a>
                                     <a href="#" class="exchange">교환신청</a>
                                 </td>
@@ -42,7 +45,7 @@
                     </article>
                     <article class="point">
                         <h3>포인트적립내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{/my/point}" class="more">더보기</a>
                         <table border="0">
                             <tr>
                                 <th>날짜</th>
@@ -67,7 +70,7 @@
                     </article>
                     <article class="review">
                         <h3>상품평</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{/my/review}" class="more">더보기</a>
                         <table border="0">
                             <tr>
                                 <th>번호</th>
@@ -91,7 +94,7 @@
 
                     <article class="qna">
                         <h3>문의내역</h3>
-                        <a href="#" class="more">더보기</a>
+                        <a th:href="@{/my/qna}" class="more">더보기</a>
                         <table border="0">
                             <tr>
                                 <th>번호</th>
@@ -101,7 +104,7 @@
                                 <th>작성일</th>
                                 <th>상태</th>
                             </tr>
-                            <tr th:each="cs:${cs}">
+                            <tr th:each="cs, i: ${cs}" th:if="${i.count < 6}">
                                 <td>[[${cs.no}]]</td>
                                 <td>[[${cs.cateType1}]]</td>
                                 <td>[[${cs.cateType2}]]</td>                                
@@ -154,36 +157,35 @@
                     <table border="0">
                         <tr>
                             <th>판매자 등급</th>
-                            <td class="level">파워딜러</td>
+                            <td class="level"></td>
                         </tr>
                         <tr>
                             <th>상호</th>
-                            <td class="company">(주)회사명</td>
+                            <td class="company"></td>
                         </tr>
                         <tr>
                             <th>대표자</th>
-                            <td class="ceo">홍길동</td>
+                            <td class="ceo"></td>
                         </tr>
                         <tr>
                             <th>전화번호</th>
-                            <td class="tel">051-123-1000</td>
+                            <td class="tel"></td>
                         </tr>
                         <tr>
                             <th>FAX</th>
-                            <td class="fax">051-123-1001</td>
+                            <td class="fax"></td>
                         </tr>
                         <tr>
                             <th>Email</th>
-                            <td class="email">company@abc.com</td>
+                            <td class="email"></td>
                         </tr>
                         <tr>
                             <th>사업자번호</th>
-                            <td class="bizNum">123-12-123457</td>
+                            <td class="bizNum"></td>
                         </tr>
                         <tr>
                             <th>영업소재지</th>
                             <td class="address">
-                                [210**] 부산광역시 부산진구 대연동 121 10층 1004호
                             </td>
                         </tr>
                     </table>
@@ -220,35 +222,35 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p class="date">2022-12-13</p>
-                                    주문번호 : <span class="ordNo">1012211341</span>
+                                    <p class="date"></p>
+                                    주문번호 : <span class="ordNo"></span>
                                 </td>
                                 <td>
-                                    <img src="https://via.placeholder.com/80x80" alt="">
+                                    <img src="#" alt="">
                                     <ul>
                                         <li class="company">상호명</li>
                                         <li class="prodName">상품명</li>
-                                        <li>수량 : <span class="prodCount">1</span>개</li>
-                                        <li class="prodPrice">34,000</li>
+                                        <li>수량 : <span class="prodCount"></span>개</li>
+                                        <li class="prodPrice"></li>
                                     </ul>
                                 </td>
                                 <td class="payment">
                                     <ol>
                                         <li class="price">
                                             <span>판매가</span>
-                                            <span>34,000원</span>
+                                            <span></span>
                                         </li>
                                         <li class="discount">
                                             <span>할인</span>
-                                            <span>- 3,000원</span>
+                                            <span></span>
                                         </li>
                                         <li class="total">
                                             <span>결제금액</span>
-                                            <span>34,000원</span>
+                                            <span></span>
                                         </li>
                                     </ol>
                                 </td>
-                                <td class="status">배송완료</td>
+                                <td class="status"></td>
                             </tr>
                         </table>
                     </article>
@@ -398,12 +400,40 @@
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/my/jquery.star-rating-svg.min.js}"></script>
 		<script>
+			function maskingCar(strCar) {
+			    if (strCar == undefined || strCar === '') {
+			        return '';
+			    }
+			    var pattern = /.{3}$/; // 정규식
+			    return strCar.replace(pattern, "***");
+			}
+			
 			$(function(){
 	
 			    // 판매자 정보 팝업 띄우기
 			    $('.latest .info .company > a').click(function(e){
 			        e.preventDefault();
-			        $('#popSeller').addClass('on');
+			        
+			        let company = $(this).text();
+			        
+			        $.ajax({
+			        	url:'/Kmarket/my/company',
+			        	method:'POST',
+			        	data: { "company" : company },
+			        	dataType:'JSON',
+			        	success: function(data){
+			        		$('#popSeller .level').text(data.company.level);
+			        		$('#popSeller .company').text(company);
+			        		$('#popSeller .ceo').text(data.company.ceo);
+			        		$('#popSeller .tel').text(data.company.tel);
+			        		$('#popSeller .fax').text(data.company.fax);
+			        		$('#popSeller .email').text(data.company.email);
+			        		$('#popSeller .bizNum').text(data.company.bizRegNum);
+			        		$('#popSeller .address').text("["+maskingCar(data.company.zip)+"] "  + data.company.addr1 + data.company.addr2);
+			        	}
+			        });
+			        
+			        $('#popSeller').addClass('on');			        	
 			    });
 	
 			    // 문의하기 팝업 띄우기
@@ -416,26 +446,81 @@
 			    // 주문상세 팝업 띄우기
 			    $('.latest .info .orderNo > a').click(function(e){
 			        e.preventDefault();
+			        let ordNo = $(this).text();
+			        
+			        $.ajax({
+			        	url:'/Kmarket/my/order',
+			        	method:'POST',
+			        	data: { "ordNo":ordNo },
+			        	dataType:'JSON',
+			        	success: function(data){
+			        		$('#popOrder .order .date').text(data.vo.order.ordDate.substring(0,10));
+			        		$('#popOrder .order .ordNo').text(ordNo);
+			        		let imgURL = "/Kmarket/prodImg/"+data.vo.product.prodCate1 +"/"+ data.vo.product.prodCate2 +"/"+ data.vo.product.thumb2;
+			        		$('#popOrder .order img').attr('src', imgURL);
+			        		$('#popOrder .order .company').text(data.vo.product.company);
+			        		$('#popOrder .order .prodName').text(data.vo.product.prodName);
+			        		$('#popOrder .order .prodCount').text(data.vo.order.count);
+			        		$('#popOrder .order .prodPrice').text(data.vo.order.price);
+			        		$('#popOrder .order .price > span:eq(1)').text(Number(data.vo.order.price).toLocaleString() + "원");
+			        		$('#popOrder .order .discount > span:eq(1)').text(Number(data.vo.order.discount).toLocaleString() + "원");
+			        		$('#popOrder .order .total > span:eq(1)').text(Number(data.vo.order.total).toLocaleString() + "원");
+			        		if(data.vo.order.deliStatus == 0){
+			        			$('#popOrder .order .status').text('주문 접수 중');			        			
+			        		}else if(data.vo.order.deliStatus == 1){
+			        			$('#popOrder .order .status').text('배송 준비 중');
+			        		}else if(data.vo.order.deliStatus == 2){
+			        			$('#popOrder .order .status').text('배송 중');
+			        		}else if(data.vo.order.deliStatus == 3){
+			        			$('#popOrder .order .status').text('배송 완료');
+			        		}
+			        		$('#popOrder .delivery .name').text(data.vo.order.recipName);
+			        		$('#popOrder .delivery .hp').text(data.vo.order.recipHp);
+			        		let address = "[" +maskingCar(data.vo.order.recipZip)+"] " + data.vo.order.recipAddr1 + data.vo.order.recipAddr2;  
+			        		$('#popOrder .delivery .address').text(address);
+			        		console.log(data.vo.order);
+			        	}
+			        });
+			        
+			        
 			        $('#popOrder').addClass('on');
 			    });
 	
 			    // 수취확인 팝업 띄우기
 			    $('.latest .confirm > .receive').click(function(e){
 			        e.preventDefault();
+			        
+			        if($(this).attr('data-no') != 3){
+			        	alert('배송이 완료되어야 구매 확정 하실 수 있습니다.');
+			        	return false;
+			        };
+			        
 			        $('#popReceive').addClass('on');
 			    });
-	
-			    // 상품평 작성 팝업 띄우기
-			    $('.latest .confirm > .review').click(function(e){
-			        e.preventDefault();
-			        $('#popReview').addClass('on');
+			    
+			    // 수취확인 후 포인트 확정
+			    $('#popReceive .btnPositive').click(function(e){
+			    	alert('test');
 			    });
-			               
+			    
+			    // 팝업 끄기
+			    $('.btnCancel').click(function(){
+			    	$(this).closest('.popup').removeClass('on');
+			    });
+			    
 			    // 팝업 닫기
 			    $('.btnClose').click(function(){                
 			        $(this).closest('.popup').removeClass('on');                
 			    });
-	
+			    
+			    // 상품평 작성 팝업 띄우기
+			    $('.latest .confirm > .review').click(function(e){
+			        e.preventDefault();
+				    
+			        $('#popReview').addClass('on');
+			    });
+			    
+			    let rating = 0;
 			    // 상품평 작성 레이팅바 기능
 			    $(".my-rating").starRating({
 			        starSize: 20,
@@ -445,11 +530,40 @@
 			        minRating: 1,
 			        ratedColors: ['#ffa400', '#ffa400', '#ffa400', '#ffa400', '#ffa400'],
 			        callback: function(currentRating, $el){
-			            alert('rated ' + currentRating);
-			            console.log('DOM element ', $el);
+			        	rating = currentRating;
 			        }
 			    });
-	
+			    
+			    // 리뷰 작성 완료
+			    $('#popReview .btnPositive').click(function(e){
+			    	e.preventDefault();
+			    	
+			        let prodNo = $('.latest .confirm > .review').attr('data-no');
+			        let review = $('#popReview .review > textarea').val();
+			        
+				    let jsonData = {
+				    	"prodNo" : prodNo,
+				    	"rating" : rating,
+				    	"content" : review
+				    };
+				    
+				    $.ajax({
+				    	url:'/Kmarket/my/review',
+				    	method:'POST',
+				    	contentType:'application/json',
+				    	data:JSON.stringify(jsonData),
+				    	dataType:'JSON',
+				    	success: function(data){
+				    		if(data.result == 0){
+				    			alert('이미 리뷰를 작성하신 상품입니다.');
+				    			$('#popReview').removeClass('on');
+				    		}else if(data.result == 1){
+				    			alert('리뷰를 작성 했습니다.');
+				    			$('#popReview').removeClass('on');
+				    		}
+				    	}
+				    });
+			    });
 			});
 		</script>
 	</th:block>

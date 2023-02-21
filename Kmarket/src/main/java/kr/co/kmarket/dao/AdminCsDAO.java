@@ -13,5 +13,6 @@ public interface AdminCsDAO {
     public List<CsVO> adminCSnotice(int start);
     public List<CsVO> adminCSfaq(int start);
     public List<CsVO> adminCSqna(int start);
+	public int selectCountTotal();
 
 }
