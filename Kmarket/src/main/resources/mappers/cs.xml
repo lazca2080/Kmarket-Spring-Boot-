@@ -10,15 +10,9 @@
 		(select * from km_cs_qna limit 5)
     </select>
 	
-	<select id="selectNtList" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM `km_cs` WHERE `parent`=0 AND `cate`=#{cate} AND `cateType1`= #{cateType1} ORDER BY `no` DESC LIMIT #{start},10;
-	</select>
 	
 	<select id="selectCountTotal" resultType="int">
-		select count(`no`) from `km_cs` where `parent`=0 
-		<if test="cateType1 != null">	
-		and `cateType1` = #{cateType1};
-		</if>
+		select count(`no`) from `km_cs_notice` where `parent`=0 and `cateType1` = #{cateType1};
 	</select>	
 	
 	<select id="selectCs" resultType="kr.co.kmarket.vo.CsVO">

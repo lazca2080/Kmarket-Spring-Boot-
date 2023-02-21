@@ -25,7 +25,7 @@ public class QnaController {
 	private QnaService service;
 	
 	@GetMapping("cs/qna/list")
-	public String list(String cate, String cateType1, String pg, Model model) {
+	public String list(String cateType1, String pg, Model model) {
 		//UserEntity user = myUser.getUser();
 		
 		int  currentPage = service.getCurrentPage(pg);
@@ -35,11 +35,11 @@ public class QnaController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		List<CsVO> qna = service.selectArticles(cate, cateType1, start);
+		List<CsVO> qna = service.selectArticles(cateType1, start);
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("qna",qna);
-		model.addAttribute("cate",cate);
+		//model.addAttribute("cate",cate);
 		model.addAttribute("cateType1",cateType1);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
