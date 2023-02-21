@@ -43,5 +43,4 @@ public interface AdminDAO {
 
 	// 상품삭제
 	public int deleteProduct(String prodNo);
-;
 }

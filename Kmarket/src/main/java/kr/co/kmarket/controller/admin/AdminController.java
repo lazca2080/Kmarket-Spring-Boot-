@@ -84,8 +84,7 @@ public class AdminController {
 		
 		return "redirect:/admin/product/register";
 	}
-	
-	
+
 	// 카테고리 분류
 	@ResponseBody
 	@GetMapping("admin/register/selectCate2")
@@ -97,8 +96,6 @@ public class AdminController {
 		
 		return map;
 	};
-
-	
 
 	// 상품삭제
 	@PostMapping("admin/product/oneDelete")
