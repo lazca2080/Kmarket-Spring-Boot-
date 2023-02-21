@@ -36,9 +36,9 @@ public class NoticeController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		//if(cate == null) { cate="notice"; }
+		//if(cateType1 == null) { cateType="notice"; }
 		
-		List<CsVO> notice = service.selectArticles(cateType1,start);
+		List<CsVO> notice = service.selectNoticeArticles(cateType1,start);
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("notice",notice);
@@ -46,19 +46,27 @@ public class NoticeController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
-		
+		/*
 		log.info("sdf : "+ currentPage);
+		log.info("sdf : "+ start);
+		log.info("sdf : "+ total);
+		log.info("sdf : "+ lastPage);
+		log.info("sdf : "+ pageStartNum);
+		log.info("sdf : "+ groups[0]);
+		log.info("sdf : "+ groups[1]);
+		*/
+		
 		return "cs/notice/list";
 	}
 	
 	// 글 보기
 	@GetMapping("cs/notice/view")
 	public String view(@RequestParam("no") int no, Model model, int pg) {
-		CsVO notice = service.selectCs(no);
+		CsVO notice = service.selectNCs(no);
 		
 		model.addAttribute("notice",notice);
 		model.addAttribute("pg", pg);
-		log.info("sdf : "+pg);
+		//log.info("sdf : "+pg);
 		return "cs/notice/view";
 	}
 }
