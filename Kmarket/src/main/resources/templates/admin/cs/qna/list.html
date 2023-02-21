@@ -36,24 +36,44 @@
             </tr>
 
             <tbody id='article'>
+            <th:block th:each="article : ${articles}">
                 <tr>
                     <td><input type="checkbox" name="prodCheck"></td>
-                    <td width="40px"><input type="hidden" name='csNo'>1차유형</td>
-                    <td width="100px">2차유형</td>
-                    <td>1</td>
-                    <td style='text-align: left;'><a href="#">1</a></td>
-                    <td width="60px">1</td>
-                    <td width="60px">1</td>
-                    <td class="comfirm" width="50px">
+                    <td>[[${article.no}]]</td>
+                    <td><input type="hidden" name='csNo'>[[${article.cateType1}]]</td>
+                    <td>[[${article.cateType2}]]</td>
+                    <td style='text-align: left;'><a th:href="|@{/}admin/cs/view/qna/${article.no}|">[[${article.title}]]</a></td>
+                    <td>[[${article.uid}]]</td>
+                    <td>[[${article.rdate}]]</td>
+                    <td th:if="${article.reply == null}" class="comfirm" width="50px">
                         검토중
                     </td>
+                    <td th:if="${article.reply != null}" class="comfirm" width="50px">
+                        답변완료
+                    </td>
                 </tr>
+            </th:block>
             </tbody>
+
         </table>
         <input type="button" name='del' value="선택삭제">
 
         <div class="paging">
+            <span th:if="${groups[0]>1}" class="prev">
+                <a th:href="@{/admin/cs/list/qna(pg=${groups[0]-1})}"><&nbsp;이전</a>
+            </span>
 
+            <span class="num">
+                <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
+                    <a th:href="@{/admin/cs/list/qna(pg=${i})}"
+                       th:classappend="${i==currentPage ? 'on': ''}"
+                    >[[${i}]]</a>
+                </th:block>
+            </span>
+
+            <span th:if="${groups[1]<lastPage}" class="next">
+                <a th:href="@{/admin/cs/list/qna(pg=${groups[1]+1})}">다음&nbsp;></a>
+            </span>
         </div>
     </section>
 </th:block>

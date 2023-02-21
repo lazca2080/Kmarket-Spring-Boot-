@@ -2,6 +2,8 @@ package kr.co.kmarket.vo;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class CsVO {
 	private String title;
 	private String content;
 	private String regip;
-	private String rdate;
+	private LocalDate rdate;
 	private int hit;
 	private String reply;
 

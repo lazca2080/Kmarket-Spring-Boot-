@@ -12,25 +12,24 @@
         <table>
             <tr>
                 <td>유형</td>
-                <td class="type">유형이 나와야합니다</td>
+                <td class="type">[[${cvo.cateType1}]]</td>
             </tr>
             <tr>
                 <td>제목</td>
-                <td class="title">제목이 나와야합니다</td>
+                <td class="title">[[${cvo.title}]]</td>
             </tr>
             <tr>
                 <td>내용</td>
                 <td class="content">
                     <p>
-                        내용이 나와야합니다
+                        [[${cvo.content}]]
                     </p>
                 </td>
             </tr>
         </table>
         <div>
-            <a href="#" class="remove">삭제</a>
-            <a href="#" class="btnModify">수정</a>
-            <a href="#" class="btnList">목록</a>
+            <a href="#" class="btnList">취소</a>
+            <a th:href="|@{/}admin/cs/modify/notice/${cvo.no}|" class="btnModify">수정</a>
         </div>
     </section>
 </th:block>
