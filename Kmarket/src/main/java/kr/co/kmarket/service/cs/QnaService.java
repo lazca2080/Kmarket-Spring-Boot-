@@ -13,7 +13,8 @@ public class QnaService {
 	@Autowired
 	private CsDAO dao;
 	
-	public List<CsVO> selectArticles(String cate, String cateType1, int start){
+
+	public List<CsVO> selectArticles(String cateType1, int start){
 		return dao.selectArticles(cateType1, start);
 	};
 	
