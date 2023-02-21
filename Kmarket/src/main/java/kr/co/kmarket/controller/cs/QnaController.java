@@ -25,7 +25,7 @@ public class QnaController {
 	private QnaService service;
 	
 	@GetMapping("cs/qna/list")
-	public String list(String cateType1, String pg, Model model) {
+	public String list(@AuthenticationPrincipal MyUserDetails myUser, Model model, String cateType1, String pg) {
 		//UserEntity user = myUser.getUser();
 		
 		int  currentPage = service.getCurrentPage(pg);
@@ -35,28 +35,35 @@ public class QnaController {
 		int pageStartNum = service.getPageStartNum(total, start);
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
-		List<CsVO> qna = service.selectArticles(cateType1, start);
+		List<CsVO> qna = service.selectQnaArticles(cateType1, start);
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("qna",qna);
-		//model.addAttribute("cate",cate);
 		model.addAttribute("cateType1",cateType1);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
 		
-		log.info("dafdfa: "+qna);
+		log.info("zxcv : "+ qna);
+		log.info("cateType1 : "+ cateType1);
+		log.info("zxcv : "+ currentPage);
+		log.info("zxcv : "+ lastPage);
+		log.info("zxcv : "+ pageStartNum);
+		log.info("zxcv : "+ groups[0]);
+	
+		
 		return "cs/qna/list";
 	}
 	
 	@GetMapping("cs/qna/view")
-	public String view(@RequestParam("no") int no, Model model, int pg) {
-		CsVO qna = service.selectCs(no);
+	public String view(@RequestParam("no") int no, Model model, int pg, String cateType1) {
+		CsVO qna = service.selectQCs(no);
 		
 		model.addAttribute("qna",qna);
+		model.addAttribute("cateType1",cateType1);
 		model.addAttribute("pg",pg);
-		log.info("adad : "+pg);
+		log.info("adad : "+qna);
 		return "cs/qna/view";
 	}
 	
@@ -70,7 +77,7 @@ public class QnaController {
 		vo.setUid("testTest");
 		vo.setRegip(req.getRemoteAddr());
 		
-		int result = service.insertArticle(vo);
+		int result = service.QinsertArticle(vo);
 		
 		return "redirect:/cs/qna/list";
 	}

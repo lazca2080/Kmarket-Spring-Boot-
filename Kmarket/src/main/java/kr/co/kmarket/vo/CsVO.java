@@ -12,7 +12,6 @@ public class CsVO {
 	private String no;
 	private String uid;
 	private int parent;
-	private String cate;
 	private String cateType1;
 	private String cateType2;
 	private String title;

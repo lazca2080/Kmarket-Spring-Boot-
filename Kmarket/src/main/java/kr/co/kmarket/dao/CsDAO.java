@@ -13,17 +13,29 @@ import kr.co.kmarket.vo.CsVO;
 public interface CsDAO {
 	// 글 관리
 	public List<CsVO> selectCss();
-	public List<CsVO> selectArticles(@Param("cateType1") String cateType1, @Param("start") int start);
-	public CsVO selectCs(int no);
-	public int updateArticleHit(int no);
+	public List<CsVO> selectNoticeArticles(@Param("cateType1") String cateType1, @Param("start") int start);
+	public List<CsVO> selectQnaArticles(@Param("cateType1") String cateType1, @Param("start") int start);
+	
+	public CsVO selectNCs(int no);
+	public CsVO selectFCs(int no);
+	public CsVO selectQCs(int no);
+	
+	public int updateNArticleHit(int no);
+	public int updateQArticleHit(int no);
+	public int updateFArticleHit(int no);
+	
 	public List<CsVO> selectFaqArticles(@Param("cateType1") String cateType1, @Param("cateType2") String cateType2);
 	
 	
 	//글 작성
-	public int insertArticle(CsVO vo);
+	public int NinsertArticle(CsVO vo);
+	public int QinsertArticle(CsVO vo);
+	public int FinsertArticle(CsVO vo);
 	
 	
 	// 글 페이지
-	public int selectCountTotal(String cateType1);
+	public int selectNoticeCountTotal(String cateType1);
+	public int selectFaqCountTotal(String cateType1);
+	public int selectQnaCountTotal(String cateType1);
 }
 

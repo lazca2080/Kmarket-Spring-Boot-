@@ -14,20 +14,20 @@ public class QnaService {
 	private CsDAO dao;
 	
 
-	public List<CsVO> selectArticles(String cateType1, int start){
-		return dao.selectArticles(cateType1, start);
+	public List<CsVO> selectQnaArticles(String cateType1, int start){
+		return dao.selectQnaArticles(cateType1, start);
 	};
 	
-	public CsVO selectCs(int no) {
-		CsVO vo = dao.selectCs(no);
-		dao.updateArticleHit(no);
+	public CsVO selectQCs(int no) {
+		CsVO vo = dao.selectQCs(no);
+		dao.updateQArticleHit(no);
 		return vo;
 	}
 	
-	public int insertArticle(CsVO vo) {
+	public int QinsertArticle(CsVO vo) {
 		int result = 0;
 		
-		result = dao.insertArticle(vo);
+		result = dao.QinsertArticle(vo);
 		
 		return result;
 		
@@ -50,7 +50,7 @@ public class QnaService {
 			
 			// 전체 게시물 갯수
 			public int getTotalCount(String cateType1) {
-				return dao.selectCountTotal(cateType1);
+				return dao.selectQnaCountTotal(cateType1);
 			}
 			
 			// 마지막 페이지 번호
