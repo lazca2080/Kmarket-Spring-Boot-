@@ -44,6 +44,111 @@ function checkDelete(){
     }
 }
 
+// 선택삭제 admin-CS
+function csDelete1(){
+    const url = "/Kmarket/admin/cs/deleteNotice1"
+    const replaceUrl = "/Kmarket/admin/cs/list/notice";
+    let valueArr = new Array();
+    let deleteList = document.getElementsByName("check");
+
+    for(let i = 0; i<deleteList.length; i++){
+        if(deleteList[i].checked){
+            valueArr.push(deleteList[i].value);
+        }
+    }
+    if(valueArr == 0){
+        alert('선택된 상품이 없습니다.')
+    }else{
+        confirm('정말 삭제하시겠습니까?')
+
+        console.log(valueArr);
+        $.ajax({
+            url: url,
+            method: 'post',
+            traditional: true,
+            data:{valueArr : valueArr},
+            dataType:'json',
+            success: (data)=>{
+                if(data.result == 1){
+                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    location.href = replaceUrl;
+                }else{
+                    alert('삭제 실패')
+                }
+            }
+        })
+    }
+}
+function csDelete2(){
+    const url = "/Kmarket/admin/cs/deleteNotice2"
+    const replaceUrl = "/Kmarket/admin/cs/list/faq";
+    let valueArr = new Array();
+    let deleteList = document.getElementsByName("check");
+
+    for(let i = 0; i<deleteList.length; i++){
+        if(deleteList[i].checked){
+            valueArr.push(deleteList[i].value);
+        }
+    }
+    if(valueArr == 0){
+        alert('선택된 상품이 없습니다.')
+    }else{
+        confirm('정말 삭제하시겠습니까?')
+
+        console.log(valueArr);
+        $.ajax({
+            url: url,
+            method: 'post',
+            traditional: true,
+            data:{valueArr : valueArr},
+            dataType:'json',
+            success: (data)=>{
+                if(data.result == 1){
+                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    location.href = replaceUrl;
+                }else{
+                    alert('삭제 실패')
+                }
+            }
+        })
+    }
+}
+function csDelete3(){
+    const url = "/Kmarket/admin/cs/deleteNotice3"
+    const replaceUrl = "/Kmarket/admin/cs/list/qna";
+    let valueArr = new Array();
+    let deleteList = document.getElementsByName("check");
+
+    for(let i = 0; i<deleteList.length; i++){
+        if(deleteList[i].checked){
+            valueArr.push(deleteList[i].value);
+        }
+    }
+    if(valueArr == 0){
+        alert('선택된 상품이 없습니다.')
+    }else{
+        confirm('정말 삭제하시겠습니까?')
+
+        console.log(valueArr);
+        $.ajax({
+            url: url,
+            method: 'post',
+            traditional: true,
+            data:{valueArr : valueArr},
+            dataType:'json',
+            success: (data)=>{
+                if(data.result == 1){
+                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    location.href = replaceUrl;
+                }else{
+                    alert('삭제 실패')
+                }
+            }
+        })
+    }
+}
+
+
 $(function(){
 	let checkObj = document.getElementsByName("check");
 	let rowCount = checkObj.length;

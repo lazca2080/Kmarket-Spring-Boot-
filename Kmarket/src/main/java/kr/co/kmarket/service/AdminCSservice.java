@@ -34,11 +34,9 @@ public class AdminCSservice {
         return dao.qnaSelectOne(no);
     }
 
-
     public List<CsVO> selectAdminCSnotice(int start){
         return dao.selectAdminCSnotice(start);
     }
-
     public List<CsVO> selectAdminCSfaq(int start){
         return dao.selectAdminCSfaq(start);
     }
@@ -49,15 +47,18 @@ public class AdminCSservice {
     public int selectAdminNoticeTotal(){
         return dao.selectAdminNoticeTotal();
     };
-
     public int selectAdminQnaTotal(){
         return dao.selectAdminQnaTotal();
     };
-
     public int selectAdminFaqTotal(){
         return dao.selectAdminFaqTotal();
     };
 
+    public void updateNotice(CsVO vo){dao.updateNotice(vo);};
+    public void updateFaq(CsVO vo){dao.updateFaq(vo);};
+    public Integer checkDeleteNotice(String no){return dao.checkDeleteNotice(no);}
+    public Integer checkDeleteFaq(String no){return dao.checkDeleteFaq(no);}
+    public Integer checkDeleteQna(String no){return dao.checkDeleteQna(no);}
 
     // 페이지 시작값
     public int getLimitStart(int currentPage) {

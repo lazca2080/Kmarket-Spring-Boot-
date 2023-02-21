@@ -30,4 +30,10 @@ public interface AdminCsDAO {
     public int selectAdminNoticeTotal();
     public int selectAdminQnaTotal();
     public int selectAdminFaqTotal();
+
+    public void updateNotice(CsVO vo);
+    public void updateFaq(CsVO vo);
+    public int checkDeleteNotice(String no);
+    public int checkDeleteFaq(String no);
+    public int checkDeleteQna(String no);
 }

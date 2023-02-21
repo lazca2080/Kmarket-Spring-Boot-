@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -126,14 +125,80 @@ public class AdminCScontroller {
     public String modify(@PathVariable("csType")String csType,
                          @PathVariable("no")int no,
                          Model m){
+        /**공지사항*/
         if("notice".equals(csType)){
             CsVO cvo = service.noticeSelectOne(no);
             m.addAttribute("cvo", cvo);
             return "admin/cs/notice/modify";
         }else{
+            /**자주묻는질문 */
             CsVO cvo = service.faqSelectOne(no);
             m.addAttribute("cvo", cvo);
             return "admin/cs/faq/modify";
         }
+
     }
+    @PostMapping("admin/update/{csType}")
+    public String modify(@PathVariable("csType")String csType, CsVO vo){
+        if("notice".equals(csType)){
+            service.updateNotice(vo);
+        }else{
+            service.updateFaq(vo);
+        }
+        return "redirect:/admin/cs/list/{csType}";
+    }
+
+
+
+    /**=============================================================*/
+    @PostMapping("admin/cs/deleteNotice1")
+    @ResponseBody
+    public Map<String, Object> delete1(@RequestParam("valueArr")String[] valueArr){
+        int size = valueArr.length;
+        int result = 0;
+
+        // no 받아오기 때문에 647,646,645 이렇게 받아온다.
+        for(int i=0; i<size; i++){
+            result = service.checkDeleteNotice(valueArr[i]);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
+    @PostMapping("admin/cs/deleteNotice2")
+    @ResponseBody
+    public Map<String, Object> delete2(@RequestParam("valueArr")String[] valueArr){
+        int size = valueArr.length;
+        int result = 0;
+
+        // no 받아오기 때문에 647,646,645 이렇게 받아온다.
+        for(int i=0; i<size; i++){
+            result = service.checkDeleteFaq(valueArr[i]);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
+    @PostMapping("admin/cs/deleteNotice3")
+    @ResponseBody
+    public Map<String, Object> delete3(@RequestParam("valueArr")String[] valueArr){
+        int size = valueArr.length;
+        int result = 0;
+
+        // no 받아오기 때문에 647,646,645 이렇게 받아온다.
+        for(int i=0; i<size; i++){
+            result = service.checkDeleteQna(valueArr[i]);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
+
+
 }
