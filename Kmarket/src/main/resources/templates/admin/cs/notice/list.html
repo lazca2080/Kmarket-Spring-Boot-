@@ -19,7 +19,7 @@
 
         <table>
             <tr>
-                <th><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"></th>
+                <th width="30px"><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"></th>
                 <th>번호</th>
                 <th>유형</th>
                 <th>제목</th>
@@ -29,27 +29,43 @@
             </tr>
 
             <tbody id=article>
-            <tr>
-                <td width="20px"><input type="checkbox" name='check'></td>
-                <td width="50px">1</td>
-                <td width="60px">고객서비스</td>
-                <td style="text-align: left;"><a href="#">[안내]해외결제 사칭주의</a></td>
-                <td width="30px">3</td>
-                <td width="50px">2020-01-01</td>
+            <th:block th:each="article : ${articles}">
+                <tr>
+                    <td><input type="checkbox" name='check'></td>
+                    <td width="50px">[[${article.no}]]</td>
+                    <td width="60px">[[${article.cateType1}]]</td>
+                    <td style="text-align: left;"><a th:href="|@{/}admin/cs/view/notice/${article.no}|">[[${article.title}]]</a></td>
+                    <td width="30px">[[${article.hit}]]</td>
+                    <td width="50px">[[${article.rdate}]]</td>
 
-                <td width="70px">
-                    <a href="#" class="remove">[삭제]</a>
-                    <a href="#" class="modify">[수정]</a>
-                </td>
-            </tr>
+                    <td width="70px">
+                        <a href="#" class="remove">[삭제]</a>
+                        <a href="#" class="modify">[수정]</a>
+                    </td>
+                </tr>
+            </th:block>
             </tbody>
         </table>
         <input type="button" name=del value="선택삭제">
 
         <div class="paging">
+            <span th:if="${groups[0]>1}" class="prev">
+                <a th:href="@{/admin/cs/list/notice(pg=${groups[0]-1})}"><&nbsp;이전</a>
+            </span>
 
+            <span class="num">
+                <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
+                    <a th:href="@{/admin/cs/list/notice(pg=${i})}"
+                       th:classappend="${i==currentPage ? 'on': ''}"
+                    >[[${i}]]</a>
+                </th:block>
+            </span>
+
+            <span th:if="${groups[1]<lastPage}" class="next">
+                <a th:href="@{/admin/cs/list/notice(pg=${groups[1]+1})}">다음&nbsp;></a>
+            </span>
         </div>
 
-        <a href="#" class="btnWrite">작성하기</a>
+        <a th:href="@{/admin/cs/noticeWrite}" class="btnWrite">작성하기</a>
     </section>
 </th:block>

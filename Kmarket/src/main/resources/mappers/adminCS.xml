@@ -5,17 +5,60 @@
 
 <mapper namespace="kr.co.kmarket.dao.AdminCsDAO">
     <!--============== 관리자 고객센터 ===============-->
-    <select id="adminCSnotice" resultType="kr.co.kmarket.vo.CsVO">
+    <insert id="insertArticleNotice">
+        INSERT INTO `km_cs_notice` SET
+            `uid` = #{uid},
+            `cateType1` = #{cateType1},
+            `title` = #{title},
+            `content` = #{content},
+            `regip` = #{regip},
+            `rdate` = NOW();
+    </insert>
+
+    <insert id="insertArticleFaq">
+        INSERT INTO `km_cs_faq` SET
+        `uid` = #{uid},
+        `cateType1` = #{cateType1},
+        `cateType2` = #{cateType2},
+        `title` = #{title},
+        `content` = #{content},
+        `regip` = #{regip},
+        `rdate` = NOW();
+    </insert>
+
+    <select id="noticeSelectOne" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_notice` WHERE `no`=#{no};
+    </select>
+    <select id="faqSelectOne" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_faq` WHERE `no`=#{no};
+    </select>
+
+    <select id="qnaSelectOne" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_qna` WHERE `no`=#{no};
+    </select>
+
+    <select id="selectAdminCSnotice" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_notice` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
     </select>
 
-    <select id="adminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectAdminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_faq` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
     </select>
 
-    <select id="adminCSqna" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectAdminCSqna" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_qna` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
     </select>
 
+    <select id="selectAdminNoticeTotal" resultType="int">
+        SELECT COUNT(*) FROM `km_cs_notice`;
+    </select>
+
+    <select id="selectAdminQnaTotal" resultType="int">
+        SELECT COUNT(*) FROM `km_cs_qna`;
+    </select>
+
+    <select id="selectAdminFaqTotal" resultType="int">
+        SELECT COUNT(*) FROM `km_cs_faq`;
+    </select>
 
 </mapper>

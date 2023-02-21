@@ -534,6 +534,7 @@ button[type=submit] {
 	background: #f6f6f6;
     padding: 15px;
     border-bottom: 1px solid #e6e6e6;
+    width: 164px;
 }
 
 #cs-list > .FAQth tr:not(:first-child) > td:nth-child(4) {
@@ -566,6 +567,7 @@ button[type=submit] {
     background: #f6f6f6;
     padding: 15px;
     border-bottom: 1px solid #e6e6e6;
+    width: 120px;
 }
 #cs-list > table tr:first-child > th > input[type=checkbox] {margin-top: 1.5px;}
 #cs-list > table tr > td {padding: 10px;}
@@ -720,6 +722,37 @@ button[type=submit] {
 	float: right;
     margin-top: 35px;
 }
+
+#cs-view > div > .btnList{
+    background-color: #c0c0c0;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #fff;
+}
+#cs-view > div > .btnModify{
+    padding: 10px 15px;
+    background: skyblue;
+    border: 1px solid #d6d6d6;
+    color: white;
+}
+
+#cs-view > div > .qnaBtnList{
+    float: right;
+    padding: 10px 15px;
+    background: skyblue;
+    border: 1px solid #d6d6d6;
+    color: white;
+}
+#cs-view > div > .qnaReplyCommit{
+    padding: 10px 15px;
+    background: skyblue;
+    border: 1px solid #d6d6d6;
+    color: white;
+}
+
 #cs-view > div > .remove {
 	background-color: #c0c0c0;
     border: 1px solid #c0c0c0;
@@ -848,18 +881,6 @@ button[type=submit] {
     padding: 10px;
     box-sizing: border-box;
 }
-
-
-#cs-write > input:nth-of-type(1) {
-    margin-top: 50px;
-    float: right;
-}
-#cs-write > input:nth-of-type(2) {
-    display: block;
-    margin-top: 50px;
-    float: right;
-}
-
 /* 공지사항 수정 */
 #cs-modify > form > table {
     width: 100%;
@@ -922,8 +943,11 @@ button[type=submit] {
 
 #cs-write .btnList{
 	position: relative;
-    top: 10px;
-    left: 470px;
+    left: 851px;
+    width: 114px;
+    height: 36px;
+    font-size: 18px;
+    margin-top: 50px;
 }
 #cs-write .btnWrite{
 	top: 609px;
@@ -932,6 +956,12 @@ button[type=submit] {
     width: 114px;
     height: 36px;
     box-sizing: border-box;
+    background: skyblue;
+    border: 1px solid #d6d6d6;
+    color: white;
+    display: block;
+    margin-top: 50px;
+    float: right;
 }
 #qnaRemove{
     position: relative;
@@ -952,3 +982,10 @@ button[type=submit] {
     right: -66px;
 
 }
+
+#cs-list .paging { width: 100%; padding: 30px 0px; text-align: center; }
+#cs-list .paging > span > a { color: rgb(119, 119, 119); font-family: 돋움, Dotum, Tahoma, sans-serif; font-size: 11px; letter-spacing: -1px; }
+#cs-list .paging > span > a:hover { text-decoration: underline; }
+#cs-list .paging > .num > a { display: inline-block; min-width: 14px; margin: 0px 2px; padding: 8px 9px; border: 1px solid rgb(196, 196, 196); background: url("") 0px 0px repeat-x; color: rgb(0, 0, 0); font-family: Tahoma; font-size: 12px; text-align: center; text-decoration: none; }
+#cs-list .paging > .num > a:hover { border: 1px solid rgb(69, 76, 95); text-decoration: none; }
+#cs-list .paging > .num > a.on { color: rgb(254, 67, 76); font-weight: bold; }
