@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.kmarket.dao.AdminCsDAO">
+    <!--============== 관리자 고객센터 ===============-->
+    <select id="adminCSnotice" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_notice` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+
+    <select id="adminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_faq` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+
+    <select id="adminCSqna" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_qna` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+
+
+</mapper>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<th:block layout:fragment="content">
+    <section id="cs-modify" class="admin">
+        <nav>
+            <h1>자주묻는질문 수정</h1>
+            <p>HOME > 고객센터 > <span>자주묻는질문</span></p>
+        </nav>
+
+        <form action="#" method="post">
+            <input type="hidden" name="no"/>
+            <input type="hidden" name="cate1"/>
+            <table>
+                <tr>
+                    <td>유형</td>
+                    <td>
+                        <select name="cate2" class="cate2" required onchange="qnaOption()">
+                            <option selected></option>
+                                <option>쿠폰/혜택/이벤트</option>
+                                <option>주문/결제</option>
+                                <option>배송</option>
+                                <option>취소/반품/교환</option>
+                                <option>여행/숙박/항공</option>
+                                <option>안전거래</option>
+                        </select>
+                        <select name="type" class="type">
+                            <option selected></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td>
+                        <input type="text" name="title" placeholder="제목을 입력합니다.">
+                    </td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td>
+                        <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <a href="#" class="btnList">취소</a>
+            <input type="submit" class="btnWrite" value="등록">
+        </form>
+    </section>
+</th:block>

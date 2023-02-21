@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<th:block layout:fragment="content">
+    <section id="cs-list" class="admin">
+        <nav>
+            <h1>공지사항 목록</h1>
+            <p>HOME > 고객센터 > <span>공지사항</span></p>
+        </nav>
+
+        <select name="noticeType">
+            <option value="none">유형선택</option>
+            <option value="service">고객서비스</option>
+            <option value="safeDeal">안전거래</option>
+            <option value="xproduct">위해상품</option>
+            <option value="great">이벤트당첨</option>
+        </select>
+
+        <table>
+            <tr>
+                <th><input type="checkbox" name="allCheck" value="all" onclick="selectAll(this)"></th>
+                <th>번호</th>
+                <th>유형</th>
+                <th>제목</th>
+                <th>조회</th>
+                <th>날짜</th>
+                <th>관리</th>
+            </tr>
+
+            <tbody id=article>
+            <tr>
+                <td width="20px"><input type="checkbox" name='check'></td>
+                <td width="50px">1</td>
+                <td width="60px">고객서비스</td>
+                <td style="text-align: left;"><a href="#">[안내]해외결제 사칭주의</a></td>
+                <td width="30px">3</td>
+                <td width="50px">2020-01-01</td>
+
+                <td width="70px">
+                    <a href="#" class="remove">[삭제]</a>
+                    <a href="#" class="modify">[수정]</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="button" name=del value="선택삭제">
+
+        <div class="paging">
+
+        </div>
+
+        <a href="#" class="btnWrite">작성하기</a>
+    </section>
+</th:block>

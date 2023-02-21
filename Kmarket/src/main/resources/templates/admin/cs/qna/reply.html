@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<th:block layout:fragment="content">
+  <section id="cs-view" class="admin">
+    <nav>
+        <h1>문의사항 답변</h1>
+        <p>HOME > 고객센터 > <span>문의하기</span></p>
+    </nav>
+
+    <form action="#">
+      <input type="hidden" name="no"/>
+      <input type="hidden" name="cate1"/>
+
+      <table class="qna">
+        <tr>
+          <td>유형</td>
+          <td class="type"></td>
+        </tr>
+        <tr>
+          <td>제목</td>
+          <td class="title"></td>
+        </tr>
+        <tr>
+          <td>내용</td>
+          <td>
+            <p>
+
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>답변</td>
+          <td id="rep">
+            <textarea name="reply" class="reply"></textarea>
+          </td>
+        </tr>
+      </table>
+
+      <a href="#" class="remove">삭제</a>
+      <a href="#" id="reply" class="btnWrite">답변등록</a>
+      <a href="#" class="btnList">목록</a>
+    </form>
+  </section>
+</th:block>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminLayout}">
+<th:block layout:fragment="content">
+    <section id="cs-view" class="admin">
+        <nav>
+            <h1>자주묻는질문 보기</h1>
+            <p>HOME > 고객센터 > <span>자주묻는 질문</span></p>
+        </nav>
+            <table>
+                <tr>
+                    <td>유형</td>
+                    <td class="type">
+                        회원 - 가입
+                    </td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td class="title">제목입니다</td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td class="content">
+                        <p>
+                            내용입니다.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <a href="#" class="remove" data-no="${cvo.csNo}">삭제</a>
+                <a href="#" class="btnModify">수정</a>
+                <a href="#" class="btnList">목록</a>
+            </div>
+    </section>
+</th:block>
