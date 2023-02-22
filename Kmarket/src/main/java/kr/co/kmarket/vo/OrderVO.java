@@ -30,6 +30,8 @@ public class OrderVO {
 	private String ordPayment;
 	private String ordComplete;
 	private String ordDate;
+	private int deliStatus;
+	private int purConfirm;
 	
 	// 추가
 	private String prodName;
@@ -45,8 +47,6 @@ public class OrderVO {
 	private int delivery;
 	private int total;
 	private int price;
-	private int deliStatus;
-	private int purConfirm;
 	
 	
 }

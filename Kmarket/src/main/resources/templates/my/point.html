@@ -3,58 +3,86 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/myLayout}">
 	<th:block layout:fragment="content">
-                <section>
-                    <a href="#"><img th:src="@{/img/my/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
-                    <article class="point">
-                        <h3>포인트내역</h3>
-
-                        <div class="byDate">
-                            <span class="tit">기간별조회</span>                            
-                            <ul class="date_3ea">
-                                <li><a href="#"><em>1</em>주일</a></li>
-                                <li><a href="#"><em>15</em>일</a></li>
-                                <li><a href="#" class="on"><em>1</em>개월</a></li>
-                            </ul>
-                            <ul class="date_5ea">
-                                <li><a href="#"><em>11</em>월</a></li>
-                                <li><a href="#"><em>10</em>월</a></li>
-                                <li><a href="#"><em>9</em>월</a></li>
-                                <li><a href="#"><em>8</em>월</a></li>
-                                <li><a href="#"><em>7</em>월</a></li>
-                            </ul>
-                            <p>
-                                <input type="date" name="begin"><span>~</span><input type="date" name="end">
-                            </p>
-                            <button class="btnConfirm">조회하기</button>
-                        </div>
-
-                        <table border="0">
-                            <tr>
-                                <th>날짜</th>
-                                <th>구분</th>
-                                <th>주문번호</th>                                
-                                <th>적립금액</th>
-                                <th>비고</th>
-                                <th>유효기간</th>
-                            </tr>
-                            <tr th:each="point:${point}">
-                                <td class="date">[[${point.pointDate.substring(0,10)}]]</td>
-                                <td class="type">[[${point.type}]]</td>
-                                <td class="ordNo">[[${point.ordNo}]]</td>                                
-                                <td class="point">[[${point.point}]]</td>
-                                <td class="desc">[[${point.descript}]]</td>
-                                <td class="expire">[[${point.pointExpired.substring(0,10)}]]</td>
-                            </tr>
-                        </table>
-
-                        <p class="page">
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">다음</a>
-                        </p>
-                    </article>                  
-                </section>
+	    <section>
+	        <a href="#"><img th:src="@{/img/my/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
+	        <article class="point">
+	            <h3>포인트내역</h3>
+	
+	            <div class="byDate">
+	                <span class="tit">기간별조회</span>                            
+	                <ul class="date_3ea">
+	                    <li><a href="#"><em>1</em>주일</a></li>
+	                    <li><a href="#"><em>15</em>일</a></li>
+	                    <li><a href="#" class="on"><em>1</em>개월</a></li>
+	                </ul>
+	                <ul class="date_5ea">
+	                    <li><a href="#"><em>11</em>월</a></li>
+	                    <li><a href="#"><em>10</em>월</a></li>
+	                    <li><a href="#"><em>9</em>월</a></li>
+	                    <li><a href="#"><em>8</em>월</a></li>
+	                    <li><a href="#"><em>7</em>월</a></li>
+	                </ul>
+	                <p>
+	                    <input type="date" name="begin"><span>~</span><input type="date" name="end">
+	                </p>
+	                <button class="btnConfirm">조회하기</button>
+	            </div>
+	
+	            <table border="0">
+	                <tr>
+	                    <th>날짜</th>
+	                    <th>구분</th>
+	                    <th>주문번호</th>                                
+	                    <th>적립금액</th>
+	                    <th>비고</th>
+	                    <th>유효기간</th>
+	                </tr>
+	                <tr th:each="point:${point}">
+	                    <td class="date">[[${point.pointDate.substring(0,10)}]]</td>
+	                    <td class="type">[[${point.type}]]</td>
+	                    <td class="ordNo">[[${point.ordNo}]]</td>                                
+	                    <td class="point">[[${point.point}]]</td>
+	                    <td class="desc">[[${point.descript}]]</td>
+	                    <td class="expire">[[${point.pointExpired.substring(0,10)}]]</td>
+	                </tr>
+	            </table>
+	
+	            <p class="page">
+	                <a th:href="@{/my/point (pg=${groups[0]-1})}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/point (pg=${num})}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/point (pg=${groups[0]+1})}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	        </article>                  
+	    </section>
+	</th:block>
+	<th:block layout:fragment="script">
+		<script>
+			$(function(){
+				// 기간별 조회
+				
+				// 날짜 지정 조회
+				$('.btnConfirm').click(function(){
+					let begin = $('input[name=begin]').val();
+					let end   = $('input[name=end]').val();
+					let type  = 'point';
+					
+					if(!begin || !end){ alert('조회하실 날짜를 선택해주세요.'); return; }
+					
+					const jsonData = { "begin":begin , "end":end };
+					
+					$.ajax({
+						url:'/Kmarket/my/searchDatePoint',
+						method:'POST',
+						contentType: 'application/json',
+						data:JSON.stringify(jsonData),
+						dataType:'JSON',
+						success: function(data){
+							
+						}
+					});
+				});
+				
+			});
+		</script>
 	</th:block>
 </html>

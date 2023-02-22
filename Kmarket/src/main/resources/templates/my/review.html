@@ -16,8 +16,8 @@
                                 <th>평점</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr th:each="review:${review}">
-                                <td class="no">[[${review.revNo}]]</td>
+                            <tr th:each="review, i:${review}">
+                                <td class="no">[[${pageStartNum - i.count}]]</td>
                                 <td class="prodName"><a href="#">[[${review.prodName}]]</a></td>
                                 <td class="content">[[${review.content}]]</td>                                
                                 <td class="score"><span th:class="${'rating star' + review.rating}">평점</span></td>
@@ -26,11 +26,9 @@
                         </table>
 
                         <p class="page">
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">다음</a>
+                            <a th:href="@{/my/review (pg=${groups[0]-1})}" class="prev" th:if="${groups[0] > 1}">이전</a>
+                            <a th:href="@{/my/review (pg=${num})}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+                            <a th:href="@{/my/review (pg=${groups[0]+1})}" class="next" th:if="${groups[1] < lastPage}">다음</a>
                         </p>
                     </article>
                 </section>

@@ -44,12 +44,17 @@
                         </td>
                         <td>
                             <ul>
-                                <li><ins class="dis-price">[[${prod.sellPrice}]]</ins></li>
-                                <li>
-                                    <del class="org-price">[[${prod.price}]]</del>
-                                    <span class="discount">10%</span>
+                                <li><ins class="dis-price">[[${#numbers.formatInteger(prod.sellPrice, 0, 'COMMA')}]]</ins></li>
+                                <li th:if="${prod.discount != 0}">
+                                    <del class="org-price">[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</del>
+                                    <span class="discount">[[${prod.discount + '%'}]]</span>
                                 </li>
+                                <th:block th:if="${prod.delivery == 0}">
                                 <li><span class="free-delivery">무료배송</span></li>
+                                </th:block>
+                                <th:block th:if="${prod.delivery != 0}">
+                                <li><span>[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA') + "원"}]]</span></li>
+                                </th:block>
                             </ul>
                         </td>
                         <td>
@@ -62,19 +67,13 @@
                 </table>
                 <div class="paging">
                     <span class="prev">
-                        <a href="#">< 이전</a>
+                        <a th:href="@{/product/list (pg=${groups[0]-1}, prodCate1=${prodCate1}, prodCate2=${prodCate2})}" th:if="${groups[0] > 1}">이전</a>
                     </span>
                     <span class="num">
-                        <a href="#" class="on">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">7</a>
+                        <a th:href="@{/product/list (pg=${num}, prodCate1=${prodCate1}, prodCate2=${prodCate2})}" th:classappend="${num == currentPage} ? 'on'" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
                     </span>
                     <span class="next">
-                        <a href="#">다음 ></a>
+                        <a th:href="@{/product/list (pg=${groups[0]+1}, prodCate1=${prodCate1}, prodCate2=${prodCate2})}" th:if="${groups[1] < lastPage}">다음 ></a>
                     </span>
                 </div>
             </section>

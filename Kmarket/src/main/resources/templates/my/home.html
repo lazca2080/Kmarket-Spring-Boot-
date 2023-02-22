@@ -16,7 +16,7 @@
                                 <th>상태</th>
                                 <th>확인/신청</th>
                             </tr>
-                            <tr th:each="order:${order}">
+                            <tr th:each="order, i:${order}" th:if="${i.count lt 6}">
                                 <td class="date">[[${order.ordDate.substring(0,10)}]]</td>
                                 <td class="info">
                                     <a th:href="@{/product/view (prodNo=${order.prodNo})}" class="thumb"><img th:src="@{/prodImg/__${order.prodCate1}__/__${order.prodCate2}__/__${order.thumb2}__}" alt=""></a>
@@ -24,7 +24,7 @@
                                         <li class="company"><a href="#">[[${order.company}]]</li>
                                         <li class="prodName"><a th:href="@{/product/view (prodNo=${order.prodNo})}">[[${order.prodName}]]</a></li>
                                         <li class="orderNo">수량 : <span class="prodCount">[[${order.count}]]</span>개 / 주문번호 : <a href="#">[[${order.ordNo}]]</a></li>
-                                        <li class="prodPrice">34,000</li>
+                                        <li class="prodPrice">[[${#numbers.formatInteger(order.price, 0, 'COMMA')}]]</li>
                                     </ul>
                                 </td>
                                 <td class="status" th:if="${order.deliStatus == 0}">주문 접수 중</td>
@@ -79,7 +79,7 @@
                                 <th>평점</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr th:each="review:${review}">
+                            <tr th:each="review, i:${review}" th:if="${i.count lt 6}">
                                 <td>[[${review.revNo}]]</td>
                                 <td>[[${review.prodName}]]</td>
                                 <td>[[${review.content}]]</td>
@@ -104,12 +104,12 @@
                                 <th>작성일</th>
                                 <th>상태</th>
                             </tr>
-                            <tr th:each="cs, i: ${cs}" th:if="${i.count < 6}">
+                            <tr th:each="cs, i: ${cs}" th:if="${i.count lt 6}">
                                 <td>[[${cs.no}]]</td>
                                 <td>[[${cs.cateType1}]]</td>
                                 <td>[[${cs.cateType2}]]</td>                                
                                 <td>[[${cs.title}]]</td>
-                                <td>[[${cs.rdate.substring(0,10)}]]</td>
+                                <td>[[${cs.rdate}]]</td>
                                 <td><span class="notAnswerYet">검토중</span></td>
                             </tr>
                             <tr	th:if="${cs.size == 0}" class="empty">
@@ -124,12 +124,15 @@
                             <div class="address">
                                 <span>기본 배송지설정</span>
                                 <a href="#" class="setting">변경</a>
+                                <p>
+                                	<span>[[${#authentication.principal.user.zip + " " + #authentication.principal.user.addr1 + " " + #authentication.principal.user.addr2}]]</span>
+                                </p>
                             </div>
                             <div class="email">
                                 <span>email 설정</span>
                                 <a href="#" class="setting">변경</a>
                                 <p>
-                                    <span>abc123@gmail.com</span><br/>
+                                    <span>[[${#authentication.principal.user.email}]]</span><br/>
                                     (최종수정일 <span>2021-12-10</span>)
                                 </p>
                             </div>
@@ -137,7 +140,7 @@
                                 <span>휴대폰 설정</span>
                                 <a href="#" class="setting">변경</a>
                                 <p>
-                                    <span>abc123@gmail.com</span><br/>
+                                    <span>[[${#authentication.principal.user.tel}]]</span><br/>
                                     (최종수정일 <span>2021-12-10</span>)
                                 </p>
                             </div>
@@ -489,11 +492,6 @@
 			    // 수취확인 팝업 띄우기
 			    $('.latest .confirm > .receive').click(function(e){
 			        e.preventDefault();
-			        
-			        if($(this).attr('data-no') != 3){
-			        	alert('배송이 완료되어야 구매 확정 하실 수 있습니다.');
-			        	return false;
-			        };
 			        
 			        $('#popReceive').addClass('on');
 			    });

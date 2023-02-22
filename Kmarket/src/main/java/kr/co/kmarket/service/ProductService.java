@@ -34,8 +34,8 @@ public class ProductService {
 	}
 	
 	// 상품 카테고리에 맞는 상품 리스트
-	public List<ProductVO> selectProducts(String prodCate1, String prodCate2, String sort){
-		return dao.selectProducts(prodCate1, prodCate2, sort);
+	public List<ProductVO> selectProducts(String prodCate1, String prodCate2, String sort, int start){
+		return dao.selectProducts(prodCate1, prodCate2, sort, start);
 	}
 	
 	// 상품번호에 맞는 상품 불러오기
@@ -91,5 +91,61 @@ public class ProductService {
 	// 검색
 	public List<ProductVO> searchProduct(String keyWord, String sort) {
 		return dao.searchProduct(keyWord, sort);
+	}
+	
+	
+	
+	
+	// 페이징
+	// 페이지 시작값
+	public int getLimitStart(int currentPage) {
+		return (currentPage - 1) * 10;
+	}
+	
+	// 현재 페이지
+	public int getCurrentPage(String pg) {
+		int currentPage = 1;
+		
+		if(pg != null) {
+			currentPage = Integer.parseInt(pg);
+		}
+		return currentPage;
+	}
+	
+	// 전체 개수
+	public int getTotalCount(String prodCate1, String prodCate2) {
+		return dao.getTotalCount(prodCate1, prodCate2);
+	}
+	
+	// 마지막 페이지 번호
+	public int getLastPageNum(long total) {
+		int lastPage = 0;
+		
+		if(total % 10 == 0) {
+			lastPage = (int) (total / 10);
+		}else {
+			lastPage = (int) (total / 10) + 1;
+		}
+		return lastPage;
+	}
+	
+	// 페이지 시작번호
+	public int getPageStartNum(long total, int start) {
+		return (int) (total - start);
+	}
+	
+	// 페이지 그룹
+	public int[] getPageGroup(int currentPage, int lastPage) {
+		int groupCurrent = (int) Math.ceil(currentPage / 10.0);
+		int groupStart   = (groupCurrent-1)*10 + 1;
+		int groupEnd = groupCurrent*10;
+		
+		if(groupEnd > lastPage) {
+			groupEnd = lastPage;
+		}
+		
+		int[] groups = {groupStart, groupEnd};
+		
+		return groups;
 	}
 }
