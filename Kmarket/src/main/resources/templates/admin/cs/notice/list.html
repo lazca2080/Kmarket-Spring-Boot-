@@ -9,12 +9,12 @@
             <p>HOME > 고객센터 > <span>공지사항</span></p>
         </nav>
 
-        <select name="noticeType">
+        <select name="searchType">
             <option value="none">유형선택</option>
-            <option value="service">고객서비스</option>
-            <option value="safeDeal">안전거래</option>
-            <option value="xproduct">위해상품</option>
-            <option value="great">이벤트당첨</option>
+            <option>고객서비스</option>
+            <option>안전거래</option>
+            <option>위해상품</option>
+            <option>이벤트당첨</option>
         </select>
 
         <table>
@@ -39,7 +39,7 @@
                     <td width="50px">[[${article.rdate}]]</td>
 
                     <td width="70px">
-                        <a href="#" class="CSremove" th:data-no="${article.no}">[삭제]</a>
+                        <a href="#" class="CSremove1" th:data-no="${article.no}">[삭제]</a>
                         <a th:href="|@{/}admin/cs/modify/notice/${article.no}|" class="CSmodify" th:data-no="${article.no}">[수정]</a>
                     </td>
                 </tr>

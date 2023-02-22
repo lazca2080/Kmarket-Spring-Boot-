@@ -682,6 +682,9 @@ button[type=submit] {
 }
 #cs-list > .paging > .pg:not(.on):hover {background-color: #e7f2fb;}
 
+#cs-list > .QNAth .replyOk {
+    color : skyblue;
+}
 
 /* 공지사항 보기 */
 #cs-view > table {
@@ -751,6 +754,7 @@ button[type=submit] {
     background: skyblue;
     border: 1px solid #d6d6d6;
     color: white;
+    width: 82px;
 }
 
 #cs-view > div > .remove {

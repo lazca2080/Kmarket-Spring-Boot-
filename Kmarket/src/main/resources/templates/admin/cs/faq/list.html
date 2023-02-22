@@ -46,7 +46,7 @@
                     <td>[[${article.hit}]]</td>
                     <td>[[${article.rdate}]]</td>
                     <td>
-                        <a href="#" class="CSremove">[삭제]</a>
+                        <a href="#" class="CSremove2" th:data-no="${article.no}">[삭제]</a>
                         <a th:href="|@{/}admin/cs/modify/faq/${article.no}|" class="CSmodify">[수정]</a>
                     </td>
                 </tr>

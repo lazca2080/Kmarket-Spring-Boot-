@@ -1,7 +1,9 @@
 package kr.co.kmarket.dao;
 
 import kr.co.kmarket.vo.CsVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,25 +16,25 @@ public interface AdminCsDAO {
     public int insertArticleNotice(CsVO vo);
     public int insertArticleFaq(CsVO vo);
 
-    public List<CsVO> adminCSnotice(int start);
-    public List<CsVO> adminCSfaq(int start);
-    public List<CsVO> adminCSqna(int start);
-	  public int selectCountTotal();
-
-
+    /** 글 보기 **/
     public CsVO noticeSelectOne(int no);
     public CsVO faqSelectOne(int no);
     public CsVO qnaSelectOne(int no);
 
-    public List<CsVO> selectAdminCSnotice(int start);
+    /** 글 리스트 **/
+    public List<CsVO> selectAdminCSnotice(@Param("start") int start, @Param("searchType") String searchType);
     public List<CsVO> selectAdminCSfaq(int start);
     public List<CsVO> selectAdminCSqna(int start);
+
+    /** 게시글 개수 **/
     public int selectAdminNoticeTotal();
     public int selectAdminQnaTotal();
     public int selectAdminFaqTotal();
 
     public void updateNotice(CsVO vo);
     public void updateFaq(CsVO vo);
+    public int updateReply(CsVO vo);
+
     public int checkDeleteNotice(String no);
     public int checkDeleteFaq(String no);
     public int checkDeleteQna(String no);

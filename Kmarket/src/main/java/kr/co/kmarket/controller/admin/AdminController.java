@@ -85,6 +85,19 @@ public class AdminController {
 		return "redirect:/admin/product/register";
 	}
 
+	// 상품 업데이트
+	@PostMapping("admin/product/update")
+	@ResponseBody
+	public Map update(@RequestBody ProductVO vo){
+		int result = 0;
+		result = service.updateProduct(vo);
+
+		Map map = new HashMap();
+		map.put("result", result);
+
+		return map;
+	}
+
 	// 카테고리 분류
 	@ResponseBody
 	@GetMapping("admin/register/selectCate2")

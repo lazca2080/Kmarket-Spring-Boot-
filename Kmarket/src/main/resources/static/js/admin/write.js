@@ -54,3 +54,39 @@ function faqOption(){
 	}
 
 }
+
+$(function(){
+	$(document).on("click", ".qnaReplyCommit", (e)=>{
+		e.preventDefault();
+
+		let no = $('#replyNo').val()
+		let ment = $('textarea[name=reply]');
+		let reply = ment.val();
+
+		const url = "/Kmarket/admin/reply";
+		let jsonData = {
+			no:no,
+			reply:reply
+		};
+
+		console.log(jsonData);
+
+		$.ajax({
+			url:url,
+			method:'post',
+			data:JSON.stringify(jsonData),
+			contentType : "application/json",
+			dataType:'json',
+			success: (data)=>{
+				console.log(data);
+				
+				if(data.result > 0){
+					ment.remove();
+					$('#rep').html("<p style='font-size:18px'>"+reply+"</p>")
+				}else{
+					alert('등록 실패');
+				}
+			}
+		})
+	});
+})
