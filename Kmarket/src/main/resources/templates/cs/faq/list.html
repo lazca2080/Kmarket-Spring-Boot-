@@ -47,12 +47,12 @@
                                 <h2>가장 자주 묻는 질문입니다.</h2>
                             </nav>
                             <div>
-                                <h3>가입</h3>
+                                <h3 th:inline="text">[[${faq.cateType2}]]</h3>
                                 <ul>
                                     <li>
                                         <a th:href="@{/cs/faq/list(cateType2=${cateType2}, no=${no})}">
                                             <span>Q.</span>
-                                            개인회원과 법인회원에 차이가 있나요?
+                                            
                                         </a>
                                     </li>
                                     <li>

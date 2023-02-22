@@ -38,7 +38,7 @@
                     <article>
                         <nav>
                             <h2 class="title" th:text="${notice.title}">[안내] 해외결제 사칭 문자 주의</h2>
-                            <span class="date" th:text="${#strings.substring(notice.rdate, 0, 10)}">2023.02.07</span>
+                            <span class="date" th:text="${notice.rdate}">2023.02.07</span>
                         </nav>
                         <div class="content" th:text="${notice.content}">
                             <p>

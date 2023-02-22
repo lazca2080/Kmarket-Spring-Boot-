@@ -44,14 +44,14 @@
                     <article>
                         <form th:action="@{/cs/qna/write}" method="post">
                         <input type="hidden" name="uid" th:value="${uid}">
-                        <input type="hidden" name="cateType1" value="${cateType1}"/>
+                        <input type="hidden" name="cateType1" th:value="${cateType1}"/>
                             <table>
                                 <tbody>
                                     <tr>
                                         <td>문의유형</td>
                                         <td>
-                                            <select name="type">
-                                                <option value="0">선택</option>
+                                            <select name="cateType2">
+                                                <option value="#">선택</option>
                                                 <option>가입</option>
                                                 <option>탈퇴</option>
                                                 <option>회원정보</option>
@@ -74,7 +74,7 @@
                                 </tbody>
                             </table>
                             <div>
-                                <a th:href="@{/cs/qna/list}" class="btnList">취소하기</a>
+                                <a th:href="@{/cs/qna/list(cateType1='회원')}" class="btnList">취소하기</a>
                                 <input type="submit" class="btnSubmit" value="등록하기">
                             </div>
                         </form>

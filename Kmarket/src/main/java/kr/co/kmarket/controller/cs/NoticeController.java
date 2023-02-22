@@ -46,7 +46,8 @@ public class NoticeController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
-		/*
+		
+		log.info("sdf : "+ notice);
 		log.info("sdf : "+ currentPage);
 		log.info("sdf : "+ start);
 		log.info("sdf : "+ total);
@@ -54,7 +55,7 @@ public class NoticeController {
 		log.info("sdf : "+ pageStartNum);
 		log.info("sdf : "+ groups[0]);
 		log.info("sdf : "+ groups[1]);
-		*/
+		
 		
 		return "cs/notice/list";
 	}
