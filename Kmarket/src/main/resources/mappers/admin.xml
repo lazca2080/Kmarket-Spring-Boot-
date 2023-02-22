@@ -72,7 +72,7 @@
 		SELECT * FROM `km_product_cate2` WHERE `cate1` = #{cate1};
 	</select>
 
-	<update id="updateProduct">
+	<update id="updateProduct" parameterType="kr.co.kmarket.vo.ProductVO">
 		UPDATE `km_product` SET
 			`prodName`=#{prodName},
 			`price`=#{price},

@@ -2,6 +2,7 @@ package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.AdminCsDAO;
 import kr.co.kmarket.vo.CsVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.HttpRequestHandler;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AdminCSservice {
 
@@ -24,6 +26,7 @@ public class AdminCSservice {
         return dao.insertArticleFaq(vo);
     }
 
+    /** 글 보기 ***/
     public CsVO noticeSelectOne(int no){
         return dao.noticeSelectOne(no);
     }
@@ -34,8 +37,10 @@ public class AdminCSservice {
         return dao.qnaSelectOne(no);
     }
 
-    public List<CsVO> selectAdminCSnotice(int start){
-        return dao.selectAdminCSnotice(start);
+    public List<CsVO> selectAdminCSnotice(int start, String searchType){
+        log.info("[searchType] ============ " + searchType);
+
+        return dao.selectAdminCSnotice(start, searchType);
     }
     public List<CsVO> selectAdminCSfaq(int start){
         return dao.selectAdminCSfaq(start);
@@ -56,6 +61,10 @@ public class AdminCSservice {
 
     public void updateNotice(CsVO vo){dao.updateNotice(vo);};
     public void updateFaq(CsVO vo){dao.updateFaq(vo);};
+    public int updateReply(CsVO vo){
+        return dao.updateReply(vo);
+    };
+
     public Integer checkDeleteNotice(String no){return dao.checkDeleteNotice(no);}
     public Integer checkDeleteFaq(String no){return dao.checkDeleteFaq(no);}
     public Integer checkDeleteQna(String no){return dao.checkDeleteQna(no);}

@@ -25,4 +25,5 @@ public class CsVO {
 
 	// 추가
 	private int pg;
+	private String searchType;
 }

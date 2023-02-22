@@ -21,9 +21,14 @@ public class AdminCScontroller {
     @Autowired
     private AdminCSservice service;
 
-    /** ============= 관리자 고객센터 ================= **/
+    /** ============= 관리자 고객센터  ================= **/
+
+    /**************글 리스트 ******************/
     @GetMapping("admin/cs/list/{csType}")
-    public String csList(@PathVariable("csType")String csType, String pg, Model model){
+    public String csList(@PathVariable("csType")String csType,
+                         @RequestParam(value = "searchType", required = false)String searchType,
+                         String pg,
+                         Model model){
 
         // admin-aside에서 고객센터 타입 구분
         if("notice".equals(csType)){
@@ -34,13 +39,15 @@ public class AdminCScontroller {
             int pageStartNum = service.getPageStartNum(total, start);
             int groups[] = service.getPageGroup(currentPage, lastPage);
 
-            List<CsVO> articles = service.selectAdminCSnotice(start);
-            log.info("total : " + total);
+            List<CsVO> articles = service.selectAdminCSnotice(start, searchType);
+            log.info("[searchType] ============ " + searchType);
+            log.info("========================= ");
             model.addAttribute("currentPage", currentPage);
             model.addAttribute("lastPage", lastPage);
             model.addAttribute("pageStartNum", pageStartNum);
             model.addAttribute("groups", groups);
             model.addAttribute("articles", articles);
+
             return "admin/cs/notice/list";
 
         }else if("qna".equals(csType)) {
@@ -78,6 +85,7 @@ public class AdminCScontroller {
         }
     }
 
+    /************* 글 보기 *******************/
     @GetMapping("admin/cs/view/{csType}/{no}")
     public String csView(@PathVariable("csType")String csType,
                          @PathVariable("no")int no,
@@ -99,6 +107,7 @@ public class AdminCScontroller {
         }
     }
 
+    /************** 글쓰기 *********************/
     @GetMapping("admin/cs/{writeType}")
     public String csWrite(@PathVariable("writeType")String writeType){
         if("noticeWrite".equals(writeType)){
@@ -107,9 +116,10 @@ public class AdminCScontroller {
             return "admin/cs/faq/write";
         }
     }
-
     @PostMapping("admin/cs/{writeType}")
-    public String insertWrite(@PathVariable("writeType")String writeType, CsVO vo, HttpServletRequest req){
+    public String insertWrite(@PathVariable("writeType")String writeType,
+                              @RequestBody CsVO vo,
+                              HttpServletRequest req){
         vo.setRegip(req.getRemoteAddr());
 
         if("notice".equals(writeType)){
@@ -121,6 +131,20 @@ public class AdminCScontroller {
         return "redirect:/admin/cs/list/faq";
     }
 
+    /****************문의 글 답변 **************/
+    @PostMapping("admin/reply")
+    @ResponseBody
+    public Map replyCommit(@RequestBody CsVO vo){
+        int result = 0;
+        result = service.updateReply(vo);
+
+        Map map = new HashMap();
+        map.put("result", result);
+
+        return map;
+    }
+
+    /***************** 글 수정 *******************/
     @GetMapping("admin/cs/modify/{csType}/{no}")
     public String modify(@PathVariable("csType")String csType,
                          @PathVariable("no")int no,
@@ -136,7 +160,6 @@ public class AdminCScontroller {
             m.addAttribute("cvo", cvo);
             return "admin/cs/faq/modify";
         }
-
     }
     @PostMapping("admin/update/{csType}")
     public String modify(@PathVariable("csType")String csType, CsVO vo){
@@ -148,10 +171,8 @@ public class AdminCScontroller {
         return "redirect:/admin/cs/list/{csType}";
     }
 
-
-
-    /**=============================================================*/
-    @PostMapping("admin/cs/deleteNotice1")
+    /**========================== 삭제 ===================================*/
+    @PostMapping("admin/cs/deleteNotice")
     @ResponseBody
     public Map<String, Object> delete1(@RequestParam("valueArr")String[] valueArr){
         int size = valueArr.length;
@@ -167,7 +188,7 @@ public class AdminCScontroller {
 
         return map;
     }
-    @PostMapping("admin/cs/deleteNotice2")
+    @PostMapping("admin/cs/deleteFaq")
     @ResponseBody
     public Map<String, Object> delete2(@RequestParam("valueArr")String[] valueArr){
         int size = valueArr.length;
@@ -183,7 +204,7 @@ public class AdminCScontroller {
 
         return map;
     }
-    @PostMapping("admin/cs/deleteNotice3")
+    @PostMapping("admin/cs/deleteQna")
     @ResponseBody
     public Map<String, Object> delete3(@RequestParam("valueArr")String[] valueArr){
         int size = valueArr.length;
@@ -199,6 +220,4 @@ public class AdminCScontroller {
 
         return map;
     }
-
-
 }

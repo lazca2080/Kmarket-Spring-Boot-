@@ -8,7 +8,9 @@
       <h1>문의사항 보기</h1>
       <p>HOME > 고객센터 > <span>문의하기</span></p>
     </nav>
-
+    <div>
+      <input type="hidden" id="replyNo" name="no" th:value="${cvo.no}">
+    </div>
       <table class="qna">
         <tr>
           <td>유형</td>
@@ -27,17 +29,21 @@
 
         <tr>
           <td>답변</td>
-          <td id="rep">
-            <textarea name="reply" class="reply"></textarea>
-          </td>
+
           <th:block th:if="${cvo.reply} != null">
-            <td>[[${cvo.reply}]]</td>
+            <td><p style="font-size:18px">[[${cvo.reply}]]</p></td>
           </th:block>
+          <th:block th:if="${cvo.reply} == null">
+            <td id="rep">
+              <textarea name="reply" class="reply"></textarea>
+            </td>
+          </th:block>
+
         </tr>
       </table>
       <div>
         <a href="#" class="remove">삭제</a>
-        <a href="#" class="qnaReplyCommit">답변등록</a>
+        <input type="button" value="답변등록" class="qnaReplyCommit">
         <a href="#" class="qnaBtnList">목록</a>
       </div>
   </section>

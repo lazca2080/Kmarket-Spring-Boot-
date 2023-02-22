@@ -37,8 +37,10 @@
         SELECT * FROM `km_cs_qna` WHERE `no`=#{no};
     </select>
 
-    <select id="selectAdminCSnotice" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs_notice` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+    <select id="selectAdminCSnotice" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_notice` WHERE 1=1
+        <include refid="searchCateType"/>
+        ORDER BY `no` DESC LIMIT #{start},10;
     </select>
 
     <select id="selectAdminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
@@ -81,6 +83,13 @@
         `no`=#{no};
     </update>
 
+    <update id="updateReply" parameterType="kr.co.kmarket.vo.CsVO">
+        UPDATE `km_cs_qna` SET
+            `reply`=#{reply}
+        WHERE
+            `no`=#{no};
+    </update>
+
     <!-- 삭제 -->
     <delete id="checkDeleteNotice">
         delete from `km_cs_notice` where `no` = #{no};
@@ -91,4 +100,26 @@
     <delete id="checkDeleteQna">
         delete from `km_cs_qna` where `no` = #{no};
     </delete>
+
+
+    <!--========공통 키==========-->
+    <sql id="searchCateType">
+        <if test="searchType != null">
+            <choose>
+                <when test='searchType == "고객서비스"'>
+                    AND cateType1 = #{searchType}
+                </when>
+                <when test='searchType == "안전거래"'>
+                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
+                </when>
+                <when test='searchType == "위해상품"'>
+                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
+                </when>
+                <when test='searchType == "이벤트당첨"'>
+                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
+                </when>
+
+            </choose>
+        </if>
+    </sql>
 </mapper>

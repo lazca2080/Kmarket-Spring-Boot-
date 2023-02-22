@@ -8,7 +8,7 @@ function selectAll(selectAll) {
 	})
 }
 
-// 상품삭제(선택삭제)
+// 상품삭제(선택삭제) Product-list
 function checkDelete(){
     let url = "/Kmarket/admin/product/delete";
     let replaceUrl = "/Kmarket/admin/product/list";
@@ -46,7 +46,7 @@ function checkDelete(){
 
 // 선택삭제 admin-CS
 function csDelete1(){
-    const url = "/Kmarket/admin/cs/deleteNotice1"
+    const url = "/Kmarket/admin/cs/deleteNotice"
     const replaceUrl = "/Kmarket/admin/cs/list/notice";
     let valueArr = new Array();
     let deleteList = document.getElementsByName("check");
@@ -70,7 +70,7 @@ function csDelete1(){
             dataType:'json',
             success: (data)=>{
                 if(data.result == 1){
-                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    alert(valueArr.length + '개의 게시글이 정상적으로 삭제 되었습니다.')
                     location.href = replaceUrl;
                 }else{
                     alert('삭제 실패')
@@ -80,7 +80,7 @@ function csDelete1(){
     }
 }
 function csDelete2(){
-    const url = "/Kmarket/admin/cs/deleteNotice2"
+    const url = "/Kmarket/admin/cs/deleteFaq"
     const replaceUrl = "/Kmarket/admin/cs/list/faq";
     let valueArr = new Array();
     let deleteList = document.getElementsByName("check");
@@ -104,7 +104,7 @@ function csDelete2(){
             dataType:'json',
             success: (data)=>{
                 if(data.result == 1){
-                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    alert(valueArr.length + '개의 게시글이 정상적으로 삭제 되었습니다.')
                     location.href = replaceUrl;
                 }else{
                     alert('삭제 실패')
@@ -114,7 +114,7 @@ function csDelete2(){
     }
 }
 function csDelete3(){
-    const url = "/Kmarket/admin/cs/deleteNotice3"
+    const url = "/Kmarket/admin/cs/deleteQna"
     const replaceUrl = "/Kmarket/admin/cs/list/qna";
     let valueArr = new Array();
     let deleteList = document.getElementsByName("check");
@@ -138,7 +138,7 @@ function csDelete3(){
             dataType:'json',
             success: (data)=>{
                 if(data.result == 1){
-                    alert(valueArr.length + '개의 상품이 정상적으로 삭제 되었습니다.')
+                    alert(valueArr.length + '개의 게시글이 정상적으로 삭제 되었습니다.')
                     location.href = replaceUrl;
                 }else{
                     alert('삭제 실패')
