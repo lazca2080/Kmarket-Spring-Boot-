@@ -28,14 +28,15 @@ public interface CsDAO {
 	
 	
 	//글 작성
-	public int NinsertArticle(CsVO vo);
 	public int QinsertArticle(CsVO vo);
-	public int FinsertArticle(CsVO vo);
 	
 	
 	// 글 페이지
 	public int selectNoticeCountTotal(String cateType1);
 	public int selectFaqCountTotal(String cateType1);
 	public int selectQnaCountTotal(String cateType1);
+	
+	
+	public CsVO selectarticle(String no);
 }
 

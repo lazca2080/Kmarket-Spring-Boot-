@@ -60,7 +60,7 @@
 	
 	
 	<select id="selectFaqArticles" resultType="kr.co.kmarket.vo.CsVO">
-		SELECT * FROM `km_cs_faq` WHERE `cateType1`= #{cateType1} ORDER BY `cateType2`, `rdate` DESC;
+		SELECT * FROM `km_cs_faq` WHERE `parent`=0 and `cateType1`= #{cateType1} and `cateType2`=#{cateType2} ORDER BY `rdate` DESC;
 	</select>
 	
 	<select id="selectNoticeArticles" resultType="kr.co.kmarket.vo.CsVO">
@@ -80,22 +80,15 @@
 	</select>
 	
 	
-	
-	<insert id="NinsertArticle">
-		insert into `km_cs_notice` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
-		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
-	</insert>
-	
 	<insert id="QinsertArticle">
 		insert into `km_cs_qna` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
 		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
 	</insert>
 	
-	<insert id="FinsertArticle">
-		insert into `km_cs_faq` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
-		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();
-	</insert>
 	
+	<select id="selectarticle" resultType="kr.co.kmarket.vo.CsVO">
+		SELECT * FROM `km_cs_faq` WHERE `no`=#{no};
+	</select>
 	
 	
 	

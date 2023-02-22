@@ -25,11 +25,9 @@ public class QnaService {
 	}
 	
 	public int QinsertArticle(CsVO vo) {
-		int result = 0;
 		
-		result = dao.QinsertArticle(vo);
+		return dao.QinsertArticle(vo);
 		
-		return result;
 		
 	}
 	

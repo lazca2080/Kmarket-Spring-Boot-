@@ -37,8 +37,8 @@
                     </aside>
                     <article>
                         <nav>
-                            <h1>전체</h1>
-                            <h2>공지사항 전체 내용입니다.</h2>
+                            <h1 th:text="${cateType1}">전체</h1>
+                            <h2 th:inline="text">공지사항 [[${cateType1}]] 내용입니다.</h2>
                         </nav>
                         <table>
                             <tbody>

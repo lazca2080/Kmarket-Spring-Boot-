@@ -45,13 +45,13 @@ public class QnaController {
 		model.addAttribute("pageStartNum", pageStartNum);
 		model.addAttribute("groups", groups);
 		
-		log.info("zxcv : "+ qna);
-		log.info("cateType1 : "+ cateType1);
-		log.info("zxcv : "+ currentPage);
-		log.info("zxcv : "+ lastPage);
-		log.info("zxcv : "+ pageStartNum);
-		log.info("zxcv : "+ groups[0]);
-	
+		//log.info("zxcv : "+ qna);
+		//log.info("cateType1 : "+ cateType1);
+		//log.info("zxcv : "+ currentPage);
+		//log.info("zxcv : "+ lastPage);
+		//log.info("zxcv : "+ pageStartNum);
+		//log.info("zxcv : "+ groups[0]);
+		
 		
 		return "cs/qna/list";
 	}
@@ -63,7 +63,7 @@ public class QnaController {
 		model.addAttribute("qna",qna);
 		model.addAttribute("cateType1",cateType1);
 		model.addAttribute("pg",pg);
-		log.info("adad : "+qna);
+		//log.info("adad : "+qna);
 		return "cs/qna/view";
 	}
 	
@@ -74,11 +74,12 @@ public class QnaController {
 	
 	@PostMapping("cs/qna/write")
 	public String write(CsVO vo, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser) {
-		vo.setUid("testTest");
+		vo.setUid("uid");
 		vo.setRegip(req.getRemoteAddr());
 		
-		int result = service.QinsertArticle(vo);
+		//service.QinsertArticle(vo);
 		
+		log.info("aasdf :" +vo);
 		return "redirect:/cs/qna/list";
 	}
 	

@@ -28,12 +28,24 @@ public class FaqController {
 		model.addAttribute("no", no);
 		model.addAttribute("faq", faq);
 		
+		log.info("sdf : "+cateType1);
 		log.info("sdf : "+cateType2);
-		return "cs/faq/list";
+		log.info("sdf : "+no);
+		log.info("sdf : "+faq);
+		return "cs/fqa/list";
 	}
 	
 	@GetMapping("cs/faq/view")
-	public String view() {
+	public String view(String cateType1, String cateType2, String no, Model model) {
+		
+		CsVO vo = service.selectarticle(no);
+		
+		model.addAttribute("cateType1",cateType1);
+		model.addAttribute("cateType2",cateType2);
+		model.addAttribute("vo",vo);
+		
 		return "cs/faq/view";
 	}
+	
+	
 }

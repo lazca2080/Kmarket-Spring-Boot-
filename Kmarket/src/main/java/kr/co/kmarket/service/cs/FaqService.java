@@ -15,6 +15,10 @@ public class FaqService {
 	
 	public List<CsVO> selectFaqArticles(String cateType1, String cateType2) {
 		return dao.selectFaqArticles(cateType1,cateType2);
-	};
+	}
+	
+	public CsVO selectarticle(String no) {
+		return dao.selectarticle(no);
+	}
 	
 }
