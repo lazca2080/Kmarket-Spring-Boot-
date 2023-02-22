@@ -44,13 +44,25 @@ public class ProductController {
 	
 	// 상품 목록
 	@GetMapping("product/list")
-	public String list(Model model, String prodCate1, String prodCate2, String sort) {
+	public String list(Model model, String prodCate1, String prodCate2, String sort, String pg) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
 		
-		List<ProductVO> products = service.selectProducts(prodCate1, prodCate2, sort);
-		model.addAttribute("prods", products);			
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalCount(prodCate1, prodCate2);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		List<ProductVO> products = service.selectProducts(prodCate1, prodCate2, sort, start);
+		model.addAttribute("prods", products);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		
 		model.addAttribute("prodCate1", prodCate1);
 		model.addAttribute("prodCate2", prodCate2);
@@ -324,6 +336,7 @@ public class ProductController {
 		
 		List<ProductVO> search = service.searchProduct(keyWord, sort);
 		
+		model.addAttribute("keyWord",keyWord);
 		model.addAttribute("prods", search);
 		model.addAttribute("sort", sort);
 		model.addAttribute("size", search.size());

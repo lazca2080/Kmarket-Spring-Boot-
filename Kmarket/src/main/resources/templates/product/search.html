@@ -9,12 +9,31 @@
                     <h2>정확한 검색어인지 확인하고 다시 검색해 보세요.</h2>
                 </nav>	
 			</section>
-            <section class="list" th:if="${size != 0}">
+            <section class="list search" th:if="${size != 0}">
                 <nav>
-                    <h1>검색하신 '<strong style="font-weight: bold; font-size: 1em; color: blue;">[[${keyWord}]]</strong>'에 의한 
-                    <strong style="font-weight: bold; font-size: 1em; color: blue;">[[${size}]]</strong>개의 검색 결과 입니다.</h1>
-                    <p></p>
-                </nav>
+            		<h1>상품 검색 결과</h1>
+            		<p>
+              			HOME > <span>상품검색</span> > <strong>검색키워드</strong>
+            		</p>
+          	    </nav>
+                <!-- 검색결과 그룹박스 -->
+	            <div class="group">
+	              <h3><strong>[[${keyWord}]]</strong>검색결과 <em>(총&nbsp;:&nbsp;<span>[[${size}]]</span>&nbsp;건)</em></h3>
+	              <form action="#">
+	                <input type="text" name="search"/>
+	                <input type="submit" value="검색"/>
+	                <span>
+	                    <label><input type="checkbox" name="chk" value="상품명">상품명</label>
+	                    <label><input type="checkbox" name="chk" value="상품설명">상품설명</label>
+	                    <label><input type="checkbox" name="chk" value="상품가격">상품가격</label>
+	                    <input type="text" name="min"/>원&nbsp;~&nbsp;<input type="text" name="max"/>원
+	                </span>
+	              </form>
+	              <p class="info">
+	                상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 현재 결과내에서 검색합니다.<br>
+	                검색어는 최대 10글자까지, 여러개의 검색어를 공백으로 구분하여 입력 할수 있습니다.
+	              </p>
+	            </div>
                 <ul class="sort">
                     <li>
                         <a th:href="@{/product/search (sort='sold', keyWord=${keyWord})}" th:classappend="${sort} == 'sold' ? 'on'">판매많은순</a>

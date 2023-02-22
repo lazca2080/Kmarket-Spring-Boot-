@@ -398,7 +398,7 @@ footer p > strong {
 #my > div > section .qna > table tr > th:nth-child(1) { width: 40px; }
 #my > div > section .qna > table tr > th:nth-child(2) { width: 85px; }
 #my > div > section .qna > table tr > th:nth-child(3) { width: 85px; }
-#my > dive > section .qna > table tr > th:nth-child(4) { width: 350px; }
+#my > div > section .qna > table tr > th:nth-child(4) { width: 350px; }
 
 #my > div > section .qna > table tr > td:nth-child(2) {
 	text-overflow: ellipsis;

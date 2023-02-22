@@ -1,5 +1,6 @@
 package kr.co.kmarket.controller.my;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +39,10 @@ public class MyController {
 		model.addAttribute("type", "home");
 		
      	String uid = myUser.getUser().getUid();
-		List<OrderVO> order = service.selectMyHomeOrder(uid);
-		List<PointVO> point = service.selectMyHomePoint(uid);
-		List<ReviewVO> review = service.selectMyHomeReview(uid);
-		List<CsVO> cs = service.selectMyHomeCs(uid);
+		List<OrderVO> order = service.selectMyHomeOrder(uid, 0, "none");
+		List<PointVO> point = service.selectMyHomePoint(uid, 0);
+		List<ReviewVO> review = service.selectMyHomeReview(uid, 0);
+		List<CsVO> cs = service.selectMyHomeCs(uid, 0);
 		
 		model.addAttribute("order", order);
 		model.addAttribute("point", point);
@@ -52,25 +53,52 @@ public class MyController {
 	}
 	
 	@GetMapping("my/ordered")
-	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
+	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date) {
 		model.addAttribute("type", "ordered");
-		
 		String uid = myUser.getUser().getUid();
+		LocalDate now = LocalDate.now();
+		// 현재 달
+		int month = now.getMonthValue();
 		
-		List<OrderVO> order = service.selectMyHomeOrder(uid);
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalOrderCount(uid);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		if(date == null) { date = "none"; }
+		List<OrderVO> order = service.selectMyHomeOrder(uid, start, date);
 		model.addAttribute("order", order);
+		
+		model.addAttribute("month", month);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		
 		return "my/ordered";
 	}
 	
 	@GetMapping("my/point")
-	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
+	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
 		model.addAttribute("type", "point");
-		
 		String uid = myUser.getUser().getUid();
 		
-		List<PointVO> point = service.selectMyHomePoint(uid);
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalPointCount(uid);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		List<PointVO> point = service.selectMyHomePoint(uid, start);
 		model.addAttribute("point", point);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		
 		return "my/point";
 	}
@@ -85,25 +113,47 @@ public class MyController {
 	}
 	
 	@GetMapping("my/review")
-	public String review(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
+	public String review(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
 		model.addAttribute("type", "review");
-		
 		String uid = myUser.getUser().getUid();
 		
-		List<ReviewVO> review = service.selectMyHomeReview(uid);
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalReviewCount(uid);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		List<ReviewVO> review = service.selectMyHomeReview(uid, start);
 		model.addAttribute("review", review);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		
 		return "my/review";
 	}
 	
 	@GetMapping("my/qna")
-	public String qna(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
+	public String qna(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
 		model.addAttribute("type", "qna");
-		
 		String uid = myUser.getUser().getUid();
 		
-		List<CsVO> cs = service.selectMyHomeCs(uid);
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalCsCount(uid);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		List<CsVO> cs = service.selectMyHomeCs(uid, start);
+		
 		model.addAttribute("qna", cs);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
 		
 		return "my/qna";
 	}
@@ -165,4 +215,36 @@ public class MyController {
 		
 		return map;
 	}
+	
+	// 전체주문내역 날짜 검색
+	@ResponseBody
+	@PostMapping("my/searchDate")
+	public void searchDateOrdered(@RequestBody Map<String, String> map, @AuthenticationPrincipal MyUserDetails myUser, String pg, Model model) {
+		map.put("uid", myUser.getUser().getUid());
+		
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalOrderCount(myUser.getUser().getUid());
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		List<OrderVO> order = service.searchDateOrdered(map);
+		model.addAttribute("order", order);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
+	}
+	
+	// 포인트내역 날짜 검색
+	@ResponseBody
+	@PostMapping("my/searchDatePoint")
+	public void searchDatePoint(@RequestBody Map<String, String> map, @AuthenticationPrincipal MyUserDetails myUser) {
+		map.put("uid", myUser.getUser().getUid());
+		
+		service.searchDateOrdered(map);
+	}
+	
 }
