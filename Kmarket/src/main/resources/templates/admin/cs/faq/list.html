@@ -25,7 +25,7 @@
 
         <table class="FAQth">
             <tr>
-                <th><input type="checkbox" name="prodAllCheck"></th>
+                <th><input type="checkbox" name="allCheck" onclick="selectAll(this)"></th>
                 <th>번호</th>
                 <th>1차유형</th>
                 <th>2차유형</th>
@@ -38,7 +38,7 @@
             <tbody id=article>
             <th:block th:each="article : ${articles}">
                 <tr>
-                    <td><input type="checkbox" name='prodCheck'></td>
+                    <td><input type="checkbox" name='check' th:value="${article.no}"></td>
                     <td>[[${article.no}]]</td>
                     <td width="100px">[[${article.cateType1}]]</td>
                     <td>[[${article.cateType2}]]</td>
@@ -46,14 +46,14 @@
                     <td>[[${article.hit}]]</td>
                     <td>[[${article.rdate}]]</td>
                     <td>
-                        <a href="#" class="remove">[삭제]</a>
-                        <a href="#" class="modify">[수정]</a>
+                        <a href="#" class="CSremove">[삭제]</a>
+                        <a th:href="|@{/}admin/cs/modify/faq/${article.no}|" class="CSmodify">[수정]</a>
                     </td>
                 </tr>
             </th:block>
             </tbody>
         </table>
-        <input type="button" name=del value="선택삭제">
+        <input type="button" name=del value="선택삭제" onclick="csDelete2()">
 
         <div class="paging">
             <span th:if="${groups[0]>1}" class="prev">

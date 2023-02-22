@@ -9,18 +9,17 @@
             <p>HOME > 고객센터 > <span>공지사항</span></p>
         </nav>
 
-        <form action="#" method="post">
-            <input type="hidden" name="no" />
-            <input type="hidden" name="cate1" />
+        <form th:action="@{/admin/update/notice}" method="post">
+            <input type="hidden" name="no" th:value="${cvo.no}"/>
             <table>
                 <tr>
                     <td>유형</td>
                     <td>
-                        <select name="type" class="type">
-                            <option></option>
-                            <option>안전거래</option>
-                            <option>위해상품</option>
-                            <option>이벤트당첨</option>
+                        <select name="cateType1" class="type" th:value="${cvo.cateType1}">
+                            <option th:selected="${cvo.cateType1}=='고객서비스'">고객서비스</option>
+                            <option th:selected="${cvo.cateType1}=='안전거래'">안전거래</option>
+                            <option th:selected="${cvo.cateType1}=='위해상품'">위해상품</option>
+                            <option th:selected="${cvo.cateType1}=='이벤트당첨'">이벤트당첨</option>
                         </select>
                     </td>
                 </tr>
@@ -33,12 +32,12 @@
                 <tr>
                     <td>내용</td>
                     <td>
-                        <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                        <textarea name="content" placeholder="내용을 입력하세요." th:text="${cvo.content}"></textarea>
                     </td>
                 </tr>
             </table>
 
-            <a href="javascript:history.back()" class="btnList">취소</a>
+            <a th:href="@{/admin/cs/list/notice}" class="btnList">취소</a>
             <input type="submit" class="btnWrite" value="등록">
         </form>
     </section>
