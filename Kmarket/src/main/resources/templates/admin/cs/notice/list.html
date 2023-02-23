@@ -8,14 +8,17 @@
             <h1>공지사항 목록</h1>
             <p>HOME > 고객센터 > <span>공지사항</span></p>
         </nav>
+        <form name="search-form">
+            <select name="cateType1">
+                <option value="none">유형선택</option>
+                <option >고객서비스</option>
+                <option >안전거래</option>
+                <option >위해상품</option>
+                <option >이벤트당첨</option>
+            </select>
+            <input type="submit" value="검색">
+        </form>
 
-        <select name="searchType">
-            <option value="none">유형선택</option>
-            <option>고객서비스</option>
-            <option>안전거래</option>
-            <option>위해상품</option>
-            <option>이벤트당첨</option>
-        </select>
 
         <table>
             <tr>
@@ -48,11 +51,10 @@
         </table>
         <input type="button" name=del value="선택삭제" onclick="csDelete1()">
 
-        <div class="paging">
+        <div class="paging" th:if="${#strings.isEmpty(cateType1)}">
             <span th:if="${groups[0]>1}" class="prev">
                 <a th:href="@{/admin/cs/list/notice(pg=${groups[0]-1})}"><&nbsp;이전</a>
             </span>
-
             <span class="num">
                 <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
                     <a th:href="@{/admin/cs/list/notice(pg=${i})}"
@@ -60,9 +62,24 @@
                     >[[${i}]]</a>
                 </th:block>
             </span>
-
             <span th:if="${groups[1]<lastPage}" class="next">
                 <a th:href="@{/admin/cs/list/notice(pg=${groups[1]+1})}">다음&nbsp;></a>
+            </span>
+        </div>
+
+        <div class="paging" th:if="${not #strings.isEmpty(cateType1)}">
+            <span th:if="${groups[0]>1}" class="prev">
+                <a th:href="@{/admin/cs/list/notice(pg=${groups[0]-1}, cateType1=${cateType1})}"><&nbsp;이전</a>
+            </span>
+            <span class="num">
+                <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
+                    <a th:href="@{/admin/cs/list/notice(pg=${i},cateType1=${cateType1})}"
+                       th:classappend="${i==currentPage ? 'on': ''}"
+                    >[[${i}]]</a>
+                </th:block>
+            </span>
+            <span th:if="${groups[1]<lastPage}" class="next">
+                <a th:href="@{/admin/cs/list/notice(pg=${groups[1]+1},cateType1=${cateType1})}">다음&nbsp;></a>
             </span>
         </div>
 

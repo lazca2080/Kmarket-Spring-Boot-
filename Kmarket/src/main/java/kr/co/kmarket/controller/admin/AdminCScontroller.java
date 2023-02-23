@@ -26,22 +26,25 @@ public class AdminCScontroller {
     /**************글 리스트 ******************/
     @GetMapping("admin/cs/list/{csType}")
     public String csList(@PathVariable("csType")String csType,
-                         @RequestParam(value = "searchType", required = false)String searchType,
+                         @RequestParam(value = "cateType1", required = false)String cateType1,
+                         @RequestParam(value = "cateType2", required = false)String cateType2,
                          String pg,
                          Model model){
 
         // admin-aside에서 고객센터 타입 구분
         if("notice".equals(csType)){
-            int total = service.selectAdminNoticeTotal();
+            int total = service.selectAdminNoticeTotal(cateType1);
             int currentPage = service.getCurrentPage(pg);
             int start = service.getLimitStart(currentPage);
             int lastPage = service.getLastPageNum(total);
             int pageStartNum = service.getPageStartNum(total, start);
             int groups[] = service.getPageGroup(currentPage, lastPage);
 
-            List<CsVO> articles = service.selectAdminCSnotice(start, searchType);
-            log.info("[searchType] ============ " + searchType);
+            List<CsVO> articles = service.selectAdminCSnotice(start, cateType1);
+            log.info("[searchType] ============ " + cateType1);
             log.info("========================= ");
+
+            model.addAttribute("cateType1", cateType1);
             model.addAttribute("currentPage", currentPage);
             model.addAttribute("lastPage", lastPage);
             model.addAttribute("pageStartNum", pageStartNum);
@@ -66,22 +69,26 @@ public class AdminCScontroller {
             model.addAttribute("groups", groups);
             model.addAttribute("articles", articles);
             return "admin/cs/qna/list";
-        }else{
-            int total = service.selectAdminFaqTotal();
+        }else if("faq".equals(csType)){
+            int total = service.selectAdminFaqTotal(cateType1, cateType2);
             int currentPage = service.getCurrentPage(pg);
             int start = service.getLimitStart(currentPage);
             int lastPage = service.getLastPageNum(total);
             int pageStartNum = service.getPageStartNum(total, start);
             int groups[] = service.getPageGroup(currentPage, lastPage);
 
-            List<CsVO> articles = service.selectAdminCSfaq(start);
+            List<CsVO> articles = service.selectAdminCSfaq(start, cateType1, cateType2);
             log.info("total : " + total);
+            model.addAttribute("cateType1",cateType1);
+            model.addAttribute("cateType2",cateType2);
             model.addAttribute("currentPage", currentPage);
             model.addAttribute("lastPage", lastPage);
             model.addAttribute("pageStartNum", pageStartNum);
             model.addAttribute("groups", groups);
             model.addAttribute("articles", articles);
-            return "admin/cs/faq/list";
+            return "admin/index";
+        }else{
+            return "";
         }
     }
 
