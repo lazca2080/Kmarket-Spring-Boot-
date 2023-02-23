@@ -86,7 +86,7 @@ public class AdminCScontroller {
             model.addAttribute("pageStartNum", pageStartNum);
             model.addAttribute("groups", groups);
             model.addAttribute("articles", articles);
-            return "admin/index";
+            return "admin/cs/faq/list";
         }else{
             return "";
         }
