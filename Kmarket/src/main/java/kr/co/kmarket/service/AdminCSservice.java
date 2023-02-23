@@ -37,26 +37,24 @@ public class AdminCSservice {
         return dao.qnaSelectOne(no);
     }
 
-    public List<CsVO> selectAdminCSnotice(int start, String searchType){
-        log.info("[searchType] ============ " + searchType);
-
-        return dao.selectAdminCSnotice(start, searchType);
+    public List<CsVO> selectAdminCSnotice(int start, String cateType1){
+        return dao.selectAdminCSnotice(start, cateType1);
     }
-    public List<CsVO> selectAdminCSfaq(int start){
-        return dao.selectAdminCSfaq(start);
+    public List<CsVO> selectAdminCSfaq(int start, String cateType1, String cateType2){
+        return dao.selectAdminCSfaq(start, cateType1, cateType2);
     }
     public List<CsVO> selectAdminCSqna(int start){
         return dao.selectAdminCSqna(start);
     }
 
-    public int selectAdminNoticeTotal(){
-        return dao.selectAdminNoticeTotal();
+    public int selectAdminNoticeTotal(String cateType1){
+        return dao.selectAdminNoticeTotal(cateType1);
     };
     public int selectAdminQnaTotal(){
         return dao.selectAdminQnaTotal();
     };
-    public int selectAdminFaqTotal(){
-        return dao.selectAdminFaqTotal();
+    public int selectAdminFaqTotal(String cateType1, String cateType2){
+        return dao.selectAdminFaqTotal(cateType1,cateType2);
     };
 
     public void updateNotice(CsVO vo){dao.updateNotice(vo);};

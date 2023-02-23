@@ -22,14 +22,19 @@ public interface AdminCsDAO {
     public CsVO qnaSelectOne(int no);
 
     /** 글 리스트 **/
-    public List<CsVO> selectAdminCSnotice(@Param("start") int start, @Param("searchType") String searchType);
-    public List<CsVO> selectAdminCSfaq(int start);
+    public List<CsVO> selectAdminCSnotice(@Param("start") int start,
+                                          @Param("cateType1") String cateType1);
+
+    public List<CsVO> selectAdminCSfaq(@Param("start") int start,
+                                       @Param("cateType1") String cateType1,
+                                       @Param("cateType2") String cateType2);
+
     public List<CsVO> selectAdminCSqna(int start);
 
     /** 게시글 개수 **/
-    public int selectAdminNoticeTotal();
+    public int selectAdminNoticeTotal(String cateType1);
     public int selectAdminQnaTotal();
-    public int selectAdminFaqTotal();
+    public int selectAdminFaqTotal(String cateType1, String cateType2);
 
     public void updateNotice(CsVO vo);
     public void updateFaq(CsVO vo);

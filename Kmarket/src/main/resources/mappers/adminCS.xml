@@ -37,31 +37,8 @@
         SELECT * FROM `km_cs_qna` WHERE `no`=#{no};
     </select>
 
-    <select id="selectAdminCSnotice" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs_notice` WHERE 1=1
-        <include refid="searchCateType"/>
-        ORDER BY `no` DESC LIMIT #{start},10;
-    </select>
 
-    <select id="selectAdminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs_faq` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
-    </select>
 
-    <select id="selectAdminCSqna" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs_qna` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
-    </select>
-
-    <select id="selectAdminNoticeTotal" resultType="int">
-        SELECT COUNT(*) FROM `km_cs_notice`;
-    </select>
-
-    <select id="selectAdminQnaTotal" resultType="int">
-        SELECT COUNT(*) FROM `km_cs_qna`;
-    </select>
-
-    <select id="selectAdminFaqTotal" resultType="int">
-        SELECT COUNT(*) FROM `km_cs_faq`;
-    </select>
 
     <update id="updateNotice">
         UPDATE `km_cs_notice` SET
@@ -102,24 +79,47 @@
     </delete>
 
 
-    <!--========공통 키==========-->
-    <sql id="searchCateType">
-        <if test="searchType != null">
-            <choose>
-                <when test='searchType == "고객서비스"'>
-                    AND cateType1 = #{searchType}
-                </when>
-                <when test='searchType == "안전거래"'>
-                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
-                </when>
-                <when test='searchType == "위해상품"'>
-                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
-                </when>
-                <when test='searchType == "이벤트당첨"'>
-                    AND cateType1 LIKE CONCAT('%',#{searchType},'%')
-                </when>
+    <select id="selectAdminCSqna" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_qna` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+    <select id="selectAdminQnaTotal" resultType="int">
+        SELECT COUNT(`no`) FROM `km_cs_qna`;
+    </select>
 
-            </choose>
+
+    <!-- 게시글 리스트 -->
+    <select id="selectAdminCSnotice" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_notice`
+        <include refid="searchType1"/>
+        ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+    <select id="selectAdminCSfaq" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs_faq`
+        <include refid="searchType1"/>
+        <include refid="searchType2"/>
+        ORDER BY `no` DESC LIMIT #{start},10;
+    </select>
+    <!-- 게시글 개수 -->
+    <select id="selectAdminNoticeTotal" resultType="int">
+        SELECT COUNT(`no`) FROM `km_cs_notice`
+        <include refid="searchType1"/>;
+    </select>
+    <select id="selectAdminFaqTotal" resultType="int">
+        SELECT COUNT(`no`) FROM `km_cs_faq`
+        <include refid="searchType1"/>
+        <include refid="searchType2"/>
+    </select>
+    <!--========공통 키==========-->
+    <sql id="searchType1">
+        <where>
+            <if test="cateType1 != null">
+                `cateType1` = #{cateType1}
+            </if>
+        </where>
+    </sql>
+    <sql id="searchType2">
+        <if test="cateType2 != null">
+            AND `cateType2` = #{cateType2}
         </if>
     </sql>
 </mapper>
