@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,12 +39,17 @@ public class MyController {
 	public String home(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "home");
 		
+		Map<String, String> dateRange = new HashMap<>();
+		
      	String uid = myUser.getUser().getUid();
-		List<OrderVO> order = service.selectMyHomeOrder(uid, 0, "none");
-		List<PointVO> point = service.selectMyHomePoint(uid, 0);
+		List<OrderVO> order = service.selectMyHomeOrder(uid, 0, null, null, dateRange);
+		List<PointVO> point = service.selectMyHomePoint(uid, 0, null, null, dateRange);
 		List<ReviewVO> review = service.selectMyHomeReview(uid, 0);
 		List<CsVO> cs = service.selectMyHomeCs(uid, 0);
 		
+		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
 		model.addAttribute("order", order);
 		model.addAttribute("point", point);
 		model.addAttribute("review", review);
@@ -53,52 +59,109 @@ public class MyController {
 	}
 	
 	@GetMapping("my/ordered")
-	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date) {
+	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date, String rangeMonth, String rangeBegin, String rangeEnd, String types) {
 		model.addAttribute("type", "ordered");
 		String uid = myUser.getUser().getUid();
+		
+		// 날짜 구하기 ---------------------------------------------------------------------------
 		LocalDate now = LocalDate.now();
-		// 현재 달
+		int year = now.getYear();
 		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		model.addAttribute("day", day);
+		
+		LocalDate before7 = now.minusDays(7);
+		LocalDate before15 = now.minusDays(15);
+		LocalDate before1 = now.minusMonths(1);
+		model.addAttribute("week", before7.toString());
+		model.addAttribute("weeks", before15.toString());
+		model.addAttribute("months", before1.toString());
+		
+		Map<String, String> dateRange = new HashMap<>();
+		if(rangeBegin != null && rangeEnd != null) {
+			dateRange.put("begin", rangeBegin);
+			dateRange.put("end", rangeEnd);
+		}
+		model.addAttribute("rangeBegin", rangeBegin);
+		model.addAttribute("rangeEnd", rangeEnd);
+		// 날짜 구하기 ---------------------------------------------------------------------------
 		
 		int   currentPage  = service.getCurrentPage(pg);
 		int   start        = service.getLimitStart(currentPage);
-		long  total        = service.getTotalOrderCount(uid);
+		long  total        = service.getTotalOrderCount(uid, date, rangeMonth, dateRange);
 		int   lastPage     = service.getLastPageNum(total);
 		int   pageStartNum = service.getPageStartNum(total, start);
 		int[] groups       = service.getPageGroup(currentPage, lastPage);
 		
-		if(date == null) { date = "none"; }
-		List<OrderVO> order = service.selectMyHomeOrder(uid, start, date);
+		List<OrderVO> order = service.selectMyHomeOrder(uid, start, date, rangeMonth, dateRange);
 		model.addAttribute("order", order);
 		
-		model.addAttribute("month", month);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum+1);
 		model.addAttribute("groups", groups);
+		model.addAttribute("rangeMonth", rangeMonth);
+		model.addAttribute("date", date);
+		model.addAttribute("types", types);
+		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
 		
 		return "my/ordered";
 	}
 	
 	@GetMapping("my/point")
-	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
+	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date, String rangeMonth, String rangeBegin, String rangeEnd, String types) {
 		model.addAttribute("type", "point");
 		String uid = myUser.getUser().getUid();
 		
+		// 날짜 구하기 ---------------------------------------------------------------------------
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		model.addAttribute("day", day);
+		
+		LocalDate before7 = now.minusDays(7);
+		LocalDate before15 = now.minusDays(15);
+		LocalDate before1 = now.minusMonths(1);
+		model.addAttribute("week", before7.toString());
+		model.addAttribute("weeks", before15.toString());
+		model.addAttribute("months", before1.toString());
+		
+		Map<String, String> dateRange = new HashMap<>();
+		if(rangeBegin != null && rangeEnd != null) {
+			dateRange.put("begin", rangeBegin);
+			dateRange.put("end", rangeEnd);
+		}
+		model.addAttribute("rangeBegin", rangeBegin);
+		model.addAttribute("rangeEnd", rangeEnd);
+		// 날짜 구하기 ---------------------------------------------------------------------------
+		
 		int   currentPage  = service.getCurrentPage(pg);
 		int   start        = service.getLimitStart(currentPage);
-		long  total        = service.getTotalPointCount(uid);
+		long  total        = service.getTotalPointCount(uid, date, rangeMonth, dateRange);
 		int   lastPage     = service.getLastPageNum(total);
 		int   pageStartNum = service.getPageStartNum(total, start);
 		int[] groups       = service.getPageGroup(currentPage, lastPage);
 		
-		List<PointVO> point = service.selectMyHomePoint(uid, start);
+		List<PointVO> point = service.selectMyHomePoint(uid, start, date, rangeMonth, dateRange);
 		model.addAttribute("point", point);
 		
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageStartNum", pageStartNum+1);
 		model.addAttribute("groups", groups);
+		model.addAttribute("rangeMonth", rangeMonth);
+		model.addAttribute("date", date);
+		model.addAttribute("types", types);
+		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
 		
 		return "my/point";
 	}
@@ -108,6 +171,9 @@ public class MyController {
 		model.addAttribute("type", "coupon");
 		
 		String uid = myUser.getUser().getUid();
+		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
 		
 		return "my/coupon";
 	}
@@ -132,6 +198,9 @@ public class MyController {
 		model.addAttribute("pageStartNum", pageStartNum+1);
 		model.addAttribute("groups", groups);
 		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
+		
 		return "my/review";
 	}
 	
@@ -155,6 +224,9 @@ public class MyController {
 		model.addAttribute("pageStartNum", pageStartNum+1);
 		model.addAttribute("groups", groups);
 		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
+		
 		return "my/qna";
 	}
 	
@@ -163,6 +235,9 @@ public class MyController {
 		model.addAttribute("type", "info");
 		
 		String uid = myUser.getUser().getUid();
+		
+		long csCount = service.getTotalCsCount(uid);
+		model.addAttribute("csCount", csCount);
 		
 		return "my/info";
 	}
@@ -216,35 +291,20 @@ public class MyController {
 		return map;
 	}
 	
-	// 전체주문내역 날짜 검색
+	// 포인트 확정
 	@ResponseBody
-	@PostMapping("my/searchDate")
-	public void searchDateOrdered(@RequestBody Map<String, String> map, @AuthenticationPrincipal MyUserDetails myUser, String pg, Model model) {
-		map.put("uid", myUser.getUser().getUid());
+	@PostMapping("my/pointConfirm")
+	public Map<String, Integer> pointConfirm(@RequestBody PointVO vo, @AuthenticationPrincipal MyUserDetails myUser) {
+		vo.setUid(myUser.getUser().getUid());
+		int pointConfResult = service.selectPurConfStatus(vo.getUid(), vo.getOrdNo(), vo.getProdNo());
+		Map<String, Integer> map = new HashMap<>();
 		
-		int   currentPage  = service.getCurrentPage(pg);
-		int   start        = service.getLimitStart(currentPage);
-		long  total        = service.getTotalOrderCount(myUser.getUser().getUid());
-		int   lastPage     = service.getLastPageNum(total);
-		int   pageStartNum = service.getPageStartNum(total, start);
-		int[] groups       = service.getPageGroup(currentPage, lastPage);
-		
-		List<OrderVO> order = service.searchDateOrdered(map);
-		model.addAttribute("order", order);
-		
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("pageStartNum", pageStartNum+1);
-		model.addAttribute("groups", groups);
+		if(pointConfResult == 1) {
+			map.put("result", 2);
+		}else if(pointConfResult == 0) {
+			int result = service.pointConfirm(vo);
+			map.put("result", result);
+		}
+		return map;
 	}
-	
-	// 포인트내역 날짜 검색
-	@ResponseBody
-	@PostMapping("my/searchDatePoint")
-	public void searchDatePoint(@RequestBody Map<String, String> map, @AuthenticationPrincipal MyUserDetails myUser) {
-		map.put("uid", myUser.getUser().getUid());
-		
-		service.searchDateOrdered(map);
-	}
-	
 }

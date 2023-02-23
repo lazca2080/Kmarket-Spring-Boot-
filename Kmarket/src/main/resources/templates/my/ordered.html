@@ -11,20 +11,21 @@
 	            <div class="byDate">
 	                <span class="tit">기간별조회</span>                            
 	                <ul class="date_3ea">
-	                    <li><a th:href="@{/my/ordered (date = 'week')}"><em>1</em>주일</a></li>
-	                    <li><a th:href="@{/my/ordered (date = 'weeks')}"><em>15</em>일</a></li>
-	                    <li><a th:href="@{/my/ordered (date = 'month')}" class="on"><em>1</em>개월</a></li>
+	                    <li><a th:href="@{/my/ordered (date = ${week}, types = 'week') }" th:classappend="${types == 'week'} ? 'on'"><em>1</em>주일</a></li>
+	                    <li><a th:href="@{/my/ordered (date = ${weeks}, types = 'weeks') }" th:classappend="${types == 'weeks'} ? 'on'"><em>15</em>일</a></li>
+	                    <li><a th:href="@{/my/ordered (date = ${months}, types = 'months') }" th:classappend="${types} == 'months' ? 'on'"><em>1</em>개월</a></li>
 	                </ul>
 	                <ul class="date_5ea">
-	                    <li th:each="num, i:${#numbers.sequence(month-4, month)}">
-	                    	<th:block th:if="${num <= 0}"><a th:href="@{/my/ordered (date = ${i.count})}"><em>[[${num+12}]]</em>월</a></th:block>
-	                    	<th:block th:if="${num > 0}"><a th:href="@{/my/ordered (date = ${i.count})}"><em>[[${num}]]</em>월</a></th:block>
+	                    <li th:each="num:${#numbers.sequence(month-4, month)}">
+	                    	<th:block th:if="${num <= 0}"><a th:href="@{/my/ordered (rangeMonth = ${(year-1) + '-' + {num+12} + '-' + '0' + 1}, types=${num+12 + 'th'} )}" th:classappend="${types == (num+12 + 'th')} ? 'on'"><em>[[${num+12}]]</em>월</a></th:block>
+	                    	<th:block th:if="${num > 0} and ${num > 9}"><a th:href="@{/my/ordered (rangeMonth = ${year + '-' + num + '-' + '0' + 1}, types=${num + 'th'} )}" th:classappend="${types == (num + 'th')} ? 'on'"><em>[[${num}]]</em>월</a></th:block>
+	                    	<th:block th:if="${num > 0} and ${num <= 9}"><a th:href="@{/my/ordered (rangeMonth = ${year + '-' + '0' + num + '-' + '0' + 1}, types=${num + 'th'} )}" th:classappend="${types == (num + 'th')} ? 'on'"><em>[[${num}]]</em>월</a></th:block>
 	                    </li>
 	                </ul>
 	                <p>
 	                    <input type="date" name="begin"><span>~</span><input type="date" name="end">
 	                </p>
-	                <button class="btnConfirm">조회하기</button>
+	                <button class="btnDateConfirm">조회하기</button>
 	            </div>
 	
 	            <table border="0">
@@ -45,7 +46,10 @@
 	                            <li class="prodPrice">[[${#numbers.formatInteger(order.price, 0, 'COMMA')}]]</li>
 	                        </ul>
 	                    </td>
-	                    <td class="status">배송완료</td>
+	                    <td class="status" th:if="${order.deliStatus == 0}">주문 접수 중</td>
+	                    <td class="status" th:if="${order.deliStatus == 1}">배송 준비 중</td>
+	                    <td class="status" th:if="${order.deliStatus == 2}">배송 중</td>
+	                    <td class="status" th:if="${order.deliStatus == 3}">배송 완료</td>
 	                    <td class="confirm">
 	                        <a href="#" class="receive" th:data-no="${order.deliStatus}">수취확인</a>
 	                        <a href="#" class="review" th:data-no="${order.prodNo}">상품평</a>
@@ -57,11 +61,26 @@
 	                	<td colspan="4">주문 내역이 없습니다.</td>
 	                </tr>
 	            </table>
-	
-	            <p class="page">
-	                <a th:href="@{/my/ordered (pg=${groups[0]-1})}" class="prev" th:if="${groups[0] > 1}">이전</a>
-	                <a th:href="@{/my/ordered (pg=${num})}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
-	                <a th:href="@{/my/ordered (pg=${groups[0]+1})}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            <!-- 데이터를 보낼 방식을 통합해서 구현했으면 이런일이 발생하지 않았음 -->
+	            <p class="page" th:if="${order.size != 0 and date != null}">
+	                <a th:href="@{/my/ordered ( pg=${groups[0]-1}, date=${date} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/ordered ( pg=${num}, date=${date} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/ordered ( pg=${groups[0]+1}, date=${date} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	            <p class="page" th:if="${order.size != 0 and rangeMonth != null}">
+	                <a th:href="@{/my/ordered ( pg=${groups[0]-1}, rangeMonth=${rangeMonth} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/ordered ( pg=${num}, rangeMonth=${rangeMonth} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/ordered ( pg=${groups[0]+1}, rangeMonth=${rangeMonth} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	            <p class="page" th:if="${order.size != 0 and rangeBegin != null and rangeEnd != null}">
+	                <a th:href="@{/my/ordered ( pg=${groups[0]-1}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/ordered ( pg=${num}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/ordered ( pg=${groups[0]+1}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	            <p class="page" th:if="${order.size != 0 and rangeBegin == null and rangeEnd == null and rangeMonth == null and date == null}">
+	                <a th:href="@{/my/ordered ( pg=${groups[0]-1} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/ordered ( pg=${num} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/ordered ( pg=${groups[0]+1} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
 	            </p>
 	        </article>                  
 	    </section>
@@ -141,27 +160,64 @@
 			    var pattern = /.{3}$/; // 정규식
 			    return strCar.replace(pattern, "***");
 			}
-			
+			let ordNo = 0;
+			let prodNo = 0;
 			$(function(){
+				
 				// 수취확인 팝업 띄우기
 			    $('.ordered .confirm > .receive').click(function(e){
 			        e.preventDefault();
+			        ordNo = $(this).parent().prev().prev().children('ul').children().children('.ordNo').text();
+					let data_no = $(this).attr('data-no');
+					
+					prodNo = $(this).next().attr('data-no');
+					
+					if(data_no == 0){
+						alert('주문 접수중인 상품입니다.');
+						return;
+					}
 			        
 			        $('#popReceive').addClass('on');
 			    });
 			    
 			    // 수취확인 후 포인트 확정
 			    $('#popReceive .btnPositive').click(function(e){
-			    	alert('test');
+			    	
+			    	const jsonData = {
+			    			"ordNo":ordNo,
+			    			"prodNo":prodNo,
+			    			"type":"1th",
+			    			"descript":"1th"
+    				};
+			    	
+			    	$.ajax({
+			    		url:'/Kmarket/my/pointConfirm',
+			    		method:'POST',
+			    		contentType:'application/json',
+				    	data:JSON.stringify(jsonData),
+			    		dataType:'JSON',
+			    		success: function(data){
+			    			if(data.result == 2){
+			    				alert('이미 구매확정하신 상품입니다.');
+			    			}else if(data.result == 1){
+			    				alert('구매 확정 되었습니다. 감사합니다.');
+			    				location.href = "/Kmarket/my/point"; 
+			    			}
+			    		}
+			    	});
 			    });
 			    
 			    // 팝업 끄기
 			    $('.btnCancel').click(function(){
+			    	ordNo = 0;
+			    	prodNo = 0;
 			    	$(this).closest('.popup').removeClass('on');
 			    });
 			    
 			    // 팝업 닫기
-			    $('.btnClose').click(function(){                
+			    $('.btnClose').click(function(){
+			    	ordNo = 0;
+			    	prodNo = 0;
 			        $(this).closest('.popup').removeClass('on');                
 			    });
 			    
@@ -216,6 +272,16 @@
 				    	}
 				    });
 			    });
+			    
+			    $('.btnDateConfirm').click(function(){
+					let begin = $('input[name=begin]').val();
+					let end   = $('input[name=end]').val();
+					
+					if(!begin || !end){ alert('조회하실 날짜를 선택해주세요.'); return; }
+					
+					location.href = "/Kmarket/my/ordered?rangeBegin="+begin+"&rangeEnd="+end;					
+				});
+			    
 			});
 		</script>
 	</th:block>
