@@ -96,7 +96,6 @@
     <select id="selectAdminCSfaq" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_faq`
         <include refid="searchType1"/>
-        <include refid="searchType2"/>
         ORDER BY `no` DESC LIMIT #{start},10;
     </select>
     <!-- 게시글 개수 -->
@@ -107,9 +106,9 @@
     <select id="selectAdminFaqTotal" resultType="int">
         SELECT COUNT(`no`) FROM `km_cs_faq`
         <include refid="searchType1"/>
-        <include refid="searchType2"/>
     </select>
     <!--========공통 키==========-->
+
     <sql id="searchType1">
         <where>
             <if test="cateType1 != null">
@@ -119,7 +118,7 @@
     </sql>
     <sql id="searchType2">
         <if test="cateType2 != null">
-            AND `cateType2` = #{cateType2}
+            AND `cateType2` = #{cateType}
         </if>
     </sql>
 </mapper>
