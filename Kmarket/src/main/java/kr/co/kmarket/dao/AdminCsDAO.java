@@ -34,7 +34,7 @@ public interface AdminCsDAO {
     /** 게시글 개수 **/
     public int selectAdminNoticeTotal(String cateType1);
     public int selectAdminQnaTotal();
-    public int selectAdminFaqTotal(String cateType1, String cateType2);
+    public int selectAdminFaqTotal(@Param("cateType1") String cateType1,@Param("cateType2")  String cateType2);
 
     public void updateNotice(CsVO vo);
     public void updateFaq(CsVO vo);

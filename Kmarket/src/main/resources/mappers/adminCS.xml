@@ -93,7 +93,7 @@
         <include refid="searchType1"/>
         ORDER BY `no` DESC LIMIT #{start},10;
     </select>
-    <select id="selectAdminCSfaq" parameterType="kr.co.kmarket.vo.CsVO" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectAdminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_faq`
         <include refid="searchType1"/>
         ORDER BY `no` DESC LIMIT #{start},10;
