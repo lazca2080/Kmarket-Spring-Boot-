@@ -79,7 +79,7 @@
 		ORDER BY `no` DESC LIMIT #{start},10;
 	</select>
 	
-	
+	<!-- cs- qna - write (글 작성) -->
 	<insert id="QinsertArticle">
 		insert into `km_cs_qna` set `cateType1`=#{cateType1}, `cateType2`=#{cateType2},
 		`title`=#{title}, `content`=#{content}, `uid`=#{uid}, `regip`=#{regip}, `rdate`=NOW();

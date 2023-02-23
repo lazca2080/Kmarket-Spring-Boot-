@@ -1,5 +1,6 @@
 package kr.co.kmarket.controller.cs;
 
+import java.lang.ProcessHandle.Info;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +10,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.kmarket.security.MyUserDetails;
 import kr.co.kmarket.service.cs.IndexService;
@@ -36,6 +39,8 @@ public class QnaController {
 		int[] groups     = service.getPageGroup(currentPage, lastPage);
 		
 		List<CsVO> qna = service.selectQnaArticles(cateType1, start);
+		
+		
 		
 		//model.addAttribute("user", user);
 		model.addAttribute("qna",qna);
@@ -68,16 +73,18 @@ public class QnaController {
 	}
 	
 	@GetMapping("cs/qna/write")
-	public String write() {
+	public String write(Model model, CsVO vo) {
+		model.addAttribute("vo", vo);
 		return "cs/qna/write";
 	}
 	
 	@PostMapping("cs/qna/write")
 	public String write(CsVO vo, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myUser) {
-		vo.setUid("uid");
+		
 		vo.setRegip(req.getRemoteAddr());
 		
-		//service.QinsertArticle(vo);
+		service.QinsertArticle(vo);
+		
 		
 		log.info("aasdf :" +vo);
 		return "redirect:/cs/qna/list";
