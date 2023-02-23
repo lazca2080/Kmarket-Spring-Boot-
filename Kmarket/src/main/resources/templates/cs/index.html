@@ -81,7 +81,7 @@
                             <a th:href="@{/cs/qna/view(cateType1='회원', no=${no})}" class="title" th:text="${cate.title}">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
-                                    <span class="uid" th:text="${cate.uid}">chh***</span>
+                                    <span class="uid" th:text="|${#strings.substring(cate.uid,0,3)}**|">chh***</span>
                                     <span class="date" th:text="${#strings.substring(cate.rdate, 2, 10)}">23.02.07</span>
                                 </p>
                         </li>
