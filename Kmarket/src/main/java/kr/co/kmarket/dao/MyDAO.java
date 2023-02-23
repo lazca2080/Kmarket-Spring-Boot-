@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import groovyjarjarpicocli.CommandLine.Parameters;
 import kr.co.kmarket.vo.CsVO;
 import kr.co.kmarket.vo.MemberVO;
 import kr.co.kmarket.vo.MyVO;
@@ -21,9 +22,9 @@ public interface MyDAO {
 	
 	/* 메인 */
 	// MyHomeOrder
-	public List<OrderVO> selectMyHomeOrder(@Param("uid") String uid, @Param("start") int start, @Param(value = "date") LocalDate date);
+	public List<OrderVO> selectMyHomeOrder(@Param("uid") String uid, @Param("start") int start, @Param("begin") String begin, @Param("end") String end);
 	// MyHomePoint	
-	public List<PointVO> selectMyHomePoint(@Param("uid") String uid, @Param("start") int start);
+	public List<PointVO> selectMyHomePoint(@Param("uid") String uid, @Param("start") int start, @Param("begin") String begin, @Param("end") String end);
 	// MyHomeReview	
 	public List<ReviewVO> selectMyHomeReview(@Param("uid") String uid, @Param("start") int start);
 	// MyHomeCs
@@ -44,16 +45,19 @@ public interface MyDAO {
 	// 리뷰 작성 여부 업데이트
 	public int updateRevStatus(@Param("uid") String uid, @Param("prodNo") String prodNo);
 	
-	// 전체주문내역 날짜 검색
-	public List<OrderVO> searchDateOrdered(Map<String, String> map);
+	// 포인트 확정 여부
+	public int selectPurConfStatus(@Param("uid") String uid, @Param("ordNo") int ordNo, @Param("prodNo") int prodNo);
 	
-	// 전체주문내역 날짜 검색
-	public List<PointVO> searchDatePoint(Map<String, String> map);
+	// 포인트 확정
+	public int pointConfirm(PointVO vo);
+	
+	// 포인트 확정 여부 업테이드
+	public int updatePurConf(@Param("uid") String uid, @Param("ordNo") int ordNo, @Param("prodNo") int prodNo);
 	
 	// 페이징
-	public int selectCountOrderTotal(String uid);
+	public int selectCountOrderTotal(@Param("uid") String uid, @Param("begin") String begin, @Param("end") String end);
 	
-	public int selectCountPointTotal(String uid);
+	public int selectCountPointTotal(@Param("uid") String uid, @Param("begin") String begin, @Param("end") String end);
 	
 	public int selectCountCsTotal(String uid);
 	

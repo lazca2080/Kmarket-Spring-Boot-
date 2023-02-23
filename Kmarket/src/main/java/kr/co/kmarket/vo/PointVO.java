@@ -22,5 +22,5 @@ public class PointVO {
 	private String pointDate;
 	private String pointExpired;
 	
-
+	private int prodNo;
 }

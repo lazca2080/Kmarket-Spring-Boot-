@@ -9,14 +9,14 @@
 		SELECT a.*, b.`prodNo`, b.`prodName`, b.`prodCate1`, b.`prodCate2`, b.`thumb2`, b.`company`, c.`ordDate` FROM `km_product_order_item` AS a JOIN
 		`km_product` AS b ON a.`prodNo` = b.`prodNo` JOIN
 		`km_product_order` AS c ON a.`ordNo` = c.`ordNo` WHERE `uid`=#{uid}
-		<if test="date != null">
-			AND DATE_FORMAT(c.`ordDate`, '%Y-%m-%d') = #{date}
-		</if>
-		 LIMIT #{start}, 10;
+		AND `ordDate` BETWEEN #{begin} AND #{end}
+		ORDER BY `ordDate` DESC LIMIT #{start}, 10;
 	</select>
 	
 	<select id="selectMyHomePoint" resultType="kr.co.kmarket.vo.PointVO">
-		SELECT * FROM `km_member_point` WHERE `uid` = #{uid} ORDER BY `pointNo` DESC LIMIT #{start}, 10;
+		SELECT * FROM `km_member_point` WHERE `uid` = #{uid}
+		AND `pointDate` BETWEEN #{begin} AND #{end}
+		ORDER BY `pointNo` DESC LIMIT #{start}, 10;
 	</select>
 	
 	<select id="selectMyHomeReview" resultType="kr.co.kmarket.vo.ReviewVO">
@@ -64,20 +64,24 @@
 	
 	<!-- 리뷰 작성 상태 변경 -->
 	<update id="updateRevStatus">
-		UPDATE `km_product_order_item` SET `revStatus`= 1 WHERE `uid`=#{uid} and `prodNo`=#{prodNo};
+		UPDATE `km_product_order_item` SET `revStatus`= 1 WHERE `uid` = #{uid} AND `prodNo` = #{prodNo};
 	</update>
 	
-	<!-- 통합 날짜 검색 -->
-	<!-- 전체 주문 내역 -->
-	<select id="searchDateOrdered" resultType="kr.co.kmarket.vo.OrderVO">
-		SELECT a.*, b.`prodNo`, b.`prodName`, b.`prodCate1`, b.`prodCate2`, b.`thumb2`, b.`company`, c.`ordDate` FROM `km_product_order_item` AS a JOIN
-		`km_product` AS b ON a.`prodNo` = b.`prodNo` JOIN
-		`km_product_order` AS c ON a.`ordNo` = c.`ordNo` WHERE `uid`=#{uid} LIMIT #{start}, 10;
+	<!-- 포인트 작성 여부 -->
+	<select id="selectPurConfStatus" resultType="int">
+		SELECT `purConfirm` FROM `km_product_order_item` WHERE `uid` = #{uid} AND `ordNo` = #{ordNo} AND prodNo = #{prodNo};
 	</select>
 	
-	<select id="searchDatePoint" resultType="kr.co.kmarket.vo.PointVO">
-	</select>
+	<!-- 포인트 확정 -->
+	<insert id="pointConfirm" parameterType="kr.co.kmarket.vo.PointVO">
+		INSERT INTO `km_member_point` (`uid`, `type`, `ordNo`, `point`, `descript`, `pointDate`, `pointExpired`)
+		SELECT #{uid}, #{type}, #{ordNo}, `point`, #{descript}, NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH) FROM `km_product_order_item` WHERE `uid` = #{uid} AND `ordNo` = #{ordNo} AND `prodNo` = #{prodNo};
+	</insert>
 	
+	<!-- 포인트 상태 변경 -->
+	<update id="updatePurConf">
+		UPDATE `km_product_order_item` SET `purConfirm`=1 WHERE `uid` = #{uid} AND `ordNo` = #{ordNo} AND prodNo = #{prodNo};
+	</update>
 	
 	
 	<!-- OrderVO 정보 -->
@@ -139,11 +143,14 @@
 	<!-- 페이징 -->
 	<!-- my order 토탈값 -->
 	<select id="selectCountOrderTotal" resultType="int">
-		SELECT COUNT(`ordNo`) FROM `km_product_order_item` WHERE `uid`=#{uid};
+		SELECT COUNT(a.`ordNo`) FROM `km_product_order_item` AS a JOIN
+		`km_product_order` AS b ON a.`ordNo` = b.`ordNo`  WHERE `uid`=#{uid}
+		AND `ordDate` BETWEEN #{begin} AND #{end};
 	</select>
 	<!-- my point 토탈값 -->
 	<select id="selectCountPointTotal" resultType="int">
-		SELECT COUNT(`pointNo`) FROM `km_member_point` WHERE `uid`=#{uid};
+		SELECT COUNT(`pointNo`) FROM `km_member_point` WHERE `uid`=#{uid}
+		AND `pointDate` BETWEEN #{begin} AND #{end};
 	</select>
 	<!-- my cs qna 토탈값 -->
 	<select id="selectCountCsTotal" resultType="int">

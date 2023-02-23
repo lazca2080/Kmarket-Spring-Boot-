@@ -1,12 +1,16 @@
 package kr.co.kmarket.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.vo.CsVO;
@@ -25,14 +29,17 @@ public class MyService {
 	private MyDAO dao;
 	
 	/* 메인 */
-	public List<OrderVO> selectMyHomeOrder(String uid, int start, String date) {
-		LocalDate nowDate = nowDate(date);
-		log.info(""+nowDate);
-		return dao.selectMyHomeOrder(uid, 0, nowDate);
+	public List<OrderVO> selectMyHomeOrder(String uid, int start, String date, String rangeMonth, Map<String, String> dateRange) {
+		Map<String, String> nowDate = nowDate(date, rangeMonth, dateRange);
+		log.info("begin : "+nowDate.get("begin"));
+		log.info("end : "+nowDate.get("end"));
+		
+		return dao.selectMyHomeOrder(uid, start, nowDate.get("begin"), nowDate.get("end"));
 	}
 	
-	public List<PointVO> selectMyHomePoint(String uid, int start) {
-		return dao.selectMyHomePoint(uid, start);
+	public List<PointVO> selectMyHomePoint(String uid, int start, String date, String rangeMonth, Map<String, String> dateRange) {
+		Map<String, String> nowDate = nowDate(date, rangeMonth, dateRange);
+		return dao.selectMyHomePoint(uid, start, nowDate.get("begin"), nowDate.get("end"));
 	}
 	
 	public List<ReviewVO> selectMyHomeReview(String uid, int start) {
@@ -67,17 +74,39 @@ public class MyService {
 		return dao.updateRevStatus(uid, prodNo);
 	}
 	
-	
-	// 전체주문내역 날짜 검색
-	public List<OrderVO> searchDateOrdered(Map<String, String> map) {
-		return dao.searchDateOrdered(map);
+	// 포인트 확정 여부
+	public int selectPurConfStatus(String uid, int ordNo, int prodNo) {
+		return dao.selectPurConfStatus(uid, ordNo, prodNo);
 	}
 	
-	// 포인트내역 날짜 검색
-	public List<PointVO> searchDatePoint(Map<String, String> map) {
-		return dao.searchDatePoint(map);
+	// 포인트 확정 && 포인트 확정 여부 변경
+	@Transactional
+	public int pointConfirm(PointVO vo) {
+		
+		switch (vo.getType()) {
+		case "1th":
+			vo.setType("적립");
+			break;
+		case "2th":
+			vo.setType("차감");
+			break;
+		}
+		
+		switch (vo.getDescript()) {
+		case "1th":
+			vo.setDescript("상품 구매 확정");
+			break;
+		case "2th":
+			vo.setDescript("이벤트");
+			break;
+		case "3rd":
+			vo.setDescript("구매");
+			break;
+		}
+		
+		dao.updatePurConf(vo.getUid(), vo.getOrdNo(), vo.getProdNo());
+		return dao.pointConfirm(vo);
 	}
-
 	
 	// 페이징
 	
@@ -95,14 +124,16 @@ public class MyService {
 		}
 		return currentPage;
 	}
-	// 전체 point 갯수
-	public long getTotalOrderCount(String uid) {
-		return dao.selectCountOrderTotal(uid);
+	// 전체 order 갯수
+	public long getTotalOrderCount(String uid, String date, String rangeMonth, Map<String, String> dateRange) {
+		Map<String, String> nowDate = nowDate(date, rangeMonth, dateRange);
+		return dao.selectCountOrderTotal(uid, nowDate.get("begin"), nowDate.get("end"));
 	}
 	
 	// 전체 point 갯수
-	public long getTotalPointCount(String uid) {
-		return dao.selectCountPointTotal(uid);
+	public long getTotalPointCount(String uid, String date, String rangeMonth, Map<String, String> dateRange) {
+		Map<String, String> nowDate = nowDate(date, rangeMonth, dateRange);
+		return dao.selectCountPointTotal(uid, nowDate.get("begin"), nowDate.get("end"));
 	}
 	
 	// 전체 cs 갯수
@@ -148,30 +179,37 @@ public class MyService {
 	}
 	
 	// 날짜 계산
-	public LocalDate nowDate(String date) {
-		LocalDate now = LocalDate.now();
+	public Map<String, String> nowDate(String date, String rangeMonth, Map<String, String> dateRange) {
+		Map<String, String> map = new HashMap<>();
 		
-		switch (date) {
-		case "week":
-			return now.plusDays(7);
-		case "weeks":
-			return now.plusDays(15);
-		case "month":
-			return now.minusMonths(1);
-		case "1":
-			return now.minusMonths(4);
-		case "2":
-			return now.minusMonths(3);
-		case "3":
-			return now.minusMonths(2);
-		case "4":
-			return now.minusMonths(1);
-		case "5":
-			return now;
-		case "none":
-			return null;
+		LocalDate now = LocalDate.now();
+		String begin = null;
+		String end   = null;
+		
+		if(date != null && rangeMonth == null && dateRange.isEmpty()) {
+			begin = date;
+			end   = now.plusDays(1).toString();
+			map.put("begin", begin);
+			map.put("end", end);
+		}else if(date == null && rangeMonth != null && dateRange.isEmpty()) {
+			LocalDate dates = LocalDate.parse(rangeMonth, DateTimeFormatter.ISO_DATE);
+			begin = rangeMonth;
+			end   = dates.withDayOfMonth(dates.lengthOfMonth()).toString();
+			map.put("begin", begin);
+			map.put("end", end);
+		}else if(date == null && rangeMonth == null && dateRange.isEmpty()) {
+			begin = "1900-01-01";
+			end   = "9999-01-01";
+			map.put("begin", begin);
+			map.put("end", end);
+		}else if(!dateRange.isEmpty() && date == null && rangeMonth == null) {
+			LocalDate dateBegin = LocalDate.parse(dateRange.get("begin"), DateTimeFormatter.ISO_DATE);
+			LocalDate dateEnd = LocalDate.parse(dateRange.get("end"), DateTimeFormatter.ISO_DATE);
+			begin = dateBegin.minusDays(1).toString();
+			end   = dateEnd.plusDays(1).toString();
+			map.put("begin", begin);
+			map.put("end", end);
 		}
-		return now;
+		return map;
 	}
-
 }

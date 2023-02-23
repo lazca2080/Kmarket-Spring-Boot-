@@ -11,16 +11,16 @@
 	            <div class="byDate">
 	                <span class="tit">기간별조회</span>                            
 	                <ul class="date_3ea">
-	                    <li><a href="#"><em>1</em>주일</a></li>
-	                    <li><a href="#"><em>15</em>일</a></li>
-	                    <li><a href="#" class="on"><em>1</em>개월</a></li>
+	                    <li><a th:href="@{/my/point (date = ${week}, types = 'week') }" th:classappend="${types == 'week'} ? 'on'"><em>1</em>주일</a></li>
+	                    <li><a th:href="@{/my/point (date = ${weeks}, types = 'weeks') }" th:classappend="${types == 'weeks'} ? 'on'"><em>15</em>일</a></li>
+	                    <li><a th:href="@{/my/point (date = ${months}, types = 'months') }" th:classappend="${types} == 'months' ? 'on'"><em>1</em>개월</a></li>
 	                </ul>
 	                <ul class="date_5ea">
-	                    <li><a href="#"><em>11</em>월</a></li>
-	                    <li><a href="#"><em>10</em>월</a></li>
-	                    <li><a href="#"><em>9</em>월</a></li>
-	                    <li><a href="#"><em>8</em>월</a></li>
-	                    <li><a href="#"><em>7</em>월</a></li>
+	                    <li th:each="num:${#numbers.sequence(month-4, month)}">
+	                    	<th:block th:if="${num <= 0}"><a th:href="@{/my/point (rangeMonth = ${(year-1) + '-' + {num+12} + '-' + '0' + 1}, types=${num+12 + 'th'} )}" th:classappend="${types == (num+12 + 'th')} ? 'on'"><em>[[${num+12}]]</em>월</a></th:block>
+	                    	<th:block th:if="${num > 0} and ${num > 9}"><a th:href="@{/my/point (rangeMonth = ${year + '-' + num + '-' + '0' + 1}, types=${num + 'th'} )}" th:classappend="${types == (num + 'th')} ? 'on'"><em>[[${num}]]</em>월</a></th:block>
+	                    	<th:block th:if="${num > 0} and ${num <= 9}"><a th:href="@{/my/point (rangeMonth = ${year + '-' + '0' + num + '-' + '0' + 1}, types=${num + 'th'} )}" th:classappend="${types == (num + 'th')} ? 'on'"><em>[[${num}]]</em>월</a></th:block>
+	                    </li>
 	                </ul>
 	                <p>
 	                    <input type="date" name="begin"><span>~</span><input type="date" name="end">
@@ -45,12 +45,25 @@
 	                    <td class="desc">[[${point.descript}]]</td>
 	                    <td class="expire">[[${point.pointExpired.substring(0,10)}]]</td>
 	                </tr>
+	                <tr	th:if="${point.size == 0}" class="empty">
+	                	<td colspan="6">주문 내역이 없습니다.</td>
+	                </tr>
 	            </table>
 	
-	            <p class="page">
-	                <a th:href="@{/my/point (pg=${groups[0]-1})}" class="prev" th:if="${groups[0] > 1}">이전</a>
-	                <a th:href="@{/my/point (pg=${num})}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
-	                <a th:href="@{/my/point (pg=${groups[0]+1})}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            <p class="page" th:if="${point.size != 0 and date != null}">
+	                <a th:href="@{/my/point ( pg=${groups[0]-1}, date=${date} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/point ( pg=${num}, date=${date} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/point ( pg=${groups[0]+1}, date=${date} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	            <p class="page" th:if="${point.size != 0 and rangeMonth != null}">
+	                <a th:href="@{/my/point ( pg=${groups[0]-1}, rangeMonth=${rangeMonth} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/point ( pg=${num}, rangeMonth=${rangeMonth} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/point ( pg=${groups[0]+1}, rangeMonth=${rangeMonth} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
+	            </p>
+	            <p class="page" th:if="${point.size != 0 and rangeBegin != null and rangeEnd != null}">
+	                <a th:href="@{/my/point ( pg=${groups[0]-1}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" class="prev" th:if="${groups[0] > 1}">이전</a>
+	                <a th:href="@{/my/point ( pg=${num}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" th:class="${num==currentPage ? 'num on' : 'num'}" th:each="num:${#numbers.sequence(groups[0],groups[1])}">[[${num}]]</a>
+	                <a th:href="@{/my/point ( pg=${groups[0]+1}, rangeBegin=${rangeBegin}, rangeEnd=${rangeEnd} )}" class="next" th:if="${groups[1] < lastPage}">다음</a>
 	            </p>
 	        </article>                  
 	    </section>
@@ -62,8 +75,8 @@
 				
 				// 날짜 지정 조회
 				$('.btnConfirm').click(function(){
-					let begin = $('input[name=begin]').val();
-					let end   = $('input[name=end]').val();
+					let rangeBegin = $('input[name=begin]').val();
+					let rangeEnd   = $('input[name=end]').val();
 					let type  = 'point';
 					
 					if(!begin || !end){ alert('조회하실 날짜를 선택해주세요.'); return; }
