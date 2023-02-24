@@ -35,12 +35,12 @@
                 </ul>
                 <table>
                     <tr th:each="prod:${prods}">
-                        <td><a href="#" class="thumb">
+                        <td><a th:href="@{/product/view (prodNo = ${prod.prodNo}) }" class="thumb">
                             <img th:src="@{/prodImg/__${prod.prodCate1}__/__${prod.prodCate2}__/__${prod.thumb2}__}" alt="상품이미지">
                         </a></td>
                         <td>
                             <h3 class="name">[[${prod.prodName}]]</h3>
-                            <a href="#" class="desc">[[${prod.descript}]]</a>
+                            <a th:href="@{/product/view (prodNo = ${prod.prodNo}) }" class="desc">[[${prod.descript}]]</a>
                         </td>
                         <td>
                             <ul>

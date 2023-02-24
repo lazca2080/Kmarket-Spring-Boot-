@@ -403,6 +403,8 @@
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/my/jquery.star-rating-svg.min.js}"></script>
 		<script>
+			let ordNo = 0;
+			let prodNo = 0;
 			let prodReviewNo = 0;
 			function maskingCar(strCar) {
 			    if (strCar == undefined || strCar === '') {
@@ -497,13 +499,49 @@
 			    // 수취확인 팝업 띄우기
 			    $('.latest .confirm > .receive').click(function(e){
 			        e.preventDefault();
+			        prodNo = $(this).next().attr('data-no');
+			        ordNo = $(this).parent().prev().prev().children('ul').children().children('.ordNo').children('a').text();
+			        
+					let data_no = $(this).attr('data-no');
+					
+					prodNo = $(this).next().attr('data-no');
+					
+					if(data_no == 0){
+						alert('주문 접수중인 상품입니다.');
+						return;
+					}
 			        
 			        $('#popReceive').addClass('on');
 			    });
 			    
 			    // 수취확인 후 포인트 확정
 			    $('#popReceive .btnPositive').click(function(e){
-			    	alert('test');
+			    	const jsonData = {
+			    			"ordNo":ordNo,
+			    			"prodNo":prodNo,
+			    			"type":"1th",
+			    			"descript":"1th"
+    				};
+			    	
+			    	console.log(jsonData);
+			    	
+			    	/*
+			    	$.ajax({
+			    		url:'/Kmarket/my/pointConfirm',
+			    		method:'POST',
+			    		contentType:'application/json',
+				    	data:JSON.stringify(jsonData),
+			    		dataType:'JSON',
+			    		success: function(data){
+			    			if(data.result == 2){
+			    				alert('이미 구매확정하신 상품입니다.');
+			    			}else if(data.result == 1){
+			    				alert('구매 확정 되었습니다. 감사합니다.');
+			    				location.href = "/Kmarket/my/point"; 
+			    			}
+			    		}
+			    	});
+			    	*/
 			    });
 			    
 			    // 팝업 끄기
