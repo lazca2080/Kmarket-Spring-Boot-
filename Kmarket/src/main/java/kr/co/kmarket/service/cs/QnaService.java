@@ -18,7 +18,7 @@ public class QnaService {
 		return dao.selectQnaArticles(cateType1, start);
 	};
 	
-	public CsVO selectQCs(int no) {
+	public CsVO selectQCs(Integer no) {
 		CsVO vo = dao.selectQCs(no);
 		dao.updateQArticleHit(no);
 		return vo;

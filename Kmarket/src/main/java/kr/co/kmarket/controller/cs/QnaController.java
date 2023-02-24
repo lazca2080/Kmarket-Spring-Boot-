@@ -62,7 +62,7 @@ public class QnaController {
 	}
 	
 	@GetMapping("cs/qna/view")
-	public String view(@RequestParam("no") int no, Model model, int pg, String cateType1) {
+	public String view(@RequestParam("no") Integer no, Model model, Integer pg, String cateType1) {
 		CsVO qna = service.selectQCs(no);
 		
 		model.addAttribute("qna",qna);

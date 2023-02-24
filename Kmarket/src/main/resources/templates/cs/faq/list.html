@@ -41,30 +41,163 @@
                                 </li>
                             </ul>
                         </aside>
-                        <article>
+                       <article>
                             <nav>
                                 <h1 th:text="${cateType1}">회원</h1>
                                 <h2>가장 자주 묻는 질문입니다.</h2>
                             </nav>
-                            <th:block th:each="faq:${faq}">
                             <div>
-                                <h3>[[${faq.cateType2}]]</h3>
+                                <h3>가입</h3>
                                 <ul>
-                                	<th:block th:each="vo,i:${vo}" th:if="${#strings.equals(faq.cateType2, vo.cateType2)}">
-	                                    <li>
-	                                        <a th:href="@{/cs/faq/view(cateType1='회원', no=${faq.no})}" 
-	                                        	class="title" th:data-no="${vo.no}">
-	                                            <span>Q.</span>
-	                                            [[${vo.title}]]
-	                                        </a>
-	                                    </li>
-                                    </th:block>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            개인회원과 법인회원에 차이가 있나요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            개인회원과 법인회원에 차이가 있나요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            개인회원과 법인회원에 차이가 있나요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            개인회원과 법인회원에 차이가 있나요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            개인회원과 법인회원에 차이가 있나요?
+                                        </a>
+                                    </li>
                                     <li class="more">
                                         <a href="#">더보기</a>
                                     </li>
                                 </ul>
                             </div>
-                            </th:block>
+                            <div>
+                                <h3>탈퇴</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원탈퇴 후 재가입이 가능한가요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원탈퇴 후 재가입이 가능한가요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원탈퇴 후 재가입이 가능한가요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원탈퇴 후 재가입이 가능한가요?
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원탈퇴 후 재가입이 가능한가요?
+                                        </a>
+                                    </li>
+                                    <li class="more">
+                                        <a href="#">더보기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>회원정보</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원정보를 수정하고 싶어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원정보를 수정하고 싶어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원정보를 수정하고 싶어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원정보를 수정하고 싶어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            회원정보를 수정하고 싶어요.
+                                        </a>
+                                    </li>
+                                    <li class="more">
+                                        <a href="#">더보기</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>로그인</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            로그인에 문제가 있어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            로그인에 문제가 있어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            로그인에 문제가 있어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            로그인에 문제가 있어요.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span>Q.</span>
+                                            로그인에 문제가 있어요.
+                                        </a>
+                                    </li>
+                                    <li class="more">
+                                        <a href="#">더보기</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </article>
                     </section>
                 </div>

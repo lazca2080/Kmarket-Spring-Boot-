@@ -18,7 +18,7 @@ public interface CsDAO {
 	
 	public CsVO selectNCs(int no);
 	public CsVO selectFCs(int no);
-	public CsVO selectQCs(int no);
+	public CsVO selectQCs(Integer no);
 	
 	public int updateNArticleHit(int no);
 	public int updateQArticleHit(int no);
