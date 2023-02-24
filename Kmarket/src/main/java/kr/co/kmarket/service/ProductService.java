@@ -89,11 +89,14 @@ public class ProductService {
 	}
 	
 	// 검색
-	public List<ProductVO> searchProduct(String keyWord, String sort) {
-		return dao.searchProduct(keyWord, sort);
+	public List<ProductVO> searchProduct(String keyWord, String sort, int start) {
+		return dao.searchProduct(keyWord, sort, start);
 	}
 	
-	
+	// 2차 검색
+	public List<ProductVO> secondSearch(String min, String max, String chk, String search, String firstSearch, String sort, int start) {
+		return dao.secondSearch(min, max, chk, search, firstSearch, sort, start);
+	}
 	
 	
 	// 페이징
@@ -115,6 +118,16 @@ public class ProductService {
 	// 전체 개수
 	public int getTotalCount(String prodCate1, String prodCate2) {
 		return dao.getTotalCount(prodCate1, prodCate2);
+	}
+	
+	// 검색 개수
+	public int getTotalSearchCount(String keyWord, String sort) {
+		return dao.getTotalSearchCount(keyWord, sort);
+	}
+	
+	// 2차 검색 개수
+	public int getTotalSecondSearchCount(String min, String max, String chk, String search, String firstSearch, String sort) {
+		return dao.getTotalSecondSearchCount(min, max, chk, search, firstSearch, sort);
 	}
 	
 	// 마지막 페이지 번호

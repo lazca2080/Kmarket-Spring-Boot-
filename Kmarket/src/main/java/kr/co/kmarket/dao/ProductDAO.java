@@ -54,10 +54,18 @@ public interface ProductDAO {
 	public int deleteCompleteCart(@Param("uid") String uid, @Param("checkList") List<String> checkList);
 	
 	// 상품 검색
-	public List<ProductVO> searchProduct(@Param("keyWord") String kewWord, @Param("sort") String sort);
+	public List<ProductVO> searchProduct(@Param("keyWord") String kewWord, @Param("sort") String sort, @Param("start") int start);
 	
+	// 상품 2차 검색
+	public List<ProductVO> secondSearch(@Param("min") String min, @Param("max") String max, @Param("chk") String chk, @Param("search") String search, @Param("keyWord") String firstSearch, @Param("sort") String sort, @Param("start") int start);
 	
 	// 페이징
 	// 전체 개수
 	public int getTotalCount(@Param("prodCate1") String prodCate1, @Param("prodCate2") String prodCate2);
+	
+	// 검색 개수
+	public int getTotalSearchCount(@Param("keyWord") String kewWord, @Param("sort") String sort);
+	
+	// 2차 검색 개수
+	public int getTotalSecondSearchCount(@Param("min") String min, @Param("max") String max, @Param("chk") String chk, @Param("search") String search, @Param("keyWord") String firstSearch, @Param("sort") String sort);
 }

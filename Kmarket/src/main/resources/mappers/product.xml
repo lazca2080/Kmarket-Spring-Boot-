@@ -138,19 +138,63 @@
 	<!-- 검색 -->
 	<select id="searchProduct" resultType="kr.co.kmarket.vo.ProductVO">
 		SELECT * FROM `km_product` WHERE `prodName` LIKE CONCAT('%', #{keyWord}, '%')
+		<include refid="sort"/>
+	</select>
+	
+	<!-- 2차 검색 -->
+	<select id="secondSearch" resultType="kr.co.kmarket.vo.ProductVO">
+		SELECT * FROM `km_product` WHERE `prodName` LIKE CONCAT('%', #{keyWord}, '%') AND
 		<choose>
-			<when test="sort == 'sold'"> ORDER BY `sold` DESC; </when>
-			<when test="sort == 'lowPrice'"> ORDER BY `price` ASC; </when>
-			<when test="sort == 'highPrice'"> ORDER BY `price` DESC; </when>
-			<when test="sort == 'score'"> ORDER BY `score` DESC; </when>
-			<when test="sort == 'review'"> ORDER BY `review` DESC; </when>
-			<when test="sort == 'date'"> ORDER BY `rdate` DESC; </when>
+			<when test="chk == 'prodName'">
+				`prodName` LIKE CONCAT('%', #{search}, '%')
+				<include refid="sort"/>
+			</when>
+			<when test="chk == 'descript'">
+				`descript` LIKE CONCAT('%', #{search}, '%')
+				<include refid="sort"/>
+			</when>
+			<when test="chk == 'prodPrice'">
+				`price` BETWEEN #{min} AND #{max}
+				<include refid="sort"/>
+			</when>
 		</choose>
 	</select>
 	
 	<!-- 페이징 -->
 	<!-- 상품 개수 -->
 	<select id="getTotalCount" resultType="int">
-		SELECT COUNT('prodNo') FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2};
+		SELECT COUNT(`prodNo`) FROM `km_product` WHERE `prodCate1`=#{prodCate1} AND `prodCate2`=#{prodCate2};
 	</select>
+	<!-- 검색 상품 개수 -->
+	<select id="getTotalSearchCount" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `km_product` WHERE `prodName` LIKE CONCAT('%', #{keyWord}, '%')
+	</select>
+	<!-- 2차 검색 상품 개수 -->
+	<select id="getTotalSecondSearchCount" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `km_product` WHERE `prodName` LIKE CONCAT('%', #{keyWord}, '%') AND
+		<choose>
+			<when test="chk == 'prodName'">
+				`prodName` LIKE CONCAT('%', #{search}, '%')
+			</when>
+			<when test="chk == 'descript'">
+				`descript` LIKE CONCAT('%', #{search}, '%')
+			</when>
+			<when test="chk == 'prodPrice'">
+				`price` BETWEEN #{min} AND #{max}
+			</when>
+		</choose>
+	</select>
+	
+	<!--========공통 키==========-->
+
+    <sql id="sort">
+        <choose>
+			<when test="sort == 'sold'"> ORDER BY `sold` DESC LIMIT #{start}, 10 ; </when>
+			<when test="sort == 'lowPrice'"> ORDER BY `price` ASC LIMIT #{start}, 10; </when>
+			<when test="sort == 'highPrice'"> ORDER BY `price` DESC LIMIT #{start}, 10; </when>
+			<when test="sort == 'score'"> ORDER BY `score` DESC LIMIT #{start}, 10; </when>
+			<when test="sort == 'review'"> ORDER BY `review` DESC LIMIT #{start}, 10; </when>
+			<when test="sort == 'date'"> ORDER BY `rdate` DESC LIMIT #{start}, 10; </when>
+		</choose>
+    </sql>
 </mapper>

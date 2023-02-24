@@ -130,6 +130,11 @@ public class MyService {
 		return dao.selectCountOrderTotal(uid, nowDate.get("begin"), nowDate.get("end"));
 	}
 	
+	// order 개수
+	public int selectOrderTotal(String uid) {
+		return dao.selectOrderTotal(uid);
+	}
+	
 	// 전체 point 갯수
 	public long getTotalPointCount(String uid, String date, String rangeMonth, Map<String, String> dateRange) {
 		Map<String, String> nowDate = nowDate(date, rangeMonth, dateRange);

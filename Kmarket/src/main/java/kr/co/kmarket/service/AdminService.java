@@ -92,7 +92,6 @@ public class AdminService {
 		// 시스템 경로
 		String path = new File(uploadPath+cate1+"/"+cate2).getAbsolutePath();
 		
-		log.info("path"+path);
 		// 새 파일명 생성
 		String oriThumb1 = thumb1.getOriginalFilename();
 		String oriThumb2 = thumb2.getOriginalFilename();

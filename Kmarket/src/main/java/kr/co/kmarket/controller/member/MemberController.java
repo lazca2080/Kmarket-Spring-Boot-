@@ -24,40 +24,40 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/member/join")
+    @GetMapping("member/join")
     public String join(){
-        return "/member/join";
+        return "member/join";
     }
 
-    @GetMapping("/signup/{type}")
+    @GetMapping("signup/{type}")
     public String signup(@PathVariable String type, Model model){
         TermsVO tvo = memberService.selectTerms();
         model.addAttribute("tvo", tvo);
 
             if("general".equals(type)){
-                return "/member/signup";
+                return "member/signup";
             }
 
-        return "/member/signupSeller";
+        return "member/signupSeller";
     }
 
-    @GetMapping("/register/{type}")
+    @GetMapping("register/{type}")
     public String register(@PathVariable String type){
 
             if("general".equals(type)){
-                return "/member/register";
+                return "member/register";
             }
 
-        return "/member/registerSeller";
+        return "member/registerSeller";
     }
 
-    @GetMapping("/member/login")
+    @GetMapping("member/login")
     public String login(Principal principal){
 
         if(principal != null){
             return "redirect:/";
         }else{
-            return "/member/login";
+            return "member/login";
         }
 
 
@@ -66,11 +66,11 @@ public class MemberController {
 
     /* ========= Security Test... ========== */
 
-    @GetMapping("/member/loginInfo")
+    @GetMapping("member/loginInfo")
     public String loginInfo(@AuthenticationPrincipal MyUserDetails myUser, Model m){
         UserEntity user =  myUser.getUser();
         log.info("user : "+ user);
         m.addAttribute("user", user);
-        return "/member/loginInfo";
+        return "member/loginInfo";
     }
 }

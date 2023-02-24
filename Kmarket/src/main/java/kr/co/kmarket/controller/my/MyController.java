@@ -49,6 +49,8 @@ public class MyController {
 		
 		
 		long csCount = service.getTotalCsCount(uid);
+		int orderCount = service.selectOrderTotal(uid);
+		model.addAttribute("ordCount", orderCount);
 		model.addAttribute("csCount", csCount);
 		model.addAttribute("order", order);
 		model.addAttribute("point", point);
@@ -62,6 +64,8 @@ public class MyController {
 	public String ordered(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date, String rangeMonth, String rangeBegin, String rangeEnd, String types) {
 		model.addAttribute("type", "ordered");
 		String uid = myUser.getUser().getUid();
+		int orderCount = service.selectOrderTotal(uid);
+		model.addAttribute("ordCount", orderCount);
 		
 		// 날짜 구하기 ---------------------------------------------------------------------------
 		LocalDate now = LocalDate.now();
@@ -116,6 +120,8 @@ public class MyController {
 	public String point(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg, String date, String rangeMonth, String rangeBegin, String rangeEnd, String types) {
 		model.addAttribute("type", "point");
 		String uid = myUser.getUser().getUid();
+		int orderCount = service.selectOrderTotal(uid);
+		model.addAttribute("ordCount", orderCount);
 		
 		// 날짜 구하기 ---------------------------------------------------------------------------
 		LocalDate now = LocalDate.now();
@@ -169,6 +175,8 @@ public class MyController {
 	@GetMapping("my/coupon")
 	public String coupon(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "coupon");
+		int orderCount = service.selectOrderTotal(myUser.getUser().getUid());
+		model.addAttribute("ordCount", orderCount);
 		
 		String uid = myUser.getUser().getUid();
 		
@@ -182,6 +190,8 @@ public class MyController {
 	public String review(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
 		model.addAttribute("type", "review");
 		String uid = myUser.getUser().getUid();
+		int orderCount = service.selectOrderTotal(uid);
+		model.addAttribute("ordCount", orderCount);
 		
 		int   currentPage  = service.getCurrentPage(pg);
 		int   start        = service.getLimitStart(currentPage);
@@ -208,6 +218,8 @@ public class MyController {
 	public String qna(Model model, @AuthenticationPrincipal MyUserDetails myUser, String pg) {
 		model.addAttribute("type", "qna");
 		String uid = myUser.getUser().getUid();
+		int orderCount = service.selectOrderTotal(uid);
+		model.addAttribute("ordCount", orderCount);
 		
 		int   currentPage  = service.getCurrentPage(pg);
 		int   start        = service.getLimitStart(currentPage);
@@ -233,6 +245,8 @@ public class MyController {
 	@GetMapping("my/info")
 	public String info(Model model, @AuthenticationPrincipal MyUserDetails myUser) {
 		model.addAttribute("type", "info");
+		int orderCount = service.selectOrderTotal(myUser.getUser().getUid());
+		model.addAttribute("ordCount", orderCount);
 		
 		String uid = myUser.getUser().getUid();
 		

@@ -336,19 +336,57 @@ public class ProductController {
 	}
 	
 	@GetMapping("product/search")
-	public String search(Model model, String keyWord, String sort) {
+	public String search(Model model, String keyWord, String sort, String pg) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
-		
 		model.addAttribute("keyWord", keyWord);
 		
-		List<ProductVO> search = service.searchProduct(keyWord, sort);
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalSearchCount(keyWord, sort);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
 		
-		model.addAttribute("keyWord",keyWord);
+		List<ProductVO> search = service.searchProduct(keyWord, sort, start);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
+		
 		model.addAttribute("prods", search);
 		model.addAttribute("sort", sort);
-		model.addAttribute("size", search.size());
+		model.addAttribute("size", total);
+		
+		return "product/search";
+	}
+	
+	@GetMapping("product/secondSearch")
+	public String secondSearch(String min, String max, String chk, String search, String firstSearch, String pg, Model model, String sort) {
+		// 카테고리 분류
+		Map<String, List<CateVO>> cate = service.selectCate();
+		model.addAttribute("cate", cate);
+		model.addAttribute("keyWord", search);
+		
+		int   currentPage  = service.getCurrentPage(pg);
+		int   start        = service.getLimitStart(currentPage);
+		long  total        = service.getTotalSecondSearchCount(min, max, chk, search, firstSearch, sort);
+		int   lastPage     = service.getLastPageNum(total);
+		int   pageStartNum = service.getPageStartNum(total, start);
+		int[] groups       = service.getPageGroup(currentPage, lastPage);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageStartNum", pageStartNum+1);
+		model.addAttribute("groups", groups);
+		
+		List<ProductVO> secondSearch = service.secondSearch(min, max, chk, search, firstSearch, sort, start);
+		
+		model.addAttribute("prods", secondSearch);
+		model.addAttribute("sort", sort);
+		model.addAttribute("size", total);
 		
 		return "product/search";
 	}
