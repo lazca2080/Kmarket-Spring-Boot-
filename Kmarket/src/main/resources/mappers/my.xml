@@ -38,7 +38,7 @@
 	<select id="selectOrder" resultMap="Order">
 		SELECT b.*, a.`recipName`, a.`recipHp`, a.`recipZip`,a.`recipAddr1`, a.`recipAddr2`, a.`ordDate`,c.`prodCate1`, c.`prodCate2`, c.`thumb2`, c.`company` , c.`prodName` FROM `km_product_order` AS a JOIN
 		`km_product_order_item` AS b ON a.`ordNo` = b.`ordNo` JOIN
-		`km_product` AS c ON b.`prodNo` = c.`prodNo` WHERE a.`ordNo` = #{ordNo};
+		`km_product` AS c ON b.`prodNo` = c.`prodNo` WHERE a.`ordNo` = #{ordNo} AND b.`prodNo` = #{prodNo};
 	</select>
 	
 	<resultMap type="kr.co.kmarket.vo.MyVO" id="Order">

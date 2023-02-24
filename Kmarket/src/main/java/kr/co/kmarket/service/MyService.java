@@ -56,8 +56,8 @@ public class MyService {
 	}
 	
 	// 주문 상세
-	public MyVO selectOrder(int ordNo) {
-		return dao.selectOrder(ordNo);
+	public MyVO selectOrder(int ordNo, String prodNo) {
+		return dao.selectOrder(ordNo, prodNo);
 	}
 	
 	// 리뷰 작성 여부 판단

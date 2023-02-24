@@ -34,7 +34,7 @@ public interface MyDAO {
 	public MemberVO selectCompany(String company);
 	
 	// 주문 상세
-	public MyVO selectOrder(int ordNo);
+	public MyVO selectOrder(@Param("ordNo") int ordNo, @Param("prodNo") String prodNo);
 	
 	// 리뷰 작성 여부 판단
 	public int selectRevStatus(@Param("uid") String uid, @Param("prodNo") String prodNo);
