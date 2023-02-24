@@ -83,6 +83,7 @@ $(function(){
 				if(data.result > 0){
 					ment.remove();
 					$('#rep').html("<p style='font-size:18px'>"+reply+"</p>")
+					$('.qnaReplyCommit').remove();
 				}else{
 					alert('등록 실패');
 				}

@@ -24,10 +24,6 @@ public class AdminService {
 	@Autowired
 	private AdminDAO dao;
 
-	// (최고관리자) 상품 목록조회
-	public List<ProductVO> selectProductsAdmin(int start){
-		return dao.selectProductsAdmin(start);
-	}
 	// (판매회원) 판매자 조회
 	public List<ProductVO> selectProducts(int start,
 										  String seller,
