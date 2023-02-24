@@ -403,6 +403,7 @@
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/my/jquery.star-rating-svg.min.js}"></script>
 		<script>
+			let prodReviewNo = 0;
 			function maskingCar(strCar) {
 			    if (strCar == undefined || strCar === '') {
 			        return '';
@@ -450,11 +451,15 @@
 			    $('.latest .info .orderNo > a').click(function(e){
 			        e.preventDefault();
 			        let ordNo = $(this).text();
+			        let prodNo = $(this).parent().parent().parent().next().next().children('.review').attr('data-no');
+			        
+			        let jsonData = { "ordNo":ordNo , "prodNo":prodNo };
 			        
 			        $.ajax({
 			        	url:'/Kmarket/my/order',
 			        	method:'POST',
-			        	data: { "ordNo":ordNo },
+			        	contentType:'application/json',
+				    	data:JSON.stringify(jsonData),
 			        	dataType:'JSON',
 			        	success: function(data){
 			        		$('#popOrder .order .date').text(data.vo.order.ordDate.substring(0,10));
@@ -503,18 +508,21 @@
 			    
 			    // 팝업 끄기
 			    $('.btnCancel').click(function(){
+			    	prodReviewNo = 0;
 			    	$(this).closest('.popup').removeClass('on');
 			    });
 			    
 			    // 팝업 닫기
-			    $('.btnClose').click(function(){                
+			    $('.btnClose').click(function(){
+			    	prodReviewNo = 0;
 			        $(this).closest('.popup').removeClass('on');                
 			    });
 			    
 			    // 상품평 작성 팝업 띄우기
 			    $('.latest .confirm > .review').click(function(e){
 			        e.preventDefault();
-				    
+				    prodReviewNo = $(this).attr('data-no');
+			        
 			        $('#popReview').addClass('on');
 			    });
 			    
@@ -537,10 +545,10 @@
 			    	e.preventDefault();
 			    	
 			        let prodNo = $('.latest .confirm > .review').attr('data-no');
-			        let review = $('#popReview .review > textarea').val();
+			        let review = $('textarea[name=review]').val();
 			        
 				    let jsonData = {
-				    	"prodNo" : prodNo,
+				    	"prodNo" : prodReviewNo,
 				    	"rating" : rating,
 				    	"content" : review
 				    };

@@ -258,12 +258,15 @@ public class MyController {
 	// 주문 상세
 	@ResponseBody
 	@PostMapping("my/order")
-	public Map<String, MyVO> selectOrder(@RequestParam int ordNo) {
+	public Map<String, MyVO> selectOrder(@RequestBody OrderVO vo) {
 		
-		MyVO vo = service.selectOrder(ordNo);
+		int ordNo = vo.getOrdNo();
+		String prodNo = vo.getProdNo();
+		
+		MyVO my = service.selectOrder(ordNo, prodNo);
 		
 		Map<String, MyVO> map = new HashMap<>();
-		map.put("vo", vo);
+		map.put("vo", my);
 		
 		return map;
 	}
