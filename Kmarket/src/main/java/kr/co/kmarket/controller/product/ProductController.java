@@ -103,28 +103,36 @@ public class ProductController {
 	// 장바구니 등록
 	@ResponseBody
 	@PostMapping("product/cart")
-	public Map<String, Integer> insertCart(@RequestParam String prod, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
-		Gson gson = new Gson();
-		ProductVO vo = gson.fromJson(prod, ProductVO.class);
-		
+	public Map<String, Integer> insertCart(@RequestBody ProductVO vo, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
 		HttpSession session = req.getSession();
-		
 		vo.setSeller(myuser.getUser().getUid());
 		vo.setIp(req.getRemoteAddr());
 		
 		int result = 0;
 		
-		if(vo.getType().equals("cart")) {
-			result = service.insertCart(vo);
-			session.setAttribute("type", "cart");
-		}else if(vo.getType().equals("order")) {
-			result = 9527;
-			session.setAttribute("type", "order");
-			session.setAttribute("order", vo);
-		}
+		result = service.insertCart(vo);
+		session.setAttribute("type", "cart");
+		Map<String, Integer> map = new HashMap<>();
+		map.put("result", result);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("product/purchase")
+	public Map<String, Integer> insertPurchase(@RequestBody ProductVO vo, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
+		HttpSession session = req.getSession();
+		vo.setSeller(myuser.getUser().getUid());
+		vo.setIp(req.getRemoteAddr());
+		
+		int result = 0;
+		
+		result = service.insertCart(vo);
 		
 		Map<String, Integer> map = new HashMap<>();
 		map.put("result", result);
+		session.setAttribute("order", vo);
+		session.setAttribute("type", "order");
 		
 		return map;
 	}
@@ -244,17 +252,23 @@ public class ProductController {
 	public String complete(Model model, HttpServletRequest req, @AuthenticationPrincipal MyUserDetails myuser) {
 		HttpSession session = req.getSession();
 		
+		String type = (String) session.getAttribute("type");
+		
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
-		
+		OrderVO order = (OrderVO) session.getAttribute("order");
 		@SuppressWarnings("unchecked")
 		List<ProductVO> complete = (List<ProductVO>) session.getAttribute("complete");
-		OrderVO order = (OrderVO) session.getAttribute("order");
 		if(complete == null) { return "product/cart"; }
 		
 		model.addAttribute("complete", complete);
 		model.addAttribute("order", order);
+		
+		session.removeAttribute("complete");
+		session.removeAttribute("order");
+		session.removeAttribute("type");
+		session.removeAttribute("cartCheckList");
 		
 		return "product/complete";
 	}
@@ -262,14 +276,11 @@ public class ProductController {
 	@ResponseBody
 	@Transactional
 	@PostMapping("product/complete")
-	public Map<String, Integer> insertComplete(@RequestParam String order, @AuthenticationPrincipal MyUserDetails myuser, HttpServletRequest req) {
+	public Map<String, Integer> insertComplete(@RequestBody OrderVO vo, @AuthenticationPrincipal MyUserDetails myuser, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String uid = myuser.getUser().getUid();
 		int point = myuser.getUser().getPoint();
-		String type = (String) session.getAttribute("type"); 
 		
-		Gson gson = new Gson();
-		OrderVO vo = gson.fromJson(order, OrderVO.class);
 		vo.setOrdUid(uid);
 		
 		// 고유번호 ------------ 수정 필요 -------------
@@ -310,13 +321,11 @@ public class ProductController {
 		// km_product_order_item insert
 		@SuppressWarnings("unchecked")
 		List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
-		System.out.println(checkList);
+		log.info(""+checkList);
 		service.insertCompleteItem(randOrdNo, uid, checkList);
 		
-		if(type == "cart") {
-			// km_product_cart delete
-			service.deleteCompleteCart(uid, checkList);
-		}
+		// km_product_cart delete
+		service.deleteCompleteCart(uid, checkList);
 		
 		// 이 밑으로 많이 지저분함 수정 필수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		
