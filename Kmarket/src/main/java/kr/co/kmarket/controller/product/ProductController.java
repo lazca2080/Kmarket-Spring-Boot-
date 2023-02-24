@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
@@ -364,11 +365,17 @@ public class ProductController {
 	}
 	
 	@GetMapping("product/secondSearch")
-	public String secondSearch(String min, String max, String chk, String search, String firstSearch, String pg, Model model, String sort) {
+	public String secondSearch(String min, String max, String chk, String search, String firstSearch, String pg, Model model, String sort, RedirectAttributes re) {
 		// 카테고리 분류
 		Map<String, List<CateVO>> cate = service.selectCate();
 		model.addAttribute("cate", cate);
 		model.addAttribute("keyWord", search);
+		
+		if(chk == null) {
+			re.addAttribute("keyWord", firstSearch);
+			re.addAttribute("error", 101);
+			return "redirect:/product/search";
+		}
 		
 		int   currentPage  = service.getCurrentPage(pg);
 		int   start        = service.getLimitStart(currentPage);

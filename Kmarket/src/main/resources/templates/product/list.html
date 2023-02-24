@@ -58,10 +58,10 @@
                             </ul>
                         </td>
                         <td>
-                            <h4 class="seller"><i class="fas fa-home" aria-hidden="true"></i> 판매자
+                            <h4 class="seller"><i class="fas fa-home" aria-hidden="true"></i> [[${prod.company}]]
                             </h4>
                             <h5 class="badge power">판매자등급</h5>
-                            <h6 class="rating star1">상품평</h6>
+                            <h6 th:class="${'rating star' + prod.score}">상품평</h6>
                         </td>
                     </tr>
                 </table>
