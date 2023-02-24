@@ -54,15 +54,17 @@ public class AdminCScontroller {
             return "admin/cs/notice/list";
 
         }else if("qna".equals(csType)) {
-            int total = service.selectAdminQnaTotal();
+            int total = service.selectAdminQnaTotal(cateType1, cateType2);
             int currentPage = service.getCurrentPage(pg);
             int start = service.getLimitStart(currentPage);
             int lastPage = service.getLastPageNum(total);
             int pageStartNum = service.getPageStartNum(total, start);
             int groups[] = service.getPageGroup(currentPage, lastPage);
 
-            List<CsVO> articles = service.selectAdminCSqna(start);
-            log.info("total : " + total);
+            List<CsVO> articles = service.selectAdminCSqna(start, cateType1, cateType2);
+
+            model.addAttribute("cateType1",cateType1);
+            model.addAttribute("cateType2",cateType2);
             model.addAttribute("currentPage", currentPage);
             model.addAttribute("lastPage", lastPage);
             model.addAttribute("pageStartNum", pageStartNum);
@@ -78,7 +80,8 @@ public class AdminCScontroller {
             int groups[] = service.getPageGroup(currentPage, lastPage);
 
             List<CsVO> articles = service.selectAdminCSfaq(start, cateType1, cateType2);
-            log.info("total : " + total);
+            log.info("[cateType1] ============= " + cateType1);
+            log.info("[cateType2] ============= " + cateType2);
             model.addAttribute("cateType1",cateType1);
             model.addAttribute("cateType2",cateType2);
             model.addAttribute("currentPage", currentPage);

@@ -43,15 +43,15 @@ public class AdminCSservice {
     public List<CsVO> selectAdminCSfaq(int start, String cateType1, String cateType2){
         return dao.selectAdminCSfaq(start, cateType1, cateType2);
     }
-    public List<CsVO> selectAdminCSqna(int start){
-        return dao.selectAdminCSqna(start);
+    public List<CsVO> selectAdminCSqna(int start, String cateType1, String cateType2){
+        return dao.selectAdminCSqna(start, cateType1, cateType2);
     }
 
     public int selectAdminNoticeTotal(String cateType1){
         return dao.selectAdminNoticeTotal(cateType1);
     };
-    public int selectAdminQnaTotal(){
-        return dao.selectAdminQnaTotal();
+    public int selectAdminQnaTotal(String cateType1, String cateType2){
+        return dao.selectAdminQnaTotal(cateType1,cateType2);
     };
     public int selectAdminFaqTotal(String cateType1, String cateType2){
         return dao.selectAdminFaqTotal(cateType1,cateType2);

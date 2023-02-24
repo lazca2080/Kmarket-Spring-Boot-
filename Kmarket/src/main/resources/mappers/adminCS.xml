@@ -37,9 +37,6 @@
         SELECT * FROM `km_cs_qna` WHERE `no`=#{no};
     </select>
 
-
-
-
     <update id="updateNotice">
         UPDATE `km_cs_notice` SET
             `cateType1` = #{cateType1},
@@ -80,10 +77,15 @@
 
 
     <select id="selectAdminCSqna" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs_qna` WHERE 1=1 ORDER BY `no` DESC LIMIT #{start},10;
+        SELECT * FROM `km_cs_qna`
+        <include refid="searchType1"/>
+        <include refid="searchType2"/>
+        ORDER BY `no` DESC LIMIT #{start},10;
     </select>
     <select id="selectAdminQnaTotal" resultType="int">
-        SELECT COUNT(`no`) FROM `km_cs_qna`;
+        SELECT COUNT(`no`) FROM `km_cs_qna`
+        <include refid="searchType1"/>
+        <include refid="searchType2"/>;
     </select>
 
 
@@ -96,6 +98,7 @@
     <select id="selectAdminCSfaq" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs_faq`
         <include refid="searchType1"/>
+        <include refid="searchType2"/>
         ORDER BY `no` DESC LIMIT #{start},10;
     </select>
     <!-- 게시글 개수 -->
@@ -106,6 +109,7 @@
     <select id="selectAdminFaqTotal" resultType="int">
         SELECT COUNT(`no`) FROM `km_cs_faq`
         <include refid="searchType1"/>
+        <include refid="searchType2"/>
     </select>
     <!--========공통 키==========-->
 
@@ -118,7 +122,7 @@
     </sql>
     <sql id="searchType2">
         <if test="cateType2 != null">
-            AND `cateType2` = #{cateType}
+            AND `cateType2` = #{cateType2}
         </if>
     </sql>
 </mapper>

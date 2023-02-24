@@ -29,11 +29,13 @@ public interface AdminCsDAO {
                                        @Param("cateType1") String cateType1,
                                        @Param("cateType2") String cateType2);
 
-    public List<CsVO> selectAdminCSqna(int start);
+    public List<CsVO> selectAdminCSqna(@Param("start") int start,
+                                       @Param("cateType1") String cateType1,
+                                       @Param("cateType2") String cateType2);
 
     /** 게시글 개수 **/
     public int selectAdminNoticeTotal(String cateType1);
-    public int selectAdminQnaTotal();
+    public int selectAdminQnaTotal(@Param("cateType1") String cateType1,@Param("cateType2")  String cateType2);
     public int selectAdminFaqTotal(@Param("cateType1") String cateType1,@Param("cateType2")  String cateType2);
 
     public void updateNotice(CsVO vo);
