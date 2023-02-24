@@ -9,19 +9,22 @@
             <p>HOME > 고객센터 > <span>문의하기</span></p>
         </nav>
 
-        <select name="cate2" class="cate2" required onchange="qnaOption()">
-            <option value="none" disabled selected>1차 선택</option>
-            <option value="user">회원</option>
-            <option value="coupon"</option>
-            <option value="order">주문/결제</option>
-            <option value="delivery">배송</option>
-            <option value="cancel">취소/반품/교환</option>
-            <option value="travel">여행/숙박/항공</option>
-            <option value="safeDeal">안전거래</option>
-        </select>
-        <select name="type" class="type">
-            <option value="0" disabled selected>2차 선택</option>
-        </select>
+        <form name="search-form">
+            <select name="cateType1" class="cateType1" onchange="faqOption()">
+                <option value="none" disabled selected>1차 선택</option>
+                <option>회원</option>
+                <option>쿠폰/혜택/이벤트</option>
+                <option>주문/결제</option>
+                <option>배송</option>
+                <option>취소/반품/교환</option>
+                <option>여행/숙박/항공</option>
+                <option>안전거래</option>
+            </select>
+            <select name="cateType2" class="cateType2">
+                <option value="0" disabled selected>2차 선택</option>
+            </select>
+            <input type="submit" value="검색">
+        </form>
 
         <table class="QNAth">
             <tr>
@@ -58,7 +61,7 @@
         </table>
         <input type="button" name='del' value="선택삭제" onclick="csDelete3()">
 
-        <div class="paging">
+        <div class="paging" th:if="${#strings.isEmpty(cateType2)}">
             <span th:if="${groups[0]>1}" class="prev">
                 <a th:href="@{/admin/cs/list/qna(pg=${groups[0]-1})}"><&nbsp;이전</a>
             </span>
@@ -73,6 +76,24 @@
 
             <span th:if="${groups[1]<lastPage}" class="next">
                 <a th:href="@{/admin/cs/list/qna(pg=${groups[1]+1})}">다음&nbsp;></a>
+            </span>
+        </div>
+
+        <div class="paging" th:if="${not #strings.isEmpty(cateType2)}">
+            <span th:if="${groups[0]>1}" class="prev">
+                <a th:href="@{/admin/cs/list/qna(pg=${groups[0]-1},cateType1=${cateType1},cateType2=${cateType2})}"><&nbsp;이전</a>
+            </span>
+
+            <span class="num">
+                <th:block th:each="i : ${#numbers.sequence(groups[0],groups[1])}">
+                    <a th:href="@{/admin/cs/list/qna(pg=${i}, cateType1=${cateType1}, cateType2=${cateType2})}"
+                       th:classappend="${i==currentPage ? 'on': ''}"
+                    >[[${i}]]</a>
+                </th:block>
+            </span>
+
+            <span th:if="${groups[1]<lastPage}" class="next">
+                <a th:href="@{/admin/cs/list/qna(pg=${groups[1]+1},cateType1=${cateType1},cateType2=${cateType2})}">다음&nbsp;></a>
             </span>
         </div>
     </section>
