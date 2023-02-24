@@ -55,6 +55,8 @@ public interface MyDAO {
 	public int updatePurConf(@Param("uid") String uid, @Param("ordNo") int ordNo, @Param("prodNo") int prodNo);
 	
 	// 페이징
+	public int selectOrderTotal(String uid);
+	
 	public int selectCountOrderTotal(@Param("uid") String uid, @Param("begin") String begin, @Param("end") String end);
 	
 	public int selectCountPointTotal(@Param("uid") String uid, @Param("begin") String begin, @Param("end") String end);
