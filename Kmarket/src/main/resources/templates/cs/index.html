@@ -17,7 +17,7 @@
                     <ul>
                     	<th:block th:each="cate:${cate}">
                         <li th:if="${cate.cateType1 == '고객서비스'}">
-                            <a href="#" class="title" th:text="${cate.title}">[안내] 홰외결제 사칭 문자 주의</a>
+                            <a th:href="@{/cs/notice/view(cateType1=${cate.cateType1}, no=${cate.no})}" class="title" th:text="${cate.title}">[안내] 홰외결제 사칭 문자 주의</a>
                             <span class="date" th:text="${#strings.substring(cate.rdate, 2, 10)}">23.02.07</span>
                         </li>
                         </th:block>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/csLayout}">
@@ -43,14 +43,14 @@
                         </aside>
                         <article>
                             <nav>
-                                <h1 th:text="${cateType1}">회원</h1>
+                                <h1>회원</h1>
                                 <h2>가장 자주 묻는 질문입니다.</h2>
                             </nav>
                             <div>
-                                <h3 th:inline="text">[[${faq.cateType2}]]</h3>
+                                <h3 ></h3>
                                 <ul>
                                     <li>
-                                        <a th:href="@{/cs/faq/list(cateType2=${cateType2}, no=${no})}">
+                                        <a href="#">
                                             <span>Q.</span>
                                             
                                         </a>
