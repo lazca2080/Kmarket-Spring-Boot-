@@ -18,7 +18,7 @@ public class RegisterController {
     private MemberService memberService;
 
 
-    @PostMapping("/register/{MemberType}")
+    @PostMapping("register/{MemberType}")
     public String insertMember(@PathVariable("MemberType") String MemberType, MemberVO memberVO){
 
         if("general".equals(MemberType)){
@@ -29,7 +29,7 @@ public class RegisterController {
         return "redirect:/member/login";
     }
 
-    @GetMapping("/member/uidCheck")
+    @GetMapping("member/uidCheck")
     @ResponseBody
     public Map<String, Integer> checkUid(@RequestParam("uid") String uid){
         log.info(" uid : "+ uid);
