@@ -18,7 +18,7 @@ public class IndexController {
 	private IndexService service;
 	
 	@GetMapping(value = {"cs", "cs/index"})
-	public String index(Model model) {
+	public String index(Model model, String pg) {
 		List<CsVO> cate = service.selectCss();
 		model.addAttribute("cate",cate);
 		log.info("est"+cate);
