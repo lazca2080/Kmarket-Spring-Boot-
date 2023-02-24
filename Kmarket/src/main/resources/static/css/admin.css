@@ -224,12 +224,12 @@ label {
 
 input {
     width: 200px;
-    padding: 6px;
+    padding: 7px;
     border: 1px solid #959595;
     font-size: 13px;            
     background-color: #fefefe;
     color: #333;
-    vertical-align: middle;
+    /*vertical-align: middle;*/
     box-sizing: border-box;
 }
 
@@ -495,6 +495,10 @@ button[type=submit] {
 }
 .admin > nav > p {float: right; line-height: 34px;}
 .admin > nav > p > span {font-weight: bold;}
+
+#cs-list > form > input[type=submit]{
+    width: 77px;
+}
 #cs-list > select:first-of-type {
 	margin-top: 13px;
     width: 137px;
@@ -578,6 +582,10 @@ button[type=submit] {
 }
 #cs-list > table td > img {width: 60px;}
 #cs-list > input[type=button] {
+    float: left;
+    width: 100px;
+    margin-top: 10px;
+    /*
     margin-top: 10px;
     float: left;
     background: #fff;
@@ -587,14 +595,17 @@ button[type=submit] {
     padding: 10px 15px;
     border: 1px solid #d6d6d6;
     box-sizing: border-box;
+    */
 }
 
 #cs-list > .btnWrite {
+    position: relative;
     float: right;
     padding: 10px 15px;
     background: skyblue;
     border: 1px solid #d6d6d6;
     color: white;
+    bottom: 92px;
 }
 #cs-list > .paging {
     display: block;
@@ -724,16 +735,14 @@ button[type=submit] {
 #cs-view > div {
 	float: right;
     margin-top: 35px;
+    display: flex;
 }
 
 #cs-view > div > .btnList{
-    background-color: #c0c0c0;
-    border: 1px solid #c0c0c0;
-    border-radius: 2px;
-    padding: 5px 20px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #fff;
+    background: #c0c0c0;
+    padding: 10px 15px;
+    border: 1px solid #d6d6d6;
+    color: white;
 }
 #cs-view > div > .btnModify{
     padding: 10px 15px;
@@ -755,16 +764,15 @@ button[type=submit] {
     border: 1px solid #d6d6d6;
     color: white;
     width: 82px;
+    height: 38px
 }
 
 #cs-view > div > .remove {
-	background-color: #c0c0c0;
-    border: 1px solid #c0c0c0;
-    border-radius: 2px;
-    padding: 5px 20px;
-    box-sizing: border-box;
-    font-size: 18px;
-    color: #fff;
+    float: right;
+    padding: 10px 15px;
+    background: #c0c0c0;
+    border: 1px solid #d6d6d6;
+    color: white;
 }
 
 #cs-view > table tr > td > .reply {

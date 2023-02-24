@@ -17,10 +17,7 @@ public interface AdminDAO {
 	// 상품 등록
 	public void register(ProductVO vo);
 
-	// (최고관리자) 상품 목록조회
-	public List<ProductVO> selectProductsAdmin(@Param("start") int start);
-
-	// (판매회원) 판매자 조회
+	// 상품 조회
 	public List<ProductVO> selectProducts(@Param("start") int start,
 										  @Param("uid") String seller,
 										  @Param("searchType") String searchType,
