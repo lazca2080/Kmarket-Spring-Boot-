@@ -81,12 +81,12 @@ $(function(){
 			"total" : totalPrice
 		}
 	
-		let prod = JSON.stringify(jsonData);
 		
 		$.ajax({
 			url:'/Kmarket/product/cart',
 			method:'POST',
-			data:{ 'prod' : prod},
+			data: JSON.stringify(jsonData),
+			contentType:'application/json',
 			dataType:'JSON',
 			success: function(data){
 				
@@ -126,16 +126,16 @@ $(function(){
 			"total" : totalPrice
 		}
 	
-		let prod = JSON.stringify(jsonData);
 		
 		$.ajax({
-			url:'/Kmarket/product/cart',
+			url:'/Kmarket/product/purchase',
 			method:'POST',
-			data:{ 'prod' : prod},
+			data:JSON.stringify(jsonData),
+			contentType:'application/json',
 			dataType:'JSON',
 			success: function(data){
 				
-				if(data.result == 9527){
+				if(data.result == 1){
 					if(confirm('구매 하시겠습니까?')){
 						location.href = "/Kmarket/product/order";
 					}
