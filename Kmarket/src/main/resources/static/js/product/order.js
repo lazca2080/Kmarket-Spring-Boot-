@@ -61,12 +61,12 @@ $(function(){
 			"ordPayment": $('input[name=payment]:checked').val()
 		}
 		
-		let order = JSON.stringify(jsonData);
 		
 		$.ajax({
 			url:'/Kmarket/product/complete',
 			method:'POST',
-			data: { "order" : order } ,
+			data: JSON.stringify(jsonData),
+			contentType:'application/json',
 			dataType:'JSON',
 			success: function(data){
 				if(data.result == 1){
