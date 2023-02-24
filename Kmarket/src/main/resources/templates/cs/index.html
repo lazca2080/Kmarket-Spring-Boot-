@@ -78,7 +78,7 @@
                     <ul>
                     	<th:block th:each="cate:${cate}">
                         <li th:if="${cate.cateType1 == '회원'}">
-                            <a th:href="@{/cs/qna/view(cateType1='회원', no=${no})}" class="title" th:text="${cate.title}">
+                            <a th:href="@{/cs/qna/view(cateType1=${cate.cateType1}, no=${cate.no})}" class="title" th:text="${cate.title}">
                                 [회원] 개인회원과 법인회원에 차이가 있나요</a>
                                 <p>
                                     <span class="uid" th:text="|${#strings.substring(cate.uid,0,3)}**|">chh***</span>
