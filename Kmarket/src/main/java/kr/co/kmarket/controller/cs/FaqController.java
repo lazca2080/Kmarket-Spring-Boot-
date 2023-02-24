@@ -32,7 +32,7 @@ public class FaqController {
 		log.info("sdf : "+cateType2);
 		log.info("sdf : "+no);
 		log.info("sdf : "+faq);
-		return "cs/fqa/list";
+		return "cs/faq/list";
 	}
 	
 	@GetMapping("cs/faq/view")

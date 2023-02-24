@@ -62,7 +62,7 @@ public class NoticeController {
 	
 	// 글 보기
 	@GetMapping("cs/notice/view")
-	public String view(@RequestParam("no") int no, Model model, int pg) {
+	public String view(@RequestParam("no") int no, Model model, Integer pg) {
 		CsVO notice = service.selectNCs(no);
 		
 		model.addAttribute("notice",notice);
